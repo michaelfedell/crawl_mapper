@@ -44,6 +44,15 @@ public class GeneralValue
     
     public String toString()
     {
-        return "NYI";
+        String out;
+        if (!valid)
+        {
+            out = "invalid";
+        }
+        else
+        {
+            out = String.format("%.3f", doubleValue);
+        }
+        return out;
     }
 }

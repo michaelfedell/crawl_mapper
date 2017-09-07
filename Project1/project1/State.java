@@ -44,7 +44,11 @@ public class State
     
     public String toString()
     {
-        return "NYI";
+        String out = String.format("%.2f", time) + ": left_wrist=<" + leftWrist.getDimValue(0) + ", " 
+                + leftWrist.getDimValue(1) + ", " + leftWrist.getDimValue(2) + ">, right_wrist=<" 
+                + rightWrist.getDimValue(0) + ", " + rightWrist.getDimValue(1) + ", " 
+                + rightWrist.getDimValue(2) + ">";
+        return out;
     }
 
 }
