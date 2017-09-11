@@ -1,6 +1,6 @@
 /**
  * 
- * @author Zach
+ * @author Zach Schuermann
  * @version 09/07/17
  */
 public class Point3D

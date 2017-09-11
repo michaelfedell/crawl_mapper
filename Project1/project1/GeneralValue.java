@@ -4,7 +4,7 @@
  * Captures both a double value and whether or not it is valid
  * 
  * @author Zach Schuermann
- * @version 2017-09-03
+ * @version 09/03/17
  *
  */
 public class GeneralValue
