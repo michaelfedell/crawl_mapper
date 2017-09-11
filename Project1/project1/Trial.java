@@ -59,40 +59,64 @@ public class Trial
         br.close();
     }
     
+    /**
+     * Getter for infantID
+     * @return infantID
+     */
     public String getInfantID()
     {
         return infantID;
     }
     
+    /**
+     * Getter for the size of the trial.
+     * @return Number of trials.
+     */
     public int getSize()
     {
         return stateList.size();
     }
+    
+    /**
+     * Getter for a specific state in the trial.
+     * @param index Number of  state to retrieve.
+     * @return State at the given index.
+     */
     public State getState(int index)
     {
         return stateList.get(index);
     }
     
+    /**
+     * Getter for the week of the trial.
+     * @return Week of trial (int).
+     */
     public int getWeek()
     {
         return week;
     }
     
+    /**
+     * Getter for the filename retrieved.
+     * @return Filename of trial data.
+     */
     public String getFileName()
     {
         return fileName;
     }
     
     /**
-     * Dimension given as 0=X 1=Y 2=Z
-     * @param dimension
-     * @return
+     * This method will find the maximum value of the entire trial for a specified dimension.
+     * @param dimension int with dimension given as 0=X 1=Y 2=Z.
+     * @return double of the maximum value of the trial for the dimension.
      */
     public double getMaxLeftWrist(int dimension)
     {
-        double maxLeft = 0;
+        // Initialize to the smallest possible number.
+        double maxLeft = Double.NEGATIVE_INFINITY;
         double leftWrist = 0;
         
+        // Loop through all trials and test for validity
         for (int i = 0; i < stateList.size(); i++)
         {
             if (stateList.get(i).getLeftWrist().getDimValue(dimension).isValid())
@@ -108,15 +132,17 @@ public class Trial
     }
     
     /**
-     * Dimension given as 0=X 1=Y 2=Z
-     * @param dimension
-     * @return
+     * This method will find the minimum value of the entire trial for a specified dimension.
+     * @param dimension int with dimension given as 0=X 1=Y 2=Z.
+     * @return double of the minimum value of the trial for the dimension.
      */
     public double getMinLeftWrist(int dimension)
     {
+        // Initialize to the largest possible number.
         double minLeft = Double.POSITIVE_INFINITY;
         double leftWrist = 0;
         
+        // Loop through all trials and test for validity
         for (int i = 0; i < stateList.size(); i++)
         {
             if (stateList.get(i).getLeftWrist().getDimValue(dimension).isValid())
@@ -132,16 +158,18 @@ public class Trial
     }
     
     /**
-     * Dimension given as 0=X 1=Y 2=Z
-     * @param dimension
-     * @return
+     * This method will find the average value of the entire trial for a specified dimension.
+     * @param dimension int with dimension given as 0=X 1=Y 2=Z.
+     * @return double of the average value of the trial for the dimension.
      */
     public double getAverageLeftWrist(int dimension)
     {
+        // Initialize variables to zero
         double sum = 0;
         double leftWrist = 0;
         int validCount = 0;
-
+        
+        // Loop through all states and check for validity, use validCount to keep track of number of valid states.
         for (int i = 0; i < stateList.size(); i++)
         {
             if (stateList.get(i).getLeftWrist().getDimValue(dimension).isValid())
@@ -151,6 +179,8 @@ public class Trial
                 sum += leftWrist;
             }
         }
+        
+        // Calculate average by casting validCount as double and dividing.
         return sum/(double)validCount;
     }
 }

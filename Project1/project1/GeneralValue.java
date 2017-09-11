@@ -1,5 +1,5 @@
 /**
- * Value class
+ * GeneralValue class
  * 
  * Captures both a double value and whether or not it is valid
  * 
