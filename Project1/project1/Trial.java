@@ -50,7 +50,7 @@ public class Trial
         // Read first line
         strg = br.readLine();
         
-        while(strg != null)
+        while (strg != null)
         {
             stateList.add(new State(strg));
             strg = br.readLine();
@@ -181,6 +181,6 @@ public class Trial
         }
         
         // Calculate average by casting validCount as double and dividing.
-        return sum/(double)validCount;
+        return sum / (double)validCount;
     }
 }

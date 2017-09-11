@@ -7,7 +7,7 @@
 public class Point3D
 {
     /** Array of general values to describe point location */
-    private GeneralValue[] point3d = new GeneralValue[3];
+    private GeneralValue[] points = new GeneralValue[3];
     
     /**
      * Constructs Point3D object specifically from X,Y,Z
@@ -17,9 +17,9 @@ public class Point3D
      */
     public Point3D(GeneralValue x, GeneralValue y, GeneralValue z)
     {
-        point3d[0] = x;
-        point3d[1] = y;
-        point3d[2] = z;
+        points[0] = x;
+        points[1] = y;
+        points[2] = z;
     }
     
     /**
@@ -29,7 +29,7 @@ public class Point3D
      */
     public GeneralValue getDimValue(int index)
     {
-        return point3d[index];
+        return points[index];
     }
 
     /**
@@ -38,14 +38,15 @@ public class Point3D
      */
     public GeneralValue[] getValues()
     {
-        return point3d;
+        return points;
     }
     
     /**
      * Converts point3D to comma separated string in the format x,y,z
+     * @return String representation of point in 3D space, "x,y,z"
      */
     public String toString()
     {
-        return point3d[0].toString() + "," + point3d[1].toString() + "," + point3d[2].toString();
+        return points[0].toString() + "," + points[1].toString() + "," + points[2].toString();
     }
 }
