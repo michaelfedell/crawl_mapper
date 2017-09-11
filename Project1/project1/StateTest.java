@@ -21,9 +21,12 @@ public class StateTest
     public void testGetLeftWrist()
     {
         State state = new State(testString);
-        Assert.assertEquals("Get Left Wrist: X", 0.11137, state.getLeftWrist().getDimValue(0).getDoubleValue(), 0.0001);
-        Assert.assertEquals("Get Left Wrist: Y", 0.157633, state.getLeftWrist().getDimValue(1).getDoubleValue(), 0.0001);
-        Assert.assertEquals("Get Left Wrist: Z", -0.217952, state.getLeftWrist().getDimValue(2).getDoubleValue(), 0.0001);
+        Assert.assertEquals("Get Left Wrist: X", 0.11137, 
+                state.getLeftWrist().getDimValue(0).getDoubleValue(), 0.0001);
+        Assert.assertEquals("Get Left Wrist: Y", 0.157633, 
+                state.getLeftWrist().getDimValue(1).getDoubleValue(), 0.0001);
+        Assert.assertEquals("Get Left Wrist: Z", -0.217952, 
+                state.getLeftWrist().getDimValue(2).getDoubleValue(), 0.0001);
     }
     
     /**
@@ -34,9 +37,12 @@ public class StateTest
     public void testGetRightWrist()
     {
         State state = new State(testString);
-        Assert.assertEquals("Get Right Wrist: X", 0.157488, state.getRightWrist().getDimValue(0).getDoubleValue(), 0.0001);
-        Assert.assertEquals("Get Right Wrist: Y", -0.276909, state.getRightWrist().getDimValue(1).getDoubleValue(), 0.0001);
-        Assert.assertEquals("Get Right Wrist: Z", -0.052427, state.getRightWrist().getDimValue(2).getDoubleValue(), 0.0001);
+        Assert.assertEquals("Get Right Wrist: X", 0.157488, 
+                state.getRightWrist().getDimValue(0).getDoubleValue(), 0.0001);
+        Assert.assertEquals("Get Right Wrist: Y", -0.276909, 
+                state.getRightWrist().getDimValue(1).getDoubleValue(), 0.0001);
+        Assert.assertEquals("Get Right Wrist: Z", -0.052427, 
+                state.getRightWrist().getDimValue(2).getDoubleValue(), 0.0001);
     }
     
     /**
