@@ -37,6 +37,6 @@ public class Point3D
     
     public String toString()
     {
-        return "NYI";
+        return point3d[0].toString() + "," + point3d[1].toString() + "," + point3d[2].toString();
     }
 }
