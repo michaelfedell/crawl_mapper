@@ -33,9 +33,12 @@ public class Point3DTest
         // Compare the doubleValue of each GeneralValue stored in the Point 3D
         // Comparing the GeneralValue objects will return different objects despite equal contents, 
         //   thus, doubleValues are examined in place 
-        Assert.assertEquals("getDimValue: X", test[0].getDoubleValue(), point.getDimValue(0).getDoubleValue(), 0.0001);
-        Assert.assertEquals("getDimValue: Y", test[1].getDoubleValue(), point.getDimValue(1).getDoubleValue(), 0.0001);
-        Assert.assertEquals("getDimValue: Z", test[2].getDoubleValue(), point.getDimValue(2).getDoubleValue(), 0.0001);
+        Assert.assertEquals("getDimValue: X", test[0].getDoubleValue(), 
+                point.getDimValue(0).getDoubleValue(), 0.0001);
+        Assert.assertEquals("getDimValue: Y", test[1].getDoubleValue(), 
+                point.getDimValue(1).getDoubleValue(), 0.0001);
+        Assert.assertEquals("getDimValue: Z", test[2].getDoubleValue(), 
+                point.getDimValue(2).getDoubleValue(), 0.0001);
     }
     
     /**
@@ -57,9 +60,12 @@ public class Point3DTest
         // Create the Point3D object for testing
         Point3D point = new Point3D(genVal1, genVal2, genVal3);
         
-        Assert.assertEquals("Get Values: X", test[0].getDoubleValue(), point.getValues()[0].getDoubleValue(), 0.0001);
-        Assert.assertEquals("Get Values: Y", test[1].getDoubleValue(), point.getValues()[1].getDoubleValue(), 0.0001);
-        Assert.assertEquals("Get Values: Z", test[2].getDoubleValue(), point.getValues()[2].getDoubleValue(), 0.0001);
+        Assert.assertEquals("Get Values: X", test[0].getDoubleValue(), 
+                point.getValues()[0].getDoubleValue(), 0.0001);
+        Assert.assertEquals("Get Values: Y", test[1].getDoubleValue(), 
+                point.getValues()[1].getDoubleValue(), 0.0001);
+        Assert.assertEquals("Get Values: Z", test[2].getDoubleValue(), 
+                point.getValues()[2].getDoubleValue(), 0.0001);
     }
     
     /**

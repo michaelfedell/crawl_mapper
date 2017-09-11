@@ -34,15 +34,18 @@ public class GeneralValueTest
     {
         GeneralValue validGenVal = new GeneralValue("9.23");
         GeneralValue invalidGenVal = new GeneralValue("NaN");
-        Assert.assertEquals("Valid Full Constructor: doubleValue", 9.23, validGenVal.getDoubleValue(), 0.00001);
+        Assert.assertEquals("Valid Full Constructor: doubleValue", 9.23, 
+                validGenVal.getDoubleValue(), 0.00001);
         Assert.assertTrue("Valid Full Constructor: isValid", validGenVal.isValid());
-        Assert.assertEquals("Invalid Full Constructor: doubleValue", 0.00, invalidGenVal.getDoubleValue(), 0.00001);
+        Assert.assertEquals("Invalid Full Constructor: doubleValue", 0.00, 
+                invalidGenVal.getDoubleValue(), 0.00001);
         Assert.assertFalse("Invalid Full Constructor: isValid", invalidGenVal.isValid());
     }
     
     /**
      * Tests the GeneralValue toString method
-     * Should return a string representation of the doubleValue, or a string of "invalid" if no valid value exists
+     * Should return a string representation of the doubleValue, 
+     * or a string of "invalid" if no valid value exists
      */
     @Test
     public void testToString()
