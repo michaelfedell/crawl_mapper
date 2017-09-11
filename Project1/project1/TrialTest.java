@@ -8,7 +8,7 @@ import org.junit.Assert;
  * @author Zach Schuermann
  * @version 09/11/17
  */
-public class TestTrial
+public class TrialTest
 {
     /**
      * Tests trial with all valid input. Getters and calculation methods tested.
