@@ -8,9 +8,9 @@ import org.junit.Test;
  * A value is considered valid if the value is a real number (NaN excluded)
  * 
  * @author Michael Fedell
- * @version 1.0
+ * @version 09/11/17
  */
-public class TestGeneralValue
+public class GeneralValueTest
 {
     /**
      * Tests the empty constructor for GeneralValue objects. This test will also cover getters and isValid

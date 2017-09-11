@@ -7,9 +7,9 @@ import org.junit.Test;
  * This class will cover testing for all public methods of the Point3D Class
  * 
  * @author Michael Fedell
- * @version 1.0
+ * @version 09/11/17
  */
-public class TestPoint3D
+public class Point3DTest
 {
     /**
      * Tests the getDimValue method for each of the three dimensions of a fully constructed Point3D object
