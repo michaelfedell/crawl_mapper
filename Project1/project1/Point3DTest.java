@@ -2,9 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * This class will test the implementation and functionality of the Point3D Class,
- * a class designed to organize three input values into a vector with x, y, and z-values
- * This class will cover testing for all public methods of the Point3D Class
+ * Unit testing for the Point3D Class
  * 
  * @author Michael Fedell
  * @version 09/11/17
