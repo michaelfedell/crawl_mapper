@@ -15,7 +15,7 @@ public class StateTest
 
     /**
      * Tests the getLeftWrist method by comparing double values stored in the Point for Left Wrist
-     * These double values are accessed from the State -> Left Wrist -> Point 3D -> General Value
+     * These double values are accessed from the State | Left Wrist | Point 3D | General Value
      */
     @Test
     public void testGetLeftWrist()
@@ -31,7 +31,7 @@ public class StateTest
     
     /**
      * Tests the getRightWrist method by comparing double values stored in the point for Right Wrist
-     * These double values are accessed from the State -> Right Wrist -> Point 3D -> General Value
+     * These double values are accessed from the State | Right Wrist | Point 3D | General Value
      */
     @Test
     public void testGetRightWrist()
@@ -58,7 +58,7 @@ public class StateTest
     
     /**
      * Tests the toString method of the State class.
-     * This method should return a string formatted as "<time>: left_wrist=<x,y,z>, right_wrist=<x,y,z>"
+     * This method should return a string formatted as "[time]: left_wrist=[x,y,z], right_wrist=[x,y,z]"
      */
     @Test
     public void testToString()
