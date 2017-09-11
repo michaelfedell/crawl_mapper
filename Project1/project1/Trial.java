@@ -99,10 +99,6 @@ public class Trial
             {
                 leftWrist = stateList.get(i).getLeftWrist().getDimValue(dimension).getDoubleValue();
             }
-            else
-            {
-                break;
-            }
             if (leftWrist > maxLeft)
             {
                 maxLeft = leftWrist;
@@ -118,7 +114,7 @@ public class Trial
      */
     public double getMinLeftWrist(int dimension)
     {
-        double minLeft = 0;
+        double minLeft = Double.POSITIVE_INFINITY;
         double leftWrist = 0;
         
         for (int i = 0; i < stateList.size(); i++)
@@ -126,10 +122,6 @@ public class Trial
             if (stateList.get(i).getLeftWrist().getDimValue(dimension).isValid())
             {
                 leftWrist = stateList.get(i).getLeftWrist().getDimValue(dimension).getDoubleValue();
-            }
-            else
-            {
-                break;
             }
             if (leftWrist < minLeft)
             {
@@ -156,12 +148,8 @@ public class Trial
             {
                 leftWrist = stateList.get(i).getLeftWrist().getDimValue(dimension).getDoubleValue();
                 validCount++;
+                sum += leftWrist;
             }
-            else
-            {
-                break;
-            }
-            sum += leftWrist;
         }
         return sum/(double)validCount;
     }
