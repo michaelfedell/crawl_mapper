@@ -90,19 +90,79 @@ public class Trial
      */
     public double getMaxLeftWrist(int dimension)
     {
-        //NYI
-        return 0;
-    }
-
-    public double getMinLeftWrist(int dimension)
-    {
-        //NYI
-        return 0;
+        double maxLeft = 0;
+        double leftWrist = 0;
+        
+        for (int i = 0; i < stateList.size(); i++)
+        {
+            if (stateList.get(i).getLeftWrist().getDimValue(dimension).isValid())
+            {
+                leftWrist = stateList.get(i).getLeftWrist().getDimValue(dimension).getDoubleValue();
+            }
+            else
+            {
+                break;
+            }
+            if (leftWrist > maxLeft)
+            {
+                maxLeft = leftWrist;
+            }
+        }
+        return maxLeft;
     }
     
+    /**
+     * Dimension given as 0=X 1=Y 2=Z
+     * @param dimension
+     * @return
+     */
+    public double getMinLeftWrist(int dimension)
+    {
+        double minLeft = 0;
+        double leftWrist = 0;
+        
+        for (int i = 0; i < stateList.size(); i++)
+        {
+            if (stateList.get(i).getLeftWrist().getDimValue(dimension).isValid())
+            {
+                leftWrist = stateList.get(i).getLeftWrist().getDimValue(dimension).getDoubleValue();
+            }
+            else
+            {
+                break;
+            }
+            if (leftWrist < minLeft)
+            {
+                minLeft = leftWrist;
+            }
+        }
+        return minLeft;
+    }
+    
+    /**
+     * Dimension given as 0=X 1=Y 2=Z
+     * @param dimension
+     * @return
+     */
     public double getAverageLeftWrist(int dimension)
     {
-        //NYI
-        return 0;
+        double sum = 0;
+        double leftWrist = 0;
+        int validCount = 0;
+
+        for (int i = 0; i < stateList.size(); i++)
+        {
+            if (stateList.get(i).getLeftWrist().getDimValue(dimension).isValid())
+            {
+                leftWrist = stateList.get(i).getLeftWrist().getDimValue(dimension).getDoubleValue();
+                validCount++;
+            }
+            else
+            {
+                break;
+            }
+            sum += leftWrist;
+        }
+        return sum/(double)validCount;
     }
 }
