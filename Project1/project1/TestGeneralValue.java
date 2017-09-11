@@ -13,7 +13,7 @@ import org.junit.Test;
 public class TestGeneralValue
 {
     /**
-     * Tests the empty constructor for GeneralValue objects
+     * Tests the empty constructor for GeneralValue objects. This test will also cover getters and isValid
      * The empty constructor should contain an empty double value, and a validity ID of FALSE
      */
     @Test
