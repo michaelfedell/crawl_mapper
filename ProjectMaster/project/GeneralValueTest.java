@@ -20,8 +20,14 @@ public class GeneralValueTest
     public void testEmptyConstructor()
     {
         GeneralValue genVal = new GeneralValue();
-        Assert.assertEquals("Empty Constructor: doubleValue", 0.0, genVal.getDoubleValue(), 0.00001);
-        Assert.assertFalse("Empty Constructor: isValid", genVal.isValid());
+        try
+        {
+            genVal.getDoubleValue();
+        }
+        catch (InvalidValueException e)
+        {
+            Assert.assertFalse(genVal.isValid());
+        }
     }
     
     /**
@@ -30,34 +36,82 @@ public class GeneralValueTest
      * and return a GeneralValue object with both a double value and a validity ID
      */
     @Test
-    public void testFullConstructor()
+    public void testFullConstructor() throws InvalidValueException
     {
         GeneralValue validGenVal = new GeneralValue("9.23");
         GeneralValue invalidGenVal = new GeneralValue("NaN");
         Assert.assertEquals("Valid Full Constructor: doubleValue", 9.23, 
                 validGenVal.getDoubleValue(), 0.00001);
         Assert.assertTrue("Valid Full Constructor: isValid", validGenVal.isValid());
-        Assert.assertEquals("Invalid Full Constructor: doubleValue", 0.00, 
-                invalidGenVal.getDoubleValue(), 0.00001);
-        Assert.assertFalse("Invalid Full Constructor: isValid", invalidGenVal.isValid());
+        try
+        {
+            invalidGenVal.getDoubleValue();
+        }
+        catch (InvalidValueException e)
+        {
+            Assert.assertTrue(true);
+        }
     }
     
     /**
-     * Tests the standard constructor for GeneralValue objects
-     * Should pass in a string representation of a double value 
+     * Tests the double value constructor for GeneralValue objects
+     * Should pass in a double value 
      * and return a GeneralValue object with both a double value and a validity ID
      */
     @Test
-    public void testDoubleConstructor()
+    public void testDoubleConstructor() throws InvalidValueException
     {
         GeneralValue validGenVal = new GeneralValue(9.23);
         GeneralValue invalidGenVal = new GeneralValue(Double.NaN);
         Assert.assertEquals("Valid Full Constructor: doubleValue", 9.23, 
                 validGenVal.getDoubleValue(), 0.00001);
         Assert.assertTrue("Valid Full Constructor: isValid", validGenVal.isValid());
-        Assert.assertEquals("Invalid Full Constructor: doubleValue", 0.00, 
-                invalidGenVal.getDoubleValue(), 0.00001);
-        Assert.assertFalse("Invalid Full Constructor: isValid", invalidGenVal.isValid());
+        try
+        {
+            invalidGenVal.getDoubleValue();
+        }
+        catch (InvalidValueException e)
+        {
+            Assert.assertTrue(true);
+        }
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void testIsLessThan()
+    {
+        GeneralValue thisGV = new GeneralValue(5);
+        GeneralValue invalid = new GeneralValue(Double.NaN);
+        GeneralValue gv1 = new GeneralValue(7);
+        GeneralValue gv2 = new GeneralValue(3.2);
+        
+        Assert.assertTrue("Testing 5 < 7 should return true.", thisGV.isLessThan(gv1));
+        Assert.assertFalse("Testing 5 = 5 should return false.", thisGV.isLessThan(thisGV));
+        Assert.assertFalse("Testing 5 > 3.2 should return false.", thisGV.isLessThan(gv2));
+        Assert.assertTrue("Testing 5 // invalid should return true.", thisGV.isLessThan(invalid));
+        Assert.assertFalse("Testing invalid // 3.2 should return false.", invalid.isLessThan(gv2));
+        Assert.assertFalse("Testing invalid // invalid should return false.", invalid.isLessThan(invalid));
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void testIsGreaterThan()
+    {
+        GeneralValue thisGV = new GeneralValue(5);
+        GeneralValue invalid = new GeneralValue(Double.NaN);
+        GeneralValue gv1 = new GeneralValue(7);
+        GeneralValue gv2 = new GeneralValue(3.2); 
+        
+        Assert.assertFalse("Testing 5 < 7 should return false.", thisGV.isGreaterThan(gv1));
+        Assert.assertFalse("Testing 5 = 5 should return false.", thisGV.isGreaterThan(thisGV));
+        Assert.assertTrue("Testing 5 > 3.2 should return false.", thisGV.isGreaterThan(gv2));
+        Assert.assertTrue("Testing 5 // invalid should return true.", thisGV.isGreaterThan(invalid));
+        Assert.assertFalse("Testing invalid // 3.2 should return false.", invalid.isGreaterThan(gv2));
+        Assert.assertFalse("Testing invalid // invalid should return false.", invalid.isGreaterThan(invalid));
     }
     
     /**
