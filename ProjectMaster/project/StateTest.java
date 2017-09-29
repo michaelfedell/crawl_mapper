@@ -1,5 +1,6 @@
 import org.junit.Test;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 
 
 /**
@@ -11,8 +12,19 @@ import org.junit.Assert;
 public class StateTest
 {
     // Represents single line of mock data as would be pulled from a CSV file by a fileScanner
-    private String testString = "1.52,0.11137,0.157633,-0.217952,0.157488,-0.276909,-0.052427";
-
+    private static String testString = "1.52,0.11137,0.157633,-0.217952,0.157488,-0.276909,-0.052427";
+    private static State testState;
+    private final double ACCURACY = 0.0000001;
+    /**
+     * 
+     */
+    @BeforeClass
+    public static void setUpBeforeClass()
+    {
+        testState = new State(testString);
+    }
+    
+    
     /**
      * Tests the getLeftWrist method by comparing double values stored in the Point for Left Wrist
      * These double values are accessed from the State | Left Wrist | Point 3D | General Value
@@ -20,13 +32,12 @@ public class StateTest
     @Test
     public void testGetLeftWrist()
     {
-        State state = new State(testString);
         Assert.assertEquals("Get Left Wrist: X", 0.11137, 
-                state.getLeftWrist().getDimValue(0).getDoubleValue(), 0.0001);
+                testState.getLeftWrist().getDimValue(0).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Left Wrist: Y", 0.157633, 
-                state.getLeftWrist().getDimValue(1).getDoubleValue(), 0.0001);
+                testState.getLeftWrist().getDimValue(1).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Left Wrist: Z", -0.217952, 
-                state.getLeftWrist().getDimValue(2).getDoubleValue(), 0.0001);
+                testState.getLeftWrist().getDimValue(2).getDoubleValue(), ACCURACY);
     }
     
     /**
@@ -36,13 +47,12 @@ public class StateTest
     @Test
     public void testGetRightWrist()
     {
-        State state = new State(testString);
         Assert.assertEquals("Get Right Wrist: X", 0.157488, 
-                state.getRightWrist().getDimValue(0).getDoubleValue(), 0.0001);
+                testState.getRightWrist().getDimValue(0).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Right Wrist: Y", -0.276909, 
-                state.getRightWrist().getDimValue(1).getDoubleValue(), 0.0001);
+                testState.getRightWrist().getDimValue(1).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Right Wrist: Z", -0.052427, 
-                state.getRightWrist().getDimValue(2).getDoubleValue(), 0.0001);
+                testState.getRightWrist().getDimValue(2).getDoubleValue(), ACCURACY);
     }
     
     /**
@@ -52,8 +62,7 @@ public class StateTest
     @Test
     public void testGetTime()
     {
-        State state = new State(testString);
-        Assert.assertEquals("Get Time", 1.52, state.getTime(), 0.0001);
+        Assert.assertEquals("Get Time", 1.52, testState.getTime(), ACCURACY);
     }
     
     /**
@@ -63,9 +72,50 @@ public class StateTest
     @Test
     public void testToString()
     {
-        State state = new State(testString);
         String output = "1.52: left_wrist=<0.111,0.158,-0.218>, right_wrist=<0.157,-0.277,-0.052>";
-        Assert.assertEquals("To String", output, state.toString());
+        Assert.assertEquals("To String", output, testState.toString());
+    }
+    
+    /**
+     * Tests the getMaxLeftWrist method as implemented by the State Class
+     */
+    @Test
+    public void testGetMaxLeftWrist()
+    {
+        Assert.assertEquals("Get Max Left Wrist: X", 0.11137, 
+                testState.getMaxLeftWrist(0).getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Max Left Wrist: Y", 0.157633, 
+                testState.getMaxLeftWrist(1).getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Max Left Wrist: Z", -0.217952, 
+                testState.getMaxLeftWrist(2).getDoubleValue(), ACCURACY);
+    }
+        
+    /**
+     * Tests the getMinLeftWrist method as implemented by the State Class
+     */
+    @Test
+    public void testGetMinLeftWrist()
+    {
+        Assert.assertEquals("Get Min Left Wrist: X", 0.11137, 
+                testState.getMinLeftWrist(0).getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Min Left Wrist: Y", 0.157633, 
+                testState.getMinLeftWrist(1).getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Min Left Wrist: Z", -0.217952, 
+                testState.getMinLeftWrist(2).getDoubleValue(), ACCURACY);
+    }
+    
+    /**
+     * Tests the getAverageLeftWrist method as implemented by the State Class
+     */
+    @Test
+    public void testGetAverageLeftWrist()
+    {
+        Assert.assertEquals("Get Average Left Wrist: X", 0.11137, 
+                testState.getAverageLeftWrist(0).getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Average Left Wrist: Y", 0.157633, 
+                testState.getAverageLeftWrist(1).getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Average Left Wrist: Z", -0.217952, 
+                testState.getAverageLeftWrist(2).getDoubleValue(), ACCURACY);
     }
 
 }

@@ -75,7 +75,7 @@ public class State extends SingleItemAbstract
     //      e.g. max = min = avg = point_specified
     
     /**
-     * Computes statistical maximum of left wrist over a single state.
+     * "Computes" statistical maximum of left wrist over a single state.
      *  
      * @param dim 0=X, 1=Y, 2=Z 
      * @return maximum GeneralValue of leftWrist
@@ -87,7 +87,7 @@ public class State extends SingleItemAbstract
     }
     
     /**
-     * Computes statistical minimum of left wrist over a single state.
+     * "Computes" statistical minimum of left wrist over a single state.
      *  
      * @param dim 0=X, 1=Y, 2=Z 
      * @return minimum GeneralValue of leftWrist
@@ -99,7 +99,7 @@ public class State extends SingleItemAbstract
     }
     
     /**
-     * Computes statistical average of left wrist over a single state.
+     * "Computes" statistical average of left wrist over a single state.
      *  
      * @param dim 0=X, 1=Y, 2=Z 
      * @return average GeneralValue of leftWrist
