@@ -4,7 +4,7 @@
  * Captures both a double value and whether or not it is valid
  * 
  * @author Zach Schuermann
- * @version 09/03/17
+ * @version 09/29/17
  *
  */
 public class GeneralValue
@@ -41,6 +41,24 @@ public class GeneralValue
     }
     
     /**
+     * Double Constructor - creates a GeneralValue object and determines validity based on value passed
+     * (value of NaN results in an invalid GeneralValue object)
+     * @param double should contain a numeric value of type double, or NaN if invalid 
+     */
+    public GeneralValue(double doubleValue)
+    {
+        if (Double.isNaN(doubleValue))
+        {
+            valid = false;
+        }
+        else 
+        {
+            valid = true;
+            this.doubleValue = doubleValue;
+        }
+    }
+    
+    /**
      * Indicates validity of GeneralValue
      * @return true if valid, false if invalid
      */
@@ -52,10 +70,86 @@ public class GeneralValue
     /**
      * Gives user the numeric data stored in GeneralValue 
      * @return the numeric value stored in GeneralValue as type double.
+     * @throws InvalidValueException when 
      */
-    public double getDoubleValue()
+    public double getDoubleValue() throws InvalidValueException
     {
-        return doubleValue;
+        // If GV is valid, return the double
+        if(valid)
+        {
+            return doubleValue;
+        }
+        // otherwise, throw exception
+        else
+        {
+            throw new InvalidValueException("Message?");
+        }
+    }
+    
+    /**
+     * 
+     * @param v
+     * @return
+     */
+    public boolean isLessThan(GeneralValue v)
+    {
+        double vDouble = 0.0;
+        try
+        {
+            vDouble = v.getDoubleValue();
+        }
+        catch (InvalidValueException e)
+        {
+            if (this.valid)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (this.valid)
+        {
+            if (this.doubleValue < vDouble)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * 
+     * @param v
+     * @return
+     */
+    public boolean isGreaterThan(GeneralValue v)
+    {
+        double vDouble = 0.0;
+        try
+        {
+            vDouble = v.getDoubleValue();
+        }
+        catch (InvalidValueException e)
+        {
+            if (this.valid)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (this.valid)
+        {
+            if (this.doubleValue > vDouble)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**

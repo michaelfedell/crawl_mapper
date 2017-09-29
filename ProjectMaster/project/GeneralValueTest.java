@@ -7,7 +7,7 @@ import org.junit.Test;
  * a valid point may be created
  * A value is considered valid if the value is a real number (NaN excluded)
  * 
- * @author Michael Fedell
+ * @author Michael Fedell and Zach Schuermann
  * @version 09/11/17
  */
 public class GeneralValueTest
@@ -34,6 +34,24 @@ public class GeneralValueTest
     {
         GeneralValue validGenVal = new GeneralValue("9.23");
         GeneralValue invalidGenVal = new GeneralValue("NaN");
+        Assert.assertEquals("Valid Full Constructor: doubleValue", 9.23, 
+                validGenVal.getDoubleValue(), 0.00001);
+        Assert.assertTrue("Valid Full Constructor: isValid", validGenVal.isValid());
+        Assert.assertEquals("Invalid Full Constructor: doubleValue", 0.00, 
+                invalidGenVal.getDoubleValue(), 0.00001);
+        Assert.assertFalse("Invalid Full Constructor: isValid", invalidGenVal.isValid());
+    }
+    
+    /**
+     * Tests the standard constructor for GeneralValue objects
+     * Should pass in a string representation of a double value 
+     * and return a GeneralValue object with both a double value and a validity ID
+     */
+    @Test
+    public void testDoubleConstructor()
+    {
+        GeneralValue validGenVal = new GeneralValue(9.23);
+        GeneralValue invalidGenVal = new GeneralValue(Double.NaN);
         Assert.assertEquals("Valid Full Constructor: doubleValue", 9.23, 
                 validGenVal.getDoubleValue(), 0.00001);
         Assert.assertTrue("Valid Full Constructor: isValid", validGenVal.isValid());
