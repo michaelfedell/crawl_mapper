@@ -1,11 +1,11 @@
 /**
  * Representation of the state of a single time step
  * 
- * @author Andrew H. Fagg
- * @version 2017-09-03
+ * @author Andrew H. Fagg modified by Michael Fedell
+ * @version 09/29/17
  *
  */
-public class State
+public class State extends SingleItemAbstract
 {
     /** Position of the left Wrist */
     private Point3D leftWrist;
@@ -67,6 +67,46 @@ public class State
                 + rightWrist.getDimValue(0) + "," + rightWrist.getDimValue(1) + "," 
                 + rightWrist.getDimValue(2) + ">";
         return out;
+    }
+    
+    // TODO:Verify implementation of singleItemAbstract statistical methods
+    //      Currently, it does not seem to make much sense to calculate a maximum
+    //      value when the specified data set contains only one point
+    //      e.g. max = min = avg = point_specified
+    
+    /**
+     * Computes statistical maximum of left wrist over a single state.
+     *  
+     * @param dim 0=X, 1=Y, 2=Z 
+     * @return maximum GeneralValue of leftWrist
+     */
+    public GeneralValue getMaxLeftWrist(int dim)
+    {
+        // Return the general value of left wrist's specified dimension
+        return leftWrist.getDimValue(dim);
+    }
+    
+    /**
+     * Computes statistical minimum of left wrist over a single state.
+     *  
+     * @param dim 0=X, 1=Y, 2=Z 
+     * @return minimum GeneralValue of leftWrist
+     */
+    public GeneralValue getMinLeftWrist(int dim)
+    {
+        // Return the general value of left wrist's specified dimension
+        return leftWrist.getDimValue(dim);
+    }
+    
+    /**
+     * Computes statistical average of left wrist over a single state.
+     *  
+     * @param dim 0=X, 1=Y, 2=Z 
+     * @return average GeneralValue of leftWrist
+     */
+    public GeneralValue getAverageLeftWrist(int dim)
+    {
+        return leftWrist.getDimValue(dim);
     }
 
 }
