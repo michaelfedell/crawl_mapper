@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
  * Unit testing for the State class.
  * 
  * @author Michael Fedell
- * @version 09/11/17
+ * @version 09/29/17
  */
 public class StateTest
 {

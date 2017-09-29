@@ -56,7 +56,7 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
             {
                 leftWrist = getItem(i).getMinLeftWrist(dim).getDoubleValue();
             }
-            if (leftWrist > minLeft)
+            if (leftWrist < minLeft)
             {
                 minLeft = leftWrist;
             }
