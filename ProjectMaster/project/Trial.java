@@ -6,11 +6,11 @@ import java.util.ArrayList;
 /**
  * Representation of a single trial
  * 
- * @author Andrew H. Fagg
- * @version 2017-09-03
+ * @author Andrew H. Fagg modified by Michael Fedell
+ * @version 09/29/17
  *
  */
-public class Trial
+public class Trial extends MultipleItemAbstract
 {
     /** Sequence of states.   */
     private ArrayList<State> stateList;
@@ -82,7 +82,7 @@ public class Trial
      * @param index Number of  state to retrieve.
      * @return State at the given index.
      */
-    public State getState(int index)
+    public State getItem(int index)
     {
         return stateList.get(index);
     }
@@ -105,12 +105,16 @@ public class Trial
         return fileName;
     }
     
+    // TODO
+    // Remainder of Class methods have been implemented in MultipleItemAbstract Class
+    // which is extended by the Trial Class. Following code may be deleted
+    
     /**
      * This method will find the maximum value of the entire trial for a specified dimension.
      * @param dimension int with dimension given as 0=X 1=Y 2=Z.
      * @return double of the maximum value of the trial for the dimension.
      */
-    public double getMaxLeftWrist(int dimension)
+    /*public double getMaxLeftWrist(int dimension)
     {
         // Initialize to the smallest possible number.
         double maxLeft = Double.NEGATIVE_INFINITY;
@@ -129,14 +133,14 @@ public class Trial
             }
         }
         return maxLeft;
-    }
+    }*/
     
     /**
      * This method will find the minimum value of the entire trial for a specified dimension.
      * @param dimension int with dimension given as 0=X 1=Y 2=Z.
      * @return double of the minimum value of the trial for the dimension.
      */
-    public double getMinLeftWrist(int dimension)
+    /*public double getMinLeftWrist(int dimension)
     {
         // Initialize to the largest possible number.
         double minLeft = Double.POSITIVE_INFINITY;
@@ -155,14 +159,14 @@ public class Trial
             }
         }
         return minLeft;
-    }
+    }*/
     
     /**
      * This method will find the average value of the entire trial for a specified dimension.
      * @param dimension int with dimension given as 0=X 1=Y 2=Z.
      * @return double of the average value of the trial for the dimension.
      */
-    public double getAverageLeftWrist(int dimension)
+    /*public double getAverageLeftWrist(int dimension)
     {
         // Initialize variables to zero
         double sum = 0;
@@ -182,5 +186,5 @@ public class Trial
         
         // Calculate average by casting validCount as double and dividing.
         return sum / (double)validCount;
-    }
+    }*/
 }
