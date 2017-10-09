@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class Infant extends MultipleItemAbstract
      */
     public Infant(String directory, String infantID) throws IOException
     {
+        trialList = new ArrayList<Trial>();
+        this.infantID = infantID;
         for (int week = 1; week <= MAX_WEEK; week++)
         {
             try
@@ -35,9 +38,9 @@ public class Infant extends MultipleItemAbstract
                 trialList.add(new Trial(directory, infantID, week));
             }
             // No more trials to add, or other file reading error
-            catch (IOException e)
+            catch (FileNotFoundException e)
             {
-                throw e;
+                continue;
             }
         }
     }
