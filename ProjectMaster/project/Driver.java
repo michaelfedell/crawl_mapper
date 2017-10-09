@@ -11,9 +11,9 @@ public class Driver
 {
     public static void main(String[] args) throws IOException
     {
-        // Create trial object
-        Trial trial = new Trial("data", "k1", 3);
+        // Intsantiate infant object
+        Infant infant = new Infant("data", "c1");
         // Print info about trial
-        System.out.println(trial.getState(100));
+        System.out.println(Infant.getItem(1)); 
     }
 }
