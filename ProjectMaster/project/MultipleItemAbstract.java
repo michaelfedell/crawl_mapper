@@ -46,7 +46,16 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
                 }
             }
         }
-        return new GeneralValue(maxLeft);
+        
+        // test for invalid if there is no size or all entries are invalid
+        if (maxLeft == Double.NEGATIVE_INFINITY)
+        {
+            return new GeneralValue("NaN");
+        }
+        else
+        {
+            return new GeneralValue(maxLeft);
+        }
     }
     
     /**
@@ -73,7 +82,16 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
                 }
             }
         }
-        return new GeneralValue(minLeft);
+        
+        // test for invalid if there is no size or all entries are invalid
+        if (minLeft == Double.POSITIVE_INFINITY)
+        {
+            return new GeneralValue("NaN");
+        }
+        else
+        {
+            return new GeneralValue(minLeft);
+        }
     }
     
     /**
@@ -100,7 +118,15 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
             }
         }
         
-        // Calculate average by casting validCount as double and dividing.
-        return new GeneralValue(sum / (double)validCount);
+        // test for invalid if there is no size or all entries are invalid
+        if (validCount == 0)
+        {
+            return new GeneralValue("NaN");
+        }
+        else
+        {
+            // Calculate average by casting validCount as double and dividing.
+            return new GeneralValue(sum / (double)validCount);
+        }
     }
 }

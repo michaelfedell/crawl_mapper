@@ -113,4 +113,20 @@ public class InfantTest
         String id = testBaby.getInfantID();
         Assert.assertEquals("Infant  in testBaby", "testValid", id);
     }
+    
+    /**
+     * Test multiple item abstract method with 
+     * @throws IOException in case of IO exception from file loading
+     */
+    @Test
+    public void multipleItemAbstractInvalidTest() throws IOException
+    {
+        // instantiate test using two valid data files
+        Infant testBaby = new Infant("testData", "testInvalid");
+        
+        // test multiple item abstracts to return invalid GV
+        Assert.assertFalse("Infant loaded from invalid data", testBaby.getAverageLeftWrist(0).isValid());
+        Assert.assertFalse("Infant loaded from invalid data", testBaby.getMaxLeftWrist(1).isValid());
+        Assert.assertFalse("Infant loaded from invalid data", testBaby.getMinLeftWrist(2).isValid());
+    }
 }
