@@ -1,6 +1,5 @@
 /**
  * GeneralValue class
- * 
  * Captures both a double value and whether or not it is valid
  * 
  * @author Zach Schuermann
@@ -25,6 +24,7 @@ public class GeneralValue
     /**
      * Default Constructor - creates a GeneralValue object and determines validity based on value passed
      * (value of NaN results in an invalid GeneralValue object)
+     * 
      * @param strg should contain a numeric value of type double, or NaN if invalid 
      */
     public GeneralValue(String strg)
@@ -43,6 +43,7 @@ public class GeneralValue
     /**
      * Double Constructor - creates a GeneralValue object and determines validity based on value passed
      * (value of NaN results in an invalid GeneralValue object)
+     * 
      * @param double should contain a numeric value of type double, or NaN if invalid 
      */
     public GeneralValue(double doubleValue)
@@ -60,6 +61,7 @@ public class GeneralValue
     
     /**
      * Indicates validity of GeneralValue
+     * 
      * @return true if valid, false if invalid
      */
     public boolean isValid()
@@ -69,6 +71,7 @@ public class GeneralValue
     
     /**
      * Gives user the numeric data stored in GeneralValue 
+     * 
      * @return the numeric value stored in GeneralValue as type double.
      * @throws InvalidValueException when 
      */
@@ -87,23 +90,28 @@ public class GeneralValue
     }
     
     /**
+     * Compares two GeneralValue objects as required by the comparable interface
      * 
-     * @param v
-     * @return
+     * @param v The GeneralValue to which this object will be compared
+     * @return True if this is less than v, false otherwise.
+     *          comparing this (valid) to an invalid value will yield true
      */
     public boolean isLessThan(GeneralValue v)
     {
         double vDouble = 0.0;
+        // Must check for validity within a try-catch block
         try
         {
             vDouble = v.getDoubleValue();
         }
         catch (InvalidValueException e)
         {
+            // Any valid value will be considered less than an invalid one
             if (this.valid)
             {
                 return true;
             }
+            // Both values invalid yields false
             else
             {
                 return false;
@@ -120,23 +128,29 @@ public class GeneralValue
     }
     
     /**
+     * Compares two GeneralValue objects as required by the comparable interface
      * 
-     * @param v
-     * @return
+     * @param v The GeneralValue to which this object will be compared
+     * @return True if this is greater than v, false otherwise.
+     *          comparing this (valid) to an invalid value will yield true
      */
     public boolean isGreaterThan(GeneralValue v)
     {
         double vDouble = 0.0;
+        
+        // Must check for validity within a try-catch block
         try
         {
             vDouble = v.getDoubleValue();
         }
         catch (InvalidValueException e)
         {
+            // Any valid value will be considered greater than an invalid one
             if (this.valid)
             {
                 return true;
             }
+            // Both values invalid yields false
             else
             {
                 return false;
@@ -154,6 +168,7 @@ public class GeneralValue
     
     /**
      * Formats the doubleValue data as a string with three decimal places
+     * 
      * @return "invalid" string if value is not valid, doubleValue as string if valid
      */
     public String toString()

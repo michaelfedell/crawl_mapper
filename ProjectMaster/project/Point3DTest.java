@@ -19,11 +19,11 @@ public class Point3DTest
     {
         // Create general value objects to pass into the Point3D constructor
         GeneralValue genVal1 = new GeneralValue("-1.8");
-        GeneralValue genVal2 = new GeneralValue("NaN");
+        GeneralValue genVal2 = new GeneralValue("0.0");
         GeneralValue genVal3 = new GeneralValue("14.8397");
         
         // Create an array of general values against which the Point3D object will be tested
-        GeneralValue[] test = {new GeneralValue("-1.8"), new GeneralValue("NaN"), new GeneralValue("14.8397")};
+        GeneralValue[] test = {new GeneralValue("-1.8"), new GeneralValue("0.0"), new GeneralValue("14.8397")};
         
         // Create the Point3D object for testing
         Point3D point = new Point3D(genVal1, genVal2, genVal3);
@@ -49,11 +49,11 @@ public class Point3DTest
     {
         // Create general value objects to pass into the Point3D constructor
         GeneralValue genVal1 = new GeneralValue("23.98");
-        GeneralValue genVal2 = new GeneralValue("NaN");
+        GeneralValue genVal2 = new GeneralValue("0.0");
         GeneralValue genVal3 = new GeneralValue("-99999");
         
         // Create an array of general values against which the Point3D object will be tested
-        GeneralValue[] test = {new GeneralValue("23.98"), new GeneralValue("NaN"), new GeneralValue("-99999")};
+        GeneralValue[] test = {new GeneralValue("23.98"), new GeneralValue("0.0"), new GeneralValue("-99999")};
         
         // Create the Point3D object for testing
         Point3D point = new Point3D(genVal1, genVal2, genVal3);
@@ -87,5 +87,4 @@ public class Point3DTest
         
         Assert.assertEquals("To String", testString, point.toString());
     }
-    
 }

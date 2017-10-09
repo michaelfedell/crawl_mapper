@@ -7,7 +7,19 @@
  */
 public abstract class MultipleItemAbstract extends SingleItemAbstract
 {
+    /**
+     * Will be implemented by objects that extend this abstract
+     * 
+     * @return size of MultipleItem List
+     */
     abstract int getSize();
+    
+    /**
+     * Will be implemented by objects that extend this abstract
+     * 
+     * @param index location of desired SingleItem within MultipleItem list
+     * @return SingleItem object at desired index
+     */
     abstract SingleItemAbstract getItem(int index);
     
     /**
@@ -90,5 +102,5 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         
         // Calculate average by casting validCount as double and dividing.
         return new GeneralValue(sum / (double)validCount);
-        }
+    }
 }

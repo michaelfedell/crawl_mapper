@@ -34,22 +34,28 @@ public class GeneralValueTest
      * Tests the standard constructor for GeneralValue objects
      * Should pass in a string representation of a double value 
      * and return a GeneralValue object with both a double value and a validity ID
+     * Will also test the user-defined invalidValueException 
      */
     @Test
     public void testFullConstructor() throws InvalidValueException
     {
+        // Create test values
         GeneralValue validGenVal = new GeneralValue("9.23");
         GeneralValue invalidGenVal = new GeneralValue("NaN");
+        
         Assert.assertEquals("Valid Full Constructor: doubleValue", 9.23, 
                 validGenVal.getDoubleValue(), 0.00001);
         Assert.assertTrue("Valid Full Constructor: isValid", validGenVal.isValid());
+        
+        // Check for proper exception handling
         try
         {
             invalidGenVal.getDoubleValue();
+            Assert.fail("invalidGenVal not throwing an exception when attempting to reach invalid value");
         }
         catch (InvalidValueException e)
         {
-            Assert.assertTrue(true);
+            // Invalid Value was caught as intended
         }
     }
     
@@ -61,32 +67,39 @@ public class GeneralValueTest
     @Test
     public void testDoubleConstructor() throws InvalidValueException
     {
+        // Create test values
         GeneralValue validGenVal = new GeneralValue(9.23);
         GeneralValue invalidGenVal = new GeneralValue(Double.NaN);
+        
         Assert.assertEquals("Valid Full Constructor: doubleValue", 9.23, 
                 validGenVal.getDoubleValue(), 0.00001);
         Assert.assertTrue("Valid Full Constructor: isValid", validGenVal.isValid());
+        
+        // Check for proper exception handling
         try
         {
             invalidGenVal.getDoubleValue();
+            Assert.fail("invalidGenVal not throwing an exception when attempting to reach invalid value");
         }
         catch (InvalidValueException e)
         {
-            Assert.assertTrue(true);
+         // Invalid Value was caught as intended
         }
     }
     
     /**
-     * 
+     * Tests the isLessThan method implemented within GeneralValue as part of the comparable interface
      */
     @Test
     public void testIsLessThan()
     {
+        // Create test values
         GeneralValue thisGV = new GeneralValue(5);
         GeneralValue invalid = new GeneralValue(Double.NaN);
         GeneralValue gv1 = new GeneralValue(7);
         GeneralValue gv2 = new GeneralValue(3.2);
         
+        // Test all possible outcomes of comparisons, including invalid value comparison
         Assert.assertTrue("Testing 5 < 7 should return true.", thisGV.isLessThan(gv1));
         Assert.assertFalse("Testing 5 = 5 should return false.", thisGV.isLessThan(thisGV));
         Assert.assertFalse("Testing 5 > 3.2 should return false.", thisGV.isLessThan(gv2));
@@ -96,16 +109,18 @@ public class GeneralValueTest
     }
     
     /**
-     * 
+     * Tests the isGreaterThan method implemented within GeneralValue as part of the comparable interface
      */
     @Test
     public void testIsGreaterThan()
     {
+        // Create test values
         GeneralValue thisGV = new GeneralValue(5);
         GeneralValue invalid = new GeneralValue(Double.NaN);
         GeneralValue gv1 = new GeneralValue(7);
         GeneralValue gv2 = new GeneralValue(3.2); 
         
+        // Test all possible outcomes of comparisons, including invalid value comparison
         Assert.assertFalse("Testing 5 < 7 should return false.", thisGV.isGreaterThan(gv1));
         Assert.assertFalse("Testing 5 = 5 should return false.", thisGV.isGreaterThan(thisGV));
         Assert.assertTrue("Testing 5 > 3.2 should return false.", thisGV.isGreaterThan(gv2));
@@ -127,5 +142,4 @@ public class GeneralValueTest
         Assert.assertEquals("Valid To String", "-634.180", validGenVal.toString());
         Assert.assertEquals("Valid To String", "invalid", invalidGenVal.toString());
     }
-
 }

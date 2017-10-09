@@ -15,8 +15,9 @@ public class StateTest
     private static String testString = "1.52,0.11137,0.157633,-0.217952,0.157488,-0.276909,-0.052427";
     private static State testState;
     private final double ACCURACY = 0.0000001;
+    
     /**
-     * 
+     * Instantiates testState for the testing that follows
      */
     @BeforeClass
     public static void setUpBeforeClass()
@@ -117,5 +118,4 @@ public class StateTest
         Assert.assertEquals("Get Average Left Wrist: Z", -0.217952, 
                 testState.getAverageLeftWrist(2).getDoubleValue(), ACCURACY);
     }
-
 }

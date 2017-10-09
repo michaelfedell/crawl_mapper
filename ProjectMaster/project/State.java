@@ -16,6 +16,7 @@ public class State extends SingleItemAbstract
     
     /**
      * Default Constructor - parses the input string into appropriate fields to store data from single line
+     * 
      * @param strg should contain input data formatted as comma-separated values. 
      */
     public State(String strg)
@@ -33,6 +34,7 @@ public class State extends SingleItemAbstract
     
     /**
      * Left Wrist represented as Point3D object of current location.
+     * 
      * @return object representing current state of Left Wrist.
      */
     public Point3D getLeftWrist()
@@ -42,22 +44,27 @@ public class State extends SingleItemAbstract
     
     /**
      * Right Wrist represented as Point3D object of current location.
+     * 
      * @return object representing current state of Right Wrist.
      */
     public Point3D getRightWrist()
     {
         return rightWrist;
     }
+    
     /**
      * Time is in seconds
+     * 
      * @return time of current state as type double
      */
     public double getTime()
     {
         return time;
     }
+    
     /**
-     * Returns relevant information about State object as a string representation for printing
+     * Formats relevant information about State object as a string representation for printing
+     * 
      * @return All information about current state, including time and location of each wrist.
      */
     public String toString()
@@ -68,12 +75,7 @@ public class State extends SingleItemAbstract
                 + rightWrist.getDimValue(2) + ">";
         return out;
     }
-    
-    // TODO:Verify implementation of singleItemAbstract statistical methods
-    //      Currently, it does not seem to make much sense to calculate a maximum
-    //      value when the specified data set contains only one point
-    //      e.g. max = min = avg = point_specified
-    
+        
     /**
      * "Computes" statistical maximum of left wrist over a single state.
      *  
@@ -108,5 +110,4 @@ public class State extends SingleItemAbstract
     {
         return leftWrist.getDimValue(dim);
     }
-
 }

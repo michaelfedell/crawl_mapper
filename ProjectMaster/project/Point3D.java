@@ -11,6 +11,7 @@ public class Point3D
     
     /**
      * Constructs Point3D object specifically from X,Y,Z
+     * 
      * @param x GeneralValue of x-dimension
      * @param y GeneralValue of y-dimension
      * @param z GeneralValue of z-dimension
@@ -24,6 +25,7 @@ public class Point3D
     
     /**
      * Returns GeneralValue of a single dimension given by index. 
+     * 
      * @param index 0=X, 1=Y, 2=Z
      * @return point3D's dimension at x, y, or z
      */
@@ -34,6 +36,7 @@ public class Point3D
 
     /**
      * Getter which returns the GeneralValue array which stores the Point3D
+     * 
      * @return GeneralValue array in form of [x,y,z]
      */
     public GeneralValue[] getValues()
@@ -43,6 +46,7 @@ public class Point3D
     
     /**
      * Converts point3D to comma separated string in the format x,y,z
+     * 
      * @return String representation of point in 3D space, "x,y,z"
      */
     public String toString()

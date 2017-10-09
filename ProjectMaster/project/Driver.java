@@ -11,9 +11,9 @@ public class Driver
 {
     public static void main(String[] args) throws IOException
     {
-        // Intsantiate infant object
+        // Instantiate infant object
         Infant infant = new Infant("data", "c1");
         // Print info about trial
-        System.out.println(Infant.getItem(1)); 
+        System.out.println(infant.getItem(1)); 
     }
 }

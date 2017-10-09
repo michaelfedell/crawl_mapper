@@ -14,6 +14,7 @@ public class TrialTest
     
     /**
      * Tests trial with all valid input. Getters and calculation methods tested.
+     * 
      * @throws IOException Catch IO Exception in case file is not present.
      */
     @Test
@@ -43,6 +44,7 @@ public class TrialTest
     
     /**
      * Tests trial constructor with NaN input in .csv file. Getters and calculation methods tested.
+     * 
      * @throws IOException Catch IO Exception in case file is not present.
      */
     @Test

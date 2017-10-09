@@ -61,6 +61,7 @@ public class Trial extends MultipleItemAbstract
     
     /**
      * Getter for infantID
+     * 
      * @return infantID
      */
     public String getInfantID()
@@ -70,6 +71,7 @@ public class Trial extends MultipleItemAbstract
     
     /**
      * Getter for the size of the trial.
+     * 
      * @return Number of trials.
      */
     public int getSize()
@@ -79,6 +81,7 @@ public class Trial extends MultipleItemAbstract
     
     /**
      * Getter for a specific state in the trial.
+     * 
      * @param index Number of  state to retrieve.
      * @return State at the given index.
      */
@@ -89,6 +92,7 @@ public class Trial extends MultipleItemAbstract
     
     /**
      * Getter for the week of the trial.
+     * 
      * @return Week of trial (int).
      */
     public int getWeek()
@@ -98,6 +102,7 @@ public class Trial extends MultipleItemAbstract
     
     /**
      * Getter for the filename retrieved.
+     * 
      * @return Filename of trial data.
      */
     public String getFileName()
