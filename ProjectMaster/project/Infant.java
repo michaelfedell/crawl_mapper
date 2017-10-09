@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -29,8 +27,13 @@ public class Infant extends MultipleItemAbstract
      */
     public Infant(String directory, String infantID) throws IOException
     {
+        // instantiate trialList
         trialList = new ArrayList<Trial>();
+        
+        // assign infantID
         this.infantID = infantID;
+        
+        // loop over all possible weeks for trials and try to add it to trialList
         for (int week = 1; week <= MAX_WEEK; week++)
         {
             try

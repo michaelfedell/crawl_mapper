@@ -29,6 +29,7 @@ public class GeneralValue
      */
     public GeneralValue(String strg)
     {
+        // test if equals NaN and return value if not
         if (strg.equals("NaN"))
         {
             valid = false;
@@ -44,10 +45,11 @@ public class GeneralValue
      * Double Constructor - creates a GeneralValue object and determines validity based on value passed
      * (value of NaN results in an invalid GeneralValue object)
      * 
-     * @param double should contain a numeric value of type double, or NaN if invalid 
+     * @param doubleValue double should contain a numeric value of type double, or NaN if invalid 
      */
     public GeneralValue(double doubleValue)
     {
+        // check double value and assign validity
         if (Double.isNaN(doubleValue))
         {
             valid = false;
@@ -78,7 +80,7 @@ public class GeneralValue
     public double getDoubleValue() throws InvalidValueException
     {
         // If GV is valid, return the double
-        if(valid)
+        if (valid)
         {
             return doubleValue;
         }
@@ -107,24 +109,10 @@ public class GeneralValue
         catch (InvalidValueException e)
         {
             // Any valid value will be considered less than an invalid one
-            if (this.valid)
-            {
-                return true;
-            }
-            // Both values invalid yields false
-            else
-            {
-                return false;
-            }
+            return this.valid;
         }
-        if (this.valid)
-        {
-            if (this.doubleValue < vDouble)
-            {
-                return true;
-            }
-        }
-        return false;
+        // if valid return true
+        return this.valid && this.doubleValue < vDouble;
     }
     
     /**
@@ -146,24 +134,11 @@ public class GeneralValue
         catch (InvalidValueException e)
         {
             // Any valid value will be considered greater than an invalid one
-            if (this.valid)
-            {
-                return true;
-            }
-            // Both values invalid yields false
-            else
-            {
-                return false;
-            }
+            return this.valid;
         }
-        if (this.valid)
-        {
-            if (this.doubleValue > vDouble)
-            {
-                return true;
-            }
-        }
-        return false;
+        
+        // test validity
+        return this.valid && this.doubleValue > vDouble;
     }
     
     /**
@@ -174,6 +149,7 @@ public class GeneralValue
     public String toString()
     {
         String out;
+        // return invalid if not valid
         if (!valid)
         {
             out = "invalid";

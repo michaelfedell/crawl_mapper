@@ -7,6 +7,10 @@
  */
 public class InvalidValueException extends RuntimeException
 {
+    /**
+     * Constructor to throw invalidValue exception
+     * @param message to describe the exception
+     */
     public InvalidValueException(String message)
     {
         // Further implementation not needed

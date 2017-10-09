@@ -71,7 +71,7 @@ public class InfantTest
     
     /**
      * Test getSize method
-     * @throws IOException
+     * @throws IOException in case of IO exception from file loading
      */
     @Test
     public void infantGetSizeTest() throws IOException
@@ -86,7 +86,7 @@ public class InfantTest
     
     /**
      * Test getItem method
-     * @throws IOException
+     * @throws IOException in case of IO exception from file loading
      */
     @Test
     public void infantGetItemTest() throws IOException
@@ -101,7 +101,7 @@ public class InfantTest
     
     /**
      * Test getInfantID method
-     * @throws IOException
+     * @throws IOException in case of IO exception from file loading
      */
     @Test
     public void infantGetInfantIDTest() throws IOException

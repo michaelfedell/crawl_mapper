@@ -14,7 +14,7 @@ public class StateTest
     // Represents single line of mock data as would be pulled from a CSV file by a fileScanner
     private static String testString = "1.52,0.11137,0.157633,-0.217952,0.157488,-0.276909,-0.052427";
     private static State testState;
-    private final double ACCURACY = 0.0000001;
+    private static final double ACCURACY = 0.0000001;
     
     /**
      * Instantiates testState for the testing that follows

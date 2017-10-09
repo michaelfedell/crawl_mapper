@@ -57,7 +57,7 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
      */
     public GeneralValue getMinLeftWrist(int dim)
     {
-     // Initialize to the smallest possible number.
+        // Initialize to the smallest possible number.
         double minLeft = Double.POSITIVE_INFINITY;
         double leftWrist = 0;
         
@@ -84,7 +84,7 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
      */
     public GeneralValue getAverageLeftWrist(int dim)
     {
-     // Initialize variables to zero
+        // Initialize variables to zero
         double sum = 0;
         double leftWrist = 0;
         int validCount = 0;
