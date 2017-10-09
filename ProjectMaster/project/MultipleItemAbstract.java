@@ -40,10 +40,10 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
             if (getItem(i).getMaxLeftWrist(dim).isValid())
             {
                 leftWrist = getItem(i).getMaxLeftWrist(dim).getDoubleValue();
-            }
-            if (leftWrist > maxLeft)
-            {
-                maxLeft = leftWrist;
+                if (leftWrist > maxLeft)
+                {
+                    maxLeft = leftWrist;
+                }
             }
         }
         return new GeneralValue(maxLeft);
@@ -67,10 +67,10 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
             if (getItem(i).getMinLeftWrist(dim).isValid())
             {
                 leftWrist = getItem(i).getMinLeftWrist(dim).getDoubleValue();
-            }
-            if (leftWrist < minLeft)
-            {
-                minLeft = leftWrist;
+                if (leftWrist < minLeft)
+                {
+                    minLeft = leftWrist;
+                }
             }
         }
         return new GeneralValue(minLeft);
