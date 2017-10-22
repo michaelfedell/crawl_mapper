@@ -1,3 +1,6 @@
+import java.util.Iterator;
+import java.util.TreeMap;
+
 /**
  * Representation of the state of a single time step
  * 
@@ -5,109 +8,115 @@
  * @version 09/29/17
  *
  */
-public class State extends SingleItemAbstract
+public class State extends SingleItemAbstract implements Iterable<String>
 {
-    /** Position of the left Wrist */
-    private Point3D leftWrist;
-    /** Position of the right Wrist */
-    private Point3D rightWrist;
-    /** Timestamp of the current sample.  */
-    private double time;
+    /** holds the Trial that a State belongs to */
+    private Trial trial;
+    /** holds the map of points in a state      */
+    private TreeMap<String, PointND> variables;
     
     /**
-     * Default Constructor - parses the input string into appropriate fields to store data from single line
-     * 
-     * @param strg should contain input data formatted as comma-separated values. 
+     * Default Constructor - creates an empty State object
      */
-    public State(String strg)
+    public State()
     {
-        // Parse string and assign to line
-        String[] line = strg.split(",");
+        //TODO: Body needed on empty constructor?
+    }
+       
+    /**
+     * 
+     * @param trial Indicates the trial to which this state belongs
+     * @param fieldMapper Informs the constructor how to create fields from the String data
+     * @param values Describes all of the values associated with the State (a CSV row)
+     */
+    public State(Trial trial, FieldMapper fieldMapper, String values)
+    {
+        this.trial = trial;
+        //TODO: Use FieldMapper to map values to this.variables
+    }
+    
+    /**
+     * Returns the pointND object for a user-specified field in this state. 
+     * 
+     * @return PointND object of specified field at current state.
+     */
+    public PointND getPoint(String fieldName)
+    {
+        return variables.get(fieldName);
+    }
+    
+    /**
+     * Returns the value of a specific field and subfield for this state.
+     * If a desired field is without subfields, such as time, an empty String can be passed in as subFieldName
+     * 
+     * @param fieldName Specifies the desired field such as "Left_Wrist"
+     * @param subFieldName Specifies the desired subfield such as "z"
+     * @return A GeneralValue object representing the value of specified field and subfield in its current State
+     */
+    public GeneralValue getValue(String fieldName, String subFieldName)
+    {
+        return variables.get(fieldName).getValue(subFieldName);
+    }
         
-        // Assign time to the first entry (after parsing as double)
-        time = Double.parseDouble(line[0]);
-        
-        // Construct Point3D for leftWrist and rightWrist from line array
-        leftWrist = new Point3D(new GeneralValue(line[1]), new GeneralValue(line[2]), new GeneralValue(line[3]));
-        rightWrist = new Point3D(new GeneralValue(line[4]), new GeneralValue(line[5]), new GeneralValue(line[6]));
-    }
-    
     /**
-     * Left Wrist represented as Point3D object of current location.
+     * "Computes" statistical maximum of specified field over a single state.
      * 
-     * @return object representing current state of Left Wrist.
+     * @param fieldName
+     * @param subFieldName
+     * @return state containing the maximum value of specified field over a single state (this state)
      */
-    public Point3D getLeftWrist()
+    public State getMaxState(String fieldName, String subFieldName)
     {
-        return leftWrist;
+        return this;
     }
     
     /**
-     * Right Wrist represented as Point3D object of current location.
+     * "Computes" statistical minimum of specified field over a single state.
      * 
-     * @return object representing current state of Right Wrist.
+     * @param fieldName
+     * @param subFieldName
+     * @return state containing the minimum value of specified field over a single state (this state)
      */
-    public Point3D getRightWrist()
+    public State getMinState(String fieldName, String subFieldName)
     {
-        return rightWrist;
+        return this;
     }
     
     /**
-     * Time is in seconds
+     * "Computes" and returns the average value for the specified field over a single state
      * 
-     * @return time of current state as type double
+     * @param fieldName
+     * @param subFieldName
+     * @return the average value of specified field over a single state
      */
-    public double getTime()
+    public GeneralValue getAverageValue(String fieldName, String subFieldName)
     {
-        return time;
+        return variables.get(fieldName).getValue(subFieldName);
     }
     
     /**
-     * Formats relevant information about State object as a string representation for printing
+     * Returns a string iterator for the keySet of this state
+     * required by the iterable interface
      * 
-     * @return All information about current state, including time and location of each wrist.
+     * @return A string iterator for the keys in this state
+     */
+    public Iterator<String> iterator()
+    {
+        return variables.keySet().iterator();
+    }
+    
+    /**
+     * Returns a multi-line string representation of this state taking the following format:
+     * "FIELDNAME(POINTND)\n"
+     * 
+     * @return Multi-line string representing the PointND objects of each field in this state
      */
     public String toString()
     {
-        String out = String.format("%.2f", time) + ": left_wrist=<" + leftWrist.getDimValue(0) + "," 
-                + leftWrist.getDimValue(1) + "," + leftWrist.getDimValue(2) + ">, right_wrist=<" 
-                + rightWrist.getDimValue(0) + "," + rightWrist.getDimValue(1) + "," 
-                + rightWrist.getDimValue(2) + ">";
-        return out;
-    }
-        
-    /**
-     * "Computes" statistical maximum of left wrist over a single state.
-     *  
-     * @param dim 0=X, 1=Y, 2=Z 
-     * @return maximum GeneralValue of leftWrist
-     */
-    public GeneralValue getMaxLeftWrist(int dim)
-    {
-        // Return the general value of left wrist's specified dimension
-        return leftWrist.getDimValue(dim);
-    }
-    
-    /**
-     * "Computes" statistical minimum of left wrist over a single state.
-     *  
-     * @param dim 0=X, 1=Y, 2=Z 
-     * @return minimum GeneralValue of leftWrist
-     */
-    public GeneralValue getMinLeftWrist(int dim)
-    {
-        // Return the general value of left wrist's specified dimension
-        return leftWrist.getDimValue(dim);
-    }
-    
-    /**
-     * "Computes" statistical average of left wrist over a single state.
-     *  
-     * @param dim 0=X, 1=Y, 2=Z 
-     * @return average GeneralValue of leftWrist
-     */
-    public GeneralValue getAverageLeftWrist(int dim)
-    {
-        return leftWrist.getDimValue(dim);
+        String out = "";
+        for (String key : variables.keySet())
+        {
+            out += key + "(" + variables.get(key).toString() + ")\n";
+        }
     }
 }

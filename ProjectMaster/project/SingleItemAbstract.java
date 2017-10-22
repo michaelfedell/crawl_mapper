@@ -13,7 +13,7 @@ public abstract class SingleItemAbstract
      * @param dim 0=X, 1=Y, 2=Z 
      * @return maximum GeneralValue of leftWrist
      */
-    abstract GeneralValue getMaxLeftWrist(int dim);
+    abstract GeneralValue getMaxState(int dim);
     
     /**
      * Computes statistical minimum of left wrist over a single item.
@@ -21,7 +21,7 @@ public abstract class SingleItemAbstract
      * @param dim 0=X, 1=Y, 2=Z 
      * @return minimum GeneralValue of leftWrist
      */
-    abstract GeneralValue getMinLeftWrist(int dim);
+    abstract GeneralValue getMinState(int dim);
     
     /**
      * Computes statistical average of left wrist over a single item.
@@ -29,5 +29,5 @@ public abstract class SingleItemAbstract
      * @param dim 0=X, 1=Y, 2=Z 
      * @return average GeneralValue of leftWrist
      */
-    abstract GeneralValue getAverageLeftWrist(int dim);
+    abstract GeneralValue getAverageValue(int dim);
 }

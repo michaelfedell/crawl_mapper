@@ -18,9 +18,9 @@ public class Driver
         for (int i = 0; i < 3; i++)
         {
             System.out.println("Dimension: " + i); 
-            System.out.println("Average Left Wrist: " + infant.getAverageLeftWrist(i)); 
-            System.out.println("Max Left Wrist: " + infant.getMaxLeftWrist(i));
-            System.out.println("Min Left Wrist: " + infant.getMinLeftWrist(i));
+            System.out.println("Average Left Wrist: " + infant.getAverageValue(i)); 
+            System.out.println("Max Left Wrist: " + infant.getMaxState(i));
+            System.out.println("Min Left Wrist: " + infant.getMinState(i));
         }
     }
 }

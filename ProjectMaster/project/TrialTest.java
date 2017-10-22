@@ -32,11 +32,11 @@ public class TrialTest
         // Test calculation methods and toString
         // Average, max, min etc. calculated and given in testData_info.rtf in testData package
         Assert.assertEquals("getMaxLeftWrist for valid data", .109172, 
-                testTrial.getMaxLeftWrist(0).getDoubleValue(), ACCURACY);
+                testTrial.getMaxState(0).getDoubleValue(), ACCURACY);
         Assert.assertEquals("getMinLeftWrist for valid data", .104375, 
-                testTrial.getMinLeftWrist(0).getDoubleValue(), ACCURACY);
+                testTrial.getMinState(0).getDoubleValue(), ACCURACY);
         Assert.assertEquals("getAverageLeftWrist for valid data", .106955438, 
-                testTrial.getAverageLeftWrist(0).getDoubleValue(), ACCURACY);
+                testTrial.getAverageValue(0).getDoubleValue(), ACCURACY);
         Assert.assertEquals("getState for valid data", 
                 new State("0,0.105938,0.156901,-0.214572,0.157862,-0.273852,-0.055263").toString(), 
                 testTrial.getItem(0).toString());
@@ -62,11 +62,11 @@ public class TrialTest
         // Test calculation methods and toString
         // Average, max, min etc. calculated and given in testData_info.rtf in testData package
         Assert.assertEquals("getMaxLeftWrist for NaN data", .162172, 
-                testTrial.getMaxLeftWrist(0).getDoubleValue(), ACCURACY);
+                testTrial.getMaxState(0).getDoubleValue(), ACCURACY);
         Assert.assertEquals("getMinLeftWrist for NaN data", .315919, 
-                testTrial.getMinLeftWrist(1).getDoubleValue(), ACCURACY);
+                testTrial.getMinState(1).getDoubleValue(), ACCURACY);
         Assert.assertEquals("getAverageLeftWrist for NaN data", -.033168091, 
-                testTrial.getAverageLeftWrist(2).getDoubleValue(), ACCURACY);
+                testTrial.getAverageValue(2).getDoubleValue(), ACCURACY);
         Assert.assertEquals("getState for NaN data",
                 new State("0.22,NaN,NaN,NaN,0.117181,-0.310722,-0.066776").toString(), 
                 testTrial.getItem(11).toString());
