@@ -21,22 +21,22 @@ public class InfantTest
         Infant testBaby = new Infant("testData", "testValid");
         
         // test X dimension statistics
-        Assert.assertEquals("Average left wrist for X", .107335, testBaby.getAverageLeftWrist(0).getDoubleValue(),
+        Assert.assertEquals("Average left wrist for X", .107335, testBaby.getAverageValue(0).getDoubleValue(),
                 .000001);
-        Assert.assertEquals("Max left wrist for X", .109172, testBaby.getMaxLeftWrist(0).getDoubleValue(), .000001);
-        Assert.assertEquals("Min left wrist for X", .104375, testBaby.getMinLeftWrist(0).getDoubleValue(), .000001);
+        Assert.assertEquals("Max left wrist for X", .109172, testBaby.getMaxState(0).getDoubleValue(), .000001);
+        Assert.assertEquals("Min left wrist for X", .104375, testBaby.getMinState(0).getDoubleValue(), .000001);
         
         // test Y dimension statistics
-        Assert.assertEquals("Average left wrist for Y", .158158, testBaby.getAverageLeftWrist(1).getDoubleValue(),
+        Assert.assertEquals("Average left wrist for Y", .158158, testBaby.getAverageValue(1).getDoubleValue(),
                 .000001);
-        Assert.assertEquals("Max left wrist for Y", .159682, testBaby.getMaxLeftWrist(1).getDoubleValue(), .000001);
-        Assert.assertEquals("Min left wrist for Y", .155445, testBaby.getMinLeftWrist(1).getDoubleValue(), .000001);
+        Assert.assertEquals("Max left wrist for Y", .159682, testBaby.getMaxState(1).getDoubleValue(), .000001);
+        Assert.assertEquals("Min left wrist for Y", .155445, testBaby.getMinState(1).getDoubleValue(), .000001);
         
         // test Z dimension statistics
-        Assert.assertEquals("Average left wrist for Z", -.214687, testBaby.getAverageLeftWrist(2).getDoubleValue(), 
+        Assert.assertEquals("Average left wrist for Z", -.214687, testBaby.getAverageValue(2).getDoubleValue(), 
                 .000001);
-        Assert.assertEquals("Max left wrist for Z", -.213653, testBaby.getMaxLeftWrist(2).getDoubleValue(), .000001);
-        Assert.assertEquals("Min left wrist for Z", -.216293, testBaby.getMinLeftWrist(2).getDoubleValue(), .000001);
+        Assert.assertEquals("Max left wrist for Z", -.213653, testBaby.getMaxState(2).getDoubleValue(), .000001);
+        Assert.assertEquals("Min left wrist for Z", -.216293, testBaby.getMinState(2).getDoubleValue(), .000001);
         
     }
     
@@ -51,22 +51,22 @@ public class InfantTest
         Infant testBaby = new Infant("testData", "testNaN");
         
         // test X dimensions
-        Assert.assertEquals("Average left wrist for X", .161439, testBaby.getAverageLeftWrist(0).getDoubleValue(),
+        Assert.assertEquals("Average left wrist for X", .161439, testBaby.getAverageValue(0).getDoubleValue(),
                 .000001);
-        Assert.assertEquals("Max left wrist for X", .162172, testBaby.getMaxLeftWrist(0).getDoubleValue(), .000001);
-        Assert.assertEquals("Min left wrist for X", .160187, testBaby.getMinLeftWrist(0).getDoubleValue(), .000001);
+        Assert.assertEquals("Max left wrist for X", .162172, testBaby.getMaxState(0).getDoubleValue(), .000001);
+        Assert.assertEquals("Min left wrist for X", .160187, testBaby.getMinState(0).getDoubleValue(), .000001);
         
         // test Y dimension statistics
-        Assert.assertEquals("Average left wrist for Y", .316289, testBaby.getAverageLeftWrist(1).getDoubleValue(), 
+        Assert.assertEquals("Average left wrist for Y", .316289, testBaby.getAverageValue(1).getDoubleValue(), 
                 .000001);
-        Assert.assertEquals("Max left wrist for Y", .317149, testBaby.getMaxLeftWrist(1).getDoubleValue(), .000001);
-        Assert.assertEquals("Min left wrist for Y", .315919, testBaby.getMinLeftWrist(1).getDoubleValue(), .000001);
+        Assert.assertEquals("Max left wrist for Y", .317149, testBaby.getMaxState(1).getDoubleValue(), .000001);
+        Assert.assertEquals("Min left wrist for Y", .315919, testBaby.getMinState(1).getDoubleValue(), .000001);
         
         // test Z dimension statistics
-        Assert.assertEquals("Average left wrist for Z", -.033168, testBaby.getAverageLeftWrist(2).getDoubleValue(), 
+        Assert.assertEquals("Average left wrist for Z", -.033168, testBaby.getAverageValue(2).getDoubleValue(), 
                 .000001);
-        Assert.assertEquals("Max left wrist for Z", -.027961, testBaby.getMaxLeftWrist(2).getDoubleValue(), .000001);
-        Assert.assertEquals("Min left wrist for Z", -.034253, testBaby.getMinLeftWrist(2).getDoubleValue(), .000001);
+        Assert.assertEquals("Max left wrist for Z", -.027961, testBaby.getMaxState(2).getDoubleValue(), .000001);
+        Assert.assertEquals("Min left wrist for Z", -.034253, testBaby.getMinState(2).getDoubleValue(), .000001);
     }
     
     /**
@@ -125,8 +125,8 @@ public class InfantTest
         Infant testBaby = new Infant("testData", "testInvalid");
         
         // test multiple item abstracts to return invalid GV
-        Assert.assertFalse("Infant loaded from invalid data", testBaby.getAverageLeftWrist(0).isValid());
-        Assert.assertFalse("Infant loaded from invalid data", testBaby.getMaxLeftWrist(1).isValid());
-        Assert.assertFalse("Infant loaded from invalid data", testBaby.getMinLeftWrist(2).isValid());
+        Assert.assertFalse("Infant loaded from invalid data", testBaby.getAverageValue(0).isValid());
+        Assert.assertFalse("Infant loaded from invalid data", testBaby.getMaxState(1).isValid());
+        Assert.assertFalse("Infant loaded from invalid data", testBaby.getMinState(2).isValid());
     }
 }

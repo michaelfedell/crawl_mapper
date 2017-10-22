@@ -28,7 +28,7 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
      * @param dim int with dimension given as 0=X 1=Y 2=Z.
      * @return GeneralValue representing maximum value for the given dimension over the multiple item list.
      */
-    public GeneralValue getMaxLeftWrist(int dim)
+    public GeneralValue getMaxState(int dim)
     {
         // Initialize to the smallest possible number.
         double maxLeft = Double.NEGATIVE_INFINITY;
@@ -37,9 +37,9 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
         {
-            if (getItem(i).getMaxLeftWrist(dim).isValid())
+            if (getItem(i).getMaxState(dim).isValid())
             {
-                leftWrist = getItem(i).getMaxLeftWrist(dim).getDoubleValue();
+                leftWrist = getItem(i).getMaxState(dim).getDoubleValue();
                 if (leftWrist > maxLeft)
                 {
                     maxLeft = leftWrist;
@@ -64,7 +64,7 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
      * @param dim int with dimension given as 0=X 1=Y 2=Z.
      * @return GeneralValue representing minimum value for the given dimension over the multiple item list.
      */
-    public GeneralValue getMinLeftWrist(int dim)
+    public GeneralValue getMinState(int dim)
     {
         // Initialize to the smallest possible number.
         double minLeft = Double.POSITIVE_INFINITY;
@@ -73,9 +73,9 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
         {
-            if (getItem(i).getMinLeftWrist(dim).isValid())
+            if (getItem(i).getMinState(dim).isValid())
             {
-                leftWrist = getItem(i).getMinLeftWrist(dim).getDoubleValue();
+                leftWrist = getItem(i).getMinState(dim).getDoubleValue();
                 if (leftWrist < minLeft)
                 {
                     minLeft = leftWrist;
@@ -100,7 +100,7 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
      * @param dim int with dimension given as 0=X 1=Y 2=Z.
      * @return GeneralValue representing average value for the given dimension over the multiple item list.
      */
-    public GeneralValue getAverageLeftWrist(int dim)
+    public GeneralValue getAverageValue(int dim)
     {
         // Initialize variables to zero
         double sum = 0;
@@ -110,9 +110,9 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         // Loop through all states and check for validity, use validCount to keep track of number of valid states.
         for (int i = 0; i < getSize(); i++)
         {
-            if (getItem(i).getAverageLeftWrist(dim).isValid())
+            if (getItem(i).getAverageValue(dim).isValid())
             {
-                leftWrist = getItem(i).getAverageLeftWrist(dim).getDoubleValue();
+                leftWrist = getItem(i).getAverageValue(dim).getDoubleValue();
                 validCount++;
                 sum += leftWrist;
             }

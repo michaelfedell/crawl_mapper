@@ -84,11 +84,11 @@ public class StateTest
     public void testGetMaxLeftWrist()
     {
         Assert.assertEquals("Get Max Left Wrist: X", 0.11137, 
-                testState.getMaxLeftWrist(0).getDoubleValue(), ACCURACY);
+                testState.getMaxState(0).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Max Left Wrist: Y", 0.157633, 
-                testState.getMaxLeftWrist(1).getDoubleValue(), ACCURACY);
+                testState.getMaxState(1).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Max Left Wrist: Z", -0.217952, 
-                testState.getMaxLeftWrist(2).getDoubleValue(), ACCURACY);
+                testState.getMaxState(2).getDoubleValue(), ACCURACY);
     }
         
     /**
@@ -98,11 +98,11 @@ public class StateTest
     public void testGetMinLeftWrist()
     {
         Assert.assertEquals("Get Min Left Wrist: X", 0.11137, 
-                testState.getMinLeftWrist(0).getDoubleValue(), ACCURACY);
+                testState.getMinState(0).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Min Left Wrist: Y", 0.157633, 
-                testState.getMinLeftWrist(1).getDoubleValue(), ACCURACY);
+                testState.getMinState(1).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Min Left Wrist: Z", -0.217952, 
-                testState.getMinLeftWrist(2).getDoubleValue(), ACCURACY);
+                testState.getMinState(2).getDoubleValue(), ACCURACY);
     }
     
     /**
@@ -112,10 +112,10 @@ public class StateTest
     public void testGetAverageLeftWrist()
     {
         Assert.assertEquals("Get Average Left Wrist: X", 0.11137, 
-                testState.getAverageLeftWrist(0).getDoubleValue(), ACCURACY);
+                testState.getAverageValue(0).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Average Left Wrist: Y", 0.157633, 
-                testState.getAverageLeftWrist(1).getDoubleValue(), ACCURACY);
+                testState.getAverageValue(1).getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Average Left Wrist: Z", -0.217952, 
-                testState.getAverageLeftWrist(2).getDoubleValue(), ACCURACY);
+                testState.getAverageValue(2).getDoubleValue(), ACCURACY);
     }
 }
