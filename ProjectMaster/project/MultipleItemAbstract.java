@@ -34,7 +34,7 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         // Initialize to the smallest possible number.
         double max = Double.NEGATIVE_INFINITY;
         double val = 0;
-        State maxState = null;
+        State maxState = new State();
         
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
@@ -44,12 +44,13 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
                 val = getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName).getDoubleValue();
                 if (val > max)
                 {
+                    max = val;
                     maxState = getItem(i).getMaxState(fieldName, subFieldName);
                 }
             }
         }
         
-        // Return null if no maxState?
+        // Return empty State if no maxState
         return maxState;
     }
     
@@ -65,7 +66,7 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         // Initialize to the smallest possible number.
         double min = Double.POSITIVE_INFINITY;
         double val = 0;
-        State minState = null;
+        State minState = new State();
         
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
@@ -75,12 +76,13 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
                 val = getItem(i).getMinState(fieldName, subFieldName).getValue(fieldName, subFieldName).getDoubleValue();
                 if (val < min)
                 {
+                    min = val;
                     minState = getItem(i).getMinState(fieldName, subFieldName);
                 }
             }
         }
         
-        // Return null if no maxState?
+        // Return empty State if no minState
         return minState;
     }
     

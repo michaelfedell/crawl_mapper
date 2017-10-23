@@ -28,14 +28,14 @@ public class FieldMapper implements Iterable<String>
         for(String col : columnNames)
         {
             // test if it has subFields
-            if(col.charAt(col.length() - 1) == '_')
+            if(col.charAt(col.length() - 2) == '_')
             {
                 //create field, skip if already created and just need to add subfields
-                if(!fieldMap.containsKey(col.substring(0, col.length())))
+                if(!fieldMap.containsKey(col.substring(0, col.length() - 2)))
                 {
-                    fieldMap.put(col.substring(0, col.length()), new Field());
+                    fieldMap.put(col.substring(0, col.length() - 2), new Field());
                 }
-                fieldMap.get(col.substring(0, col.length())).addSubField(col.substring(col.length() - 1, col.length()), i);
+                fieldMap.get(col.substring(0, col.length() - 2)).addSubField(col.substring(col.length() - 1, col.length()), i);
             }
             // no subfields
             else

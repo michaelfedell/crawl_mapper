@@ -70,7 +70,14 @@ public class State extends SingleItemAbstract implements Iterable<String>
      */
     public GeneralValue getValue(String fieldName, String subFieldName)
     {
-        return variables.get(fieldName).getValue(subFieldName);
+        if (variables.containsKey(fieldName))
+        {
+            return variables.get(fieldName).getValue(subFieldName);
+        }
+        else
+        {
+            return new GeneralValue("NaN");
+        }
     }
         
     /**

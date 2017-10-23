@@ -16,18 +16,15 @@ public class Driver
         
         String dims = "xyz";
         
-        // Print info about trial for all three dimensions X,Y,Z
-//        for (int i = 0; i < 3; i++)
-//        {
-//            System.out.println("Dimension: " + i); 
-//            System.out.println("Average Left Wrist: " + infant.getAverageValue("left_wrist", dims.substring(i, i + 1))); 
-//            System.out.println("Max Left Wrist: " + infant.getMaxState("left_wrist", dims.substring(i, i + 1)));
-//            System.out.println("Min Left Wrist: " + infant.getMinState("left_wrist", dims.substring(i, i + 1)));
-//        }
-        
-
-        System.out.println("Average Left Wrist: " + infant.getAverageValue("left_wrist", "x")); 
-        System.out.println("Max Left Wrist: " + infant.getMaxState("left_wrist", "x"));
-        System.out.println("Min Left Wrist: " + infant.getMinState("left_wrist", "x"));
+        //Print info about trial for all three dimensions X,Y,Z
+        for (int i = 0; i < 3; i++)
+        {
+            System.out.println("Dimension: " + dims.substring(i, i + 1)); 
+            System.out.println("");
+            System.out.println("Average Left Wrist: " + infant.getAverageValue("left_wrist", dims.substring(i, i + 1))); 
+            System.out.println("");
+            System.out.println("Max Left Wrist: \n" + infant.getMaxState("left_wrist", dims.substring(i, i + 1)));
+            System.out.println("Min Left Wrist: \n" + infant.getMinState("left_wrist", dims.substring(i, i + 1)));
+        }
     }
 }
