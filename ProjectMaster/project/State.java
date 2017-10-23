@@ -32,9 +32,13 @@ public class State extends SingleItemAbstract implements Iterable<String>
      */
     public State(Trial trial, FieldMapper fieldMapper, String values)
     {
+        variables = new TreeMap<String, PointND>();
         this.trial = trial;
-        //TODO: Use FieldMapper to map values to this.variables
-        fieldMapper.extractPointND(values.split(","), trial.getItem(0).toString());
+        for(String fieldName : fieldMapper)
+        {
+            //Use FieldMapper to map values to this.variables
+            variables.put(fieldName, fieldMapper.extractPointND(values.split(","), fieldName));
+        }
     }
     
     /**

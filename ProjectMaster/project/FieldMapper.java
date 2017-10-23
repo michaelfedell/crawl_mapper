@@ -7,7 +7,7 @@ import java.util.Map;
  * @author Zach Schuermann
  * @version 10/22/17
  */
-public class FieldMapper
+public class FieldMapper implements Iterable<String>
 {
     /**
      * Declare the fieldMap to map strings to their respective fields
