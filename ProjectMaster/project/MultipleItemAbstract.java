@@ -26,36 +26,41 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
      * This method will find the maximum value of the entire multiple item list for a specified dimension.
      * 
      * @param dim int with dimension given as 0=X 1=Y 2=Z.
-     * @return GeneralValue representing maximum value for the given dimension over the multiple item list.
+     * @return State The maximum state in the set.
      */
-    public GeneralValue getMaxState(int dim)
+    public State getMaxState(String fieldName, String subFieldName)
     {
         // Initialize to the smallest possible number.
-        double maxLeft = Double.NEGATIVE_INFINITY;
-        double leftWrist = 0;
+        double max = Double.NEGATIVE_INFINITY;
+        double val = 0;
+        int maxindex = 0;
         
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
         {
-            if (getItem(i).getMaxState(dim).isValid())
+            if (getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName).isValid())
             {
-                leftWrist = getItem(i).getMaxState(dim).getDoubleValue();
-                if (leftWrist > maxLeft)
+                val = getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName).getDoubleValue();
+                if (val > max)
                 {
-                    maxLeft = leftWrist;
+                    max = val;
+                    maxindex = i;
                 }
             }
         }
         
+        return (State)getItem(maxindex);
+        
+        // TODO
         // test for invalid if there is no size or all entries are invalid
-        if (maxLeft == Double.NEGATIVE_INFINITY)
-        {
-            return new GeneralValue("NaN");
-        }
-        else
-        {
-            return new GeneralValue(maxLeft);
-        }
+//        if (max == Double.NEGATIVE_INFINITY)
+//        {
+//            //return new State("NaN");
+//        }
+//        else
+//        {
+//            //return new State(max);
+//        }
     }
     
     /**

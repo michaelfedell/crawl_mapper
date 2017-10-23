@@ -15,7 +15,7 @@ public class Trial extends MultipleItemAbstract
     /** Sequence of states.   */
     private ArrayList<State> stateList;
     /** ID for the infant  */
-    private String infantID;
+    private Infant infant;
     /** Week index.  */
     private int week;
     /** File name that was loaded.  */
@@ -30,9 +30,9 @@ public class Trial extends MultipleItemAbstract
      * 
      * @throws IOException If there is an error finding or loading the data file.
      */
-    public Trial(String directory, String infantID, int week) throws IOException
+    public Trial(Infant infant, String directory, String infantID, int week) throws IOException
     {
-        this.infantID = infantID;
+        this.infant = infant;
         this.week = week;
         this.fileName = String.format("%s/subject_%s_w%02d.csv", 
                 directory, infantID, week);
@@ -40,19 +40,22 @@ public class Trial extends MultipleItemAbstract
         
         this.stateList = new ArrayList<State>();
         
+        FieldMapper fieldMap; 
+        
         // Open the file
         BufferedReader br = new BufferedReader(new FileReader(this.fileName));
         String strg;
         
-        // Throw out header
+        // Add header to make fieldMap
         strg = br.readLine(); 
+        fieldMap = new FieldMapper(strg.split(","));
         
         // Read first line
         strg = br.readLine();
         
         while (strg != null)
         {
-            stateList.add(new State(strg));
+            stateList.add(new State(this, fieldMap, strg));
             strg = br.readLine();
         }
 
@@ -64,9 +67,9 @@ public class Trial extends MultipleItemAbstract
      * 
      * @return infantID
      */
-    public String getInfantID()
+    public Infant getInfant()
     {
-        return infantID;
+        return infant;
     }
     
     /**

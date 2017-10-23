@@ -8,26 +8,29 @@
 public abstract class SingleItemAbstract
 {
     /**
-     * Computes statistical maximum of left wrist over a single item.
+     * Computes statistical maximum of a given field/subfield
      *  
-     * @param dim 0=X, 1=Y, 2=Z 
-     * @return maximum GeneralValue of leftWrist
+     * @param fieldName String to represent the field
+     * @param subFieldName String for the given subField
+     * @return maximum State
      */
-    abstract GeneralValue getMaxState(int dim);
+    abstract State getMaxState(String fieldName, String subFieldName);
     
     /**
-     * Computes statistical minimum of left wrist over a single item.
+     * Computes statistical minimum of a given field/subfield
      *  
-     * @param dim 0=X, 1=Y, 2=Z 
-     * @return minimum GeneralValue of leftWrist
+     * @param fieldName String to represent the field
+     * @param subFieldName String for the given subField
+     * @return minimum State
      */
-    abstract GeneralValue getMinState(int dim);
+    abstract State getMinState(String fieldName, String subFieldName);
     
     /**
-     * Computes statistical average of left wrist over a single item.
+     * Computes statistical average of a given field/subfield
      *  
-     * @param dim 0=X, 1=Y, 2=Z 
-     * @return average GeneralValue of leftWrist
+     * @param fieldName String to represent the field
+     * @param subFieldName String for the given subField
+     * @return average Generalvalue
      */
-    abstract GeneralValue getAverageValue(int dim);
+    abstract GeneralValue getAverageValue(String fieldName, String subFieldName);
 }

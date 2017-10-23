@@ -21,6 +21,7 @@ public class State extends SingleItemAbstract implements Iterable<String>
     public State()
     {
         //TODO: Body needed on empty constructor?
+        variables = new TreeMap<String, PointND>();
     }
        
     /**
@@ -33,6 +34,7 @@ public class State extends SingleItemAbstract implements Iterable<String>
     {
         this.trial = trial;
         //TODO: Use FieldMapper to map values to this.variables
+        fieldMapper.extractPointND(values.split(","), trial.getItem(0).toString());
     }
     
     /**
@@ -118,5 +120,6 @@ public class State extends SingleItemAbstract implements Iterable<String>
         {
             out += key + "(" + variables.get(key).toString() + ")\n";
         }
+        return out;
     }
 }
