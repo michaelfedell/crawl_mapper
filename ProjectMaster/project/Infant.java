@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * An Infant object to store all of the trials associated with a particular infant.
  * 
  * @author Zach Schuermann 
- * @version 09/29/17
+ * @version 10/23/17
  *
  */
 public class Infant extends MultipleItemAbstract
@@ -38,7 +38,7 @@ public class Infant extends MultipleItemAbstract
         {
             try
             {
-                trialList.add(new Trial(directory, infantID, week));
+                trialList.add(new Trial(this, directory, infantID, week));
             }
             // No more trials to add, or other file reading error
             catch (FileNotFoundException e)

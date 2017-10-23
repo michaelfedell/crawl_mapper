@@ -2,8 +2,8 @@
  * Abstract class to provide structure to subclasses which will 
  * compute the defined statistical computations over multiple items
  * 
- * @author Michael Fedell
- * @version 09/29/17
+ * @author Michael Fedell modified by Zach Schuermann
+ * @version 10/23/17
  */
 public abstract class MultipleItemAbstract extends SingleItemAbstract
 {
@@ -23,17 +23,18 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
     abstract SingleItemAbstract getItem(int index);
     
     /**
-     * This method will find the maximum value of the entire multiple item list for a specified dimension.
+     * This method will find the maximum value of the entire multiple item list for a specified fieldName and subField.
      * 
-     * @param dim int with dimension given as 0=X 1=Y 2=Z.
-     * @return State The maximum state in the set.
+     * @param fieldName String to represent the fieldName to calculate Max
+     * @param subFieldName String to represent the subFieldName to calc max from
+     * @return State The maximum state in the set. (null if invalid)
      */
     public State getMaxState(String fieldName, String subFieldName)
     {
         // Initialize to the smallest possible number.
         double max = Double.NEGATIVE_INFINITY;
         double val = 0;
-        int maxindex = 0;
+        State maxState = null;
         
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
@@ -43,83 +44,68 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
                 val = getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName).getDoubleValue();
                 if (val > max)
                 {
-                    max = val;
-                    maxindex = i;
+                    maxState = getItem(i).getMaxState(fieldName, subFieldName);
                 }
             }
         }
         
-        return (State)getItem(maxindex);
-        
-        // TODO
-        // test for invalid if there is no size or all entries are invalid
-//        if (max == Double.NEGATIVE_INFINITY)
-//        {
-//            //return new State("NaN");
-//        }
-//        else
-//        {
-//            //return new State(max);
-//        }
+        // Return null if no maxState?
+        return maxState;
     }
     
     /**
-     * This method will find the minimum value of the entire multiple item list for a specified dimension.
+     * This method will find the maximum value of the entire multiple item list for a specified fieldName and subField.
      * 
-     * @param dim int with dimension given as 0=X 1=Y 2=Z.
-     * @return GeneralValue representing minimum value for the given dimension over the multiple item list.
+     * @param fieldName String to represent the fieldName to calculate min
+     * @param subFieldName String to represent the subFieldName to calc min from
+     * @return State The minimum state in the set. (null if invalid)
      */
-    public GeneralValue getMinState(int dim)
+    public State getMinState(String fieldName, String subFieldName)
     {
         // Initialize to the smallest possible number.
-        double minLeft = Double.POSITIVE_INFINITY;
-        double leftWrist = 0;
+        double min = Double.POSITIVE_INFINITY;
+        double val = 0;
+        State minState = null;
         
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
         {
-            if (getItem(i).getMinState(dim).isValid())
+            if (getItem(i).getMinState(fieldName, subFieldName).getValue(fieldName, subFieldName).isValid())
             {
-                leftWrist = getItem(i).getMinState(dim).getDoubleValue();
-                if (leftWrist < minLeft)
+                val = getItem(i).getMinState(fieldName, subFieldName).getValue(fieldName, subFieldName).getDoubleValue();
+                if (val < min)
                 {
-                    minLeft = leftWrist;
+                    minState = getItem(i).getMinState(fieldName, subFieldName);
                 }
             }
         }
         
-        // test for invalid if there is no size or all entries are invalid
-        if (minLeft == Double.POSITIVE_INFINITY)
-        {
-            return new GeneralValue("NaN");
-        }
-        else
-        {
-            return new GeneralValue(minLeft);
-        }
+        // Return null if no maxState?
+        return minState;
     }
     
     /**
-     * This method will find the average value of the entire multiple item list for a specified dimension.
+     * This method will find the average value of the entire multiple item list for a specified fieldName and subField.
      * 
-     * @param dim int with dimension given as 0=X 1=Y 2=Z.
-     * @return GeneralValue representing average value for the given dimension over the multiple item list.
+     * @param fieldName String to represent the fieldName to calculate average
+     * @param subFieldName String to represent the subFieldName to calc average from
+     * @return GeneralValue The average field/subfield in the set as a GeneralValue. (null if invalid)
      */
-    public GeneralValue getAverageValue(int dim)
+    public GeneralValue getAverageValue(String fieldName, String subFieldName)
     {
         // Initialize variables to zero
         double sum = 0;
-        double leftWrist = 0;
+        double val = 0;
         int validCount = 0;
         
         // Loop through all states and check for validity, use validCount to keep track of number of valid states.
         for (int i = 0; i < getSize(); i++)
         {
-            if (getItem(i).getAverageValue(dim).isValid())
+            if (getItem(i).getAverageValue(fieldName, subFieldName).isValid())
             {
-                leftWrist = getItem(i).getAverageValue(dim).getDoubleValue();
+                val = getItem(i).getAverageValue(fieldName, subFieldName).getDoubleValue();
                 validCount++;
-                sum += leftWrist;
+                sum += val;
             }
         }
         

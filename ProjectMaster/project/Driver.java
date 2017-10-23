@@ -4,7 +4,7 @@ import java.io.IOException;
  * Driver class to construct trial object and print arbitrary state.
  *
  * @author Zach Schuermann
- * @version 09/11/17
+ * @version 10/23/17
  *
  */
 public class Driver
@@ -14,13 +14,20 @@ public class Driver
         // Instantiate infant object
         Infant infant = new Infant("data", "c1");
         
+        String dims = "xyz";
+        
         // Print info about trial for all three dimensions X,Y,Z
-        for (int i = 0; i < 3; i++)
-        {
-            System.out.println("Dimension: " + i); 
-            System.out.println("Average Left Wrist: " + infant.getAverageValue(i)); 
-            System.out.println("Max Left Wrist: " + infant.getMaxState(i));
-            System.out.println("Min Left Wrist: " + infant.getMinState(i));
-        }
+//        for (int i = 0; i < 3; i++)
+//        {
+//            System.out.println("Dimension: " + i); 
+//            System.out.println("Average Left Wrist: " + infant.getAverageValue("left_wrist", dims.substring(i, i + 1))); 
+//            System.out.println("Max Left Wrist: " + infant.getMaxState("left_wrist", dims.substring(i, i + 1)));
+//            System.out.println("Min Left Wrist: " + infant.getMinState("left_wrist", dims.substring(i, i + 1)));
+//        }
+        
+
+        System.out.println("Average Left Wrist: " + infant.getAverageValue("left_wrist", "x")); 
+        System.out.println("Max Left Wrist: " + infant.getMaxState("left_wrist", "x"));
+        System.out.println("Min Left Wrist: " + infant.getMinState("left_wrist", "x"));
     }
 }

@@ -2,8 +2,8 @@
  * Abstract class to provide structure to subclasses which will 
  * compute the defined statistical computations over a single item
  * 
- * @author Michael Fedell
- * @version 09/29/17
+ * @author Michael Fedell modified by Zach Schuermann
+ * @version 10/23/17
  */
 public abstract class SingleItemAbstract
 {

@@ -4,8 +4,8 @@ import java.util.TreeMap;
 /**
  * Representation of the state of a single time step
  * 
- * @author Andrew H. Fagg modified by Michael Fedell
- * @version 09/29/17
+ * @author Andrew H. Fagg modified by Michael Fedell, Zach Schuermann
+ * @version 10/23/17
  *
  */
 public class State extends SingleItemAbstract implements Iterable<String>
@@ -35,6 +35,15 @@ public class State extends SingleItemAbstract implements Iterable<String>
         this.trial = trial;
         //TODO: Use FieldMapper to map values to this.variables
         fieldMapper.extractPointND(values.split(","), trial.getItem(0).toString());
+    }
+    
+    /**
+     * Getter for the trial the state belongs to
+     * @return Trial the trial the state belongs to
+     */
+    public Trial getTrial()
+    {
+        return trial;
     }
     
     /**

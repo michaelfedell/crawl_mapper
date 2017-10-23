@@ -6,8 +6,8 @@ import java.util.ArrayList;
 /**
  * Representation of a single trial
  * 
- * @author Andrew H. Fagg modified by Michael Fedell
- * @version 09/29/17
+ * @author Andrew H. Fagg modified by Michael Fedell, Zach Schuermann
+ * @version 10/23/17
  *
  */
 public class Trial extends MultipleItemAbstract
@@ -32,14 +32,16 @@ public class Trial extends MultipleItemAbstract
      */
     public Trial(Infant infant, String directory, String infantID, int week) throws IOException
     {
+        // set fields
         this.infant = infant;
         this.week = week;
         this.fileName = String.format("%s/subject_%s_w%02d.csv", 
                 directory, infantID, week);
         
-        
+        // instantiate stateList
         this.stateList = new ArrayList<State>();
         
+        //declare fieldMapper
         FieldMapper fieldMap; 
         
         // Open the file
