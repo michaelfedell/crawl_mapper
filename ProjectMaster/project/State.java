@@ -25,6 +25,10 @@ public class State extends SingleItemAbstract implements Iterable<String>
     }
        
     /**
+     * Full constructor takes a Trial, FieldMapper, and String as arguments.
+     * The Trial is passed so that each State may be able to identify the Trial to which it belongs
+     * The FieldMapper is used to map values from the CSV string to the appropriate field names
+     * The String of values is pulled from a CSV file and contains data for each of the fields contained in the trial 
      * 
      * @param trial Indicates the trial to which this state belongs
      * @param fieldMapper Informs the constructor how to create fields from the String data
@@ -43,6 +47,7 @@ public class State extends SingleItemAbstract implements Iterable<String>
     
     /**
      * Getter for the trial the state belongs to
+     * 
      * @return Trial the trial the state belongs to
      */
     public Trial getTrial()

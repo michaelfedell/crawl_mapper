@@ -1,4 +1,7 @@
 import org.junit.Test;
+
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
@@ -7,64 +10,55 @@ import org.junit.BeforeClass;
  * Unit testing for the State class.
  * 
  * @author Michael Fedell
- * @version 09/29/17
+ * @version 10/24/17
  */
 public class StateTest
 {
-    // Represents single line of mock data as would be pulled from a CSV file by a fileScanner
-    private static String testString = "1.52,0.11137,0.157633,-0.217952,0.157488,-0.276909,-0.052427";
+    /** Represents the line of headers pulled from a CSV file   */
+    private static String header;
+    
+    /** Represents single line of mock data as would be pulled from a CSV file  */
+    private static String testString;
+    
+    /** A State object created for testing  */
     private static State testState;
+    
+    /** A Trial object created for testing  */
+    private static Trial testTrial;
+    
+    /** An Infant object created for testing*/
+    private static Infant testInfant;
+    
+    /** The accuracy at which double value comparisons should be made */
     private static final double ACCURACY = 0.0000001;
     
     /**
      * Instantiates testState for the testing that follows
+     * 
+     * @throws  IOException as required by Infant Class
      */
     @BeforeClass
-    public static void setUpBeforeClass()
+    public static void setUpBeforeClass() throws IOException
     {
-        testState = new State(testString);
+        // Create a new Infant from the testData files
+        testInfant = new Infant("testData", "testValid");
+        // Assign the second trial for testing (subject_testValid_w01.csv)
+        testTrial = testInfant.getItem(1);
+        // Assign the fourth state (fifth row) for testing
+        testState = testTrial.getItem(4);
     }
     
     
     /**
-     * Tests the getLeftWrist method by comparing double values stored in the Point for Left Wrist
-     * These double values are accessed from the State | Left Wrist | Point 3D | General Value
+     * Tests the getTrial method
      */
     @Test
-    public void testGetLeftWrist()
+    public void testGetTrial()
     {
-        Assert.assertEquals("Get Left Wrist: X", 0.11137, 
-                testState.getLeftWrist().getDimValue(0).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("Get Left Wrist: Y", 0.157633, 
-                testState.getLeftWrist().getDimValue(1).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("Get Left Wrist: Z", -0.217952, 
-                testState.getLeftWrist().getDimValue(2).getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Trial", testTrial, 
+                testState.getTrial());
     }
     
-    /**
-     * Tests the getRightWrist method by comparing double values stored in the point for Right Wrist
-     * These double values are accessed from the State | Right Wrist | Point 3D | General Value
-     */
-    @Test
-    public void testGetRightWrist()
-    {
-        Assert.assertEquals("Get Right Wrist: X", 0.157488, 
-                testState.getRightWrist().getDimValue(0).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("Get Right Wrist: Y", -0.276909, 
-                testState.getRightWrist().getDimValue(1).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("Get Right Wrist: Z", -0.052427, 
-                testState.getRightWrist().getDimValue(2).getDoubleValue(), ACCURACY);
-    }
-    
-    /**
-     * Tests the getTime method of the State class
-     * The time value is read in as the first double value in an input string
-     */
-    @Test
-    public void testGetTime()
-    {
-        Assert.assertEquals("Get Time", 1.52, testState.getTime(), ACCURACY);
-    }
     
     /**
      * Tests the toString method of the State class.
