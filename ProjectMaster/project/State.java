@@ -20,7 +20,7 @@ public class State extends SingleItemAbstract implements Iterable<String>
      */
     public State()
     {
-        //TODO: Body needed on empty constructor?
+        // init empty TreeMap
         variables = new TreeMap<String, PointND>();
     }
        
@@ -38,7 +38,7 @@ public class State extends SingleItemAbstract implements Iterable<String>
     {
         variables = new TreeMap<String, PointND>();
         this.trial = trial;
-        for(String fieldName : fieldMapper)
+        for (String fieldName : fieldMapper)
         {
             //Use FieldMapper to map values to this.variables
             variables.put(fieldName, fieldMapper.extractPointND(values.split(","), fieldName));
@@ -57,7 +57,7 @@ public class State extends SingleItemAbstract implements Iterable<String>
     
     /**
      * Returns the pointND object for a user-specified field in this state. 
-     * 
+     * @param fieldName String for the given field
      * @return PointND object of specified field at current state.
      */
     public PointND getPoint(String fieldName)
@@ -88,8 +88,8 @@ public class State extends SingleItemAbstract implements Iterable<String>
     /**
      * "Computes" statistical maximum of specified field over a single state.
      * 
-     * @param fieldName
-     * @param subFieldName
+     * @param fieldName String to represent the fieldname 
+     * @param subFieldName String to represent the subFieldName
      * @return state containing the maximum value of specified field over a single state (this state)
      */
     public State getMaxState(String fieldName, String subFieldName)
@@ -100,8 +100,8 @@ public class State extends SingleItemAbstract implements Iterable<String>
     /**
      * "Computes" statistical minimum of specified field over a single state.
      * 
-     * @param fieldName
-     * @param subFieldName
+     * @param fieldName String to represent the fieldname 
+     * @param subFieldName String to represent the subFieldName
      * @return state containing the minimum value of specified field over a single state (this state)
      */
     public State getMinState(String fieldName, String subFieldName)
@@ -112,8 +112,8 @@ public class State extends SingleItemAbstract implements Iterable<String>
     /**
      * "Computes" and returns the average value for the specified field over a single state
      * 
-     * @param fieldName
-     * @param subFieldName
+     * @param fieldName String to represent the fieldname 
+     * @param subFieldName String to represent the subFieldName
      * @return the average value of specified field over a single state
      */
     public GeneralValue getAverageValue(String fieldName, String subFieldName)

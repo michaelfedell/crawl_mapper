@@ -23,10 +23,10 @@ public class PointNDTest
     private GeneralValue genValNaN = new GeneralValue("NaN");
     
     /** Array of general values used for testing    */
-    GeneralValue[] test = {new GeneralValue("-1.8"), new GeneralValue("0.0"), new GeneralValue("14.8397")};
+    private GeneralValue[] test = {new GeneralValue("-1.8"), new GeneralValue("0.0"), new GeneralValue("14.8397")};
     
     /** point to be used in testing */
-    PointND point = new PointND();
+    private PointND point = new PointND();
     
     /** point with an invalid value in the "y" subfield */
     private PointND pointInval = new PointND();
@@ -87,6 +87,20 @@ public class PointNDTest
     public void testSize()
     {        
         Assert.assertEquals("Size: ", 3, point.size());
+    }
+    
+    /**
+     * Tests to make sure that pointND is indeed Iterable
+     */
+    @Test
+    public void iterableTest()
+    {
+        // iterate over keys in point
+        for (String key : point)
+        {
+            // test each key is either x,y,z
+            Assert.assertTrue(key.equals("x") || key.equals("y") || key.equals("z"));
+        }
     }
     
     /**

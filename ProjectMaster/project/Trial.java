@@ -77,6 +77,15 @@ public class Trial extends MultipleItemAbstract
     }
     
     /**
+     * Getter for the Infant of the trial
+     * @return the infant of the trial
+     */
+    public Infant getInfant()
+    {
+        return this.infant;
+    }
+    
+    /**
      * Getter for the size of the trial.
      * 
      * @return Number of trials.

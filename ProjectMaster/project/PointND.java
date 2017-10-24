@@ -7,7 +7,7 @@ import java.util.TreeMap;
  * @author Zach Schuermann
  * @version 10/22/17
  */
-public class PointND
+public class PointND implements Iterable<String>
 {
     /** Array of general values to describe point location */
     private TreeMap<String, GeneralValue> values;
@@ -19,8 +19,8 @@ public class PointND
      */
     public PointND()
     {
-       // init empty treemap
-       values = new TreeMap<String, GeneralValue>();
+        // init empty treemap
+        values = new TreeMap<String, GeneralValue>();
     }
     
     /**

@@ -41,7 +41,8 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         {
             if (getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName).isValid())
             {
-                val = getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName).getDoubleValue();
+                val = getItem(i).getMaxState(fieldName, subFieldName)
+                        .getValue(fieldName, subFieldName).getDoubleValue();
                 if (val > max)
                 {
                     max = val;
@@ -73,7 +74,8 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         {
             if (getItem(i).getMinState(fieldName, subFieldName).getValue(fieldName, subFieldName).isValid())
             {
-                val = getItem(i).getMinState(fieldName, subFieldName).getValue(fieldName, subFieldName).getDoubleValue();
+                val = getItem(i).getMinState(fieldName, subFieldName)
+                        .getValue(fieldName, subFieldName).getDoubleValue();
                 if (val < min)
                 {
                     min = val;

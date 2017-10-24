@@ -145,4 +145,20 @@ public class StateTest
         Assert.assertEquals("Get Average Value: left_wrist_z", testPoint.getValue("z").getDoubleValue(), 
                 testState.getAverageValue("left_elbow", "z").getDoubleValue(), ACCURACY);
     }
+    
+    /**
+     * Tests to make sure that State is indeed Iterable
+     */
+    @Test
+    public void iterableTest()
+    {
+        int i = 0;
+        // iterate over keys in point
+        for (@SuppressWarnings("unused") String key : testState)
+        {
+            // test each key is either x,y,z
+            i++;
+        }
+        Assert.assertEquals(16, i);
+    }
 }
