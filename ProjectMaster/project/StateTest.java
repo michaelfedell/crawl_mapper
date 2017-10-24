@@ -66,7 +66,7 @@ public class StateTest
     @Test
     public void testGetPoint()
     {
-        Assert.assertEquals("Get Point: left_elbow", testPoint.toString(), 
+        Assert.assertEquals("Get Point: left_elbow", "X = 0.140; Y = 0.230; Z = -0.017; ", 
                 testState.getPoint("left_elbow").toString());
     }
     
@@ -77,11 +77,11 @@ public class StateTest
     public void testGetValue()
     {
         // Compare the double values of each GeneralValue for equality
-        Assert.assertEquals("GetValue: left_elbow_x", testPoint.getValue("x").getDoubleValue(), 
+        Assert.assertEquals("GetValue: left_elbow_x", 0.140007, 
                 testState.getValue("left_elbow", "x").getDoubleValue(), ACCURACY);
-        Assert.assertEquals("GetValue: left_elbow_y", testPoint.getValue("y").getDoubleValue(), 
+        Assert.assertEquals("GetValue: left_elbow_y", 0.230226, 
                 testState.getValue("left_elbow", "y").getDoubleValue(), ACCURACY);
-        Assert.assertEquals("GetValue: left_elbow_z", testPoint.getValue("z").getDoubleValue(), 
+        Assert.assertEquals("GetValue: left_elbow_z", -0.01652, 
                 testState.getValue("left_elbow", "z").getDoubleValue(), ACCURACY);
     }
     
@@ -138,11 +138,11 @@ public class StateTest
     @Test
     public void testGetAverageValue()
     {
-        Assert.assertEquals("Get Average Value: left_wrist_x", testPoint.getValue("x").getDoubleValue(), 
+        Assert.assertEquals("Get Average Value: left_wrist_x", 0.140007, 
                 testState.getAverageValue("left_elbow", "x").getDoubleValue(), ACCURACY);
-        Assert.assertEquals("Get Average Value: left_wrist_y", testPoint.getValue("y").getDoubleValue(), 
+        Assert.assertEquals("Get Average Value: left_wrist_y", 0.230226, 
                 testState.getAverageValue("left_elbow", "y").getDoubleValue(), ACCURACY);
-        Assert.assertEquals("Get Average Value: left_wrist_z", testPoint.getValue("z").getDoubleValue(), 
+        Assert.assertEquals("Get Average Value: left_wrist_z", -0.01652, 
                 testState.getAverageValue("left_elbow", "z").getDoubleValue(), ACCURACY);
     }
 }
