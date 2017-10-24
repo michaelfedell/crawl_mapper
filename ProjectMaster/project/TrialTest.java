@@ -1,17 +1,54 @@
 import org.junit.Test;
 import java.io.IOException;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 
 /**
- * Class to test Trial class.
+ * Unit testing for the Trial class.
+ * All tests reference the 'subject_testFields_w01.csv' file with mock data generated for testing
+ * in particular, the second state (time = 0.02) of this trial will be used for State tests
+ * when a particular point or value needs to be accessed, the left elbow will be used for testing
  * 
  * @author Zach Schuermann modified by Michael Fedell
- * @version 09/29/17
+ * @version 10/24/17
  */
 public class TrialTest
 {
+    /** A PointND object created for testing - left_elbow in CSV data   */
+    private static PointND testPoint;
+
+    /** A State object created for testing  */
+    private static State testState;
+    
+    /** A Trial object created for testing  */
+    private static Trial testTrial;
+    
+    /** An Infant object created for testing    */
+    private static Infant testInfant;
+    
+    /** The accuracy at which double value comparisons should be made */
     private static final double ACCURACY = 0.0000001;
     
+    /**
+     * Instantiates testState for the testing that follows
+     * 
+     * @throws  IOException as required by Infant Class
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws IOException
+    {
+        // Create a new Infant from the testData files
+        testInfant = new Infant("testData", "testFields");
+        // Assign the first (and only) trial for testing (subject_testValid_w01.csv)
+        testTrial = testInfant.getItem(0);
+        // Assign the second state (third row) for testing
+        testState = testTrial.getItem(1);
+        // Create a PointND to represent the left_elbow from testFields CSV in it's second state (time=0.02)
+        testPoint = new PointND();
+        testPoint.add("x", new GeneralValue(0.140007));
+        testPoint.add("y", new GeneralValue(0.230226));
+        testPoint.add("z", new GeneralValue(-0.01652));
+    }
     /**
      * Tests trial with all valid input. Getters and calculation methods tested.
      * 

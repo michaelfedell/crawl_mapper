@@ -1,25 +1,20 @@
 import org.junit.Test;
-
 import java.io.IOException;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
 
 /**
  * Unit testing for the State class.
+ * All tests reference the 'subject_testFields_w01.csv' file with mock data generated for testing
+ * in particular, the second state (time = 0.02) of this trial will be used for State tests
+ * when a particular point or value needs to be accessed, the left elbow will be used for testing
  * 
  * @author Michael Fedell
  * @version 10/24/17
  */
 public class StateTest
 {
-    /** Represents the line of headers pulled from a CSV file   */
-    private static String header;
-    
-    /** Represents single line of mock data as would be pulled from a CSV file  */
-    private static String testString;
-    
     /** A PointND object created for testing - left_elbow in CSV data   */
     private static PointND testPoint;
 
@@ -45,16 +40,15 @@ public class StateTest
     {
         // Create a new Infant from the testData files
         testInfant = new Infant("testData", "testFields");
-        // Assign the second trial for testing (subject_testValid_w10.csv)
-        testTrial = testInfant.getItem(10);
+        // Assign the first (and only) trial for testing (subject_testValid_w01.csv)
+        testTrial = testInfant.getItem(0);
         // Assign the second state (third row) for testing
-        testState = testTrial.getItem(2);
+        testState = testTrial.getItem(1);
         // Create a PointND to represent the left_elbow from testFields CSV in it's second state (time=0.02)
         testPoint = new PointND();
         testPoint.add("x", new GeneralValue(0.140007));
         testPoint.add("y", new GeneralValue(0.230226));
         testPoint.add("z", new GeneralValue(-0.01652));
-        
     }
     
     /**
@@ -72,9 +66,8 @@ public class StateTest
     @Test
     public void testGetPoint()
     {
-        Assert.assertEquals("Get Point: left_elbow", testPoint , testState.getPoint("left_elbow"));
-        //TODO: Add more points for testing
-        
+        Assert.assertEquals("Get Point: left_elbow", testPoint.toString(), 
+                testState.getPoint("left_elbow").toString());
     }
     
     /**
@@ -83,18 +76,41 @@ public class StateTest
     @Test
     public void testGetValue()
     {
-        //TODO: Write tests
+        // Compare the double values of each GeneralValue for equality
+        Assert.assertEquals("GetValue: left_elbow_x", testPoint.getValue("x").getDoubleValue(), 
+                testState.getValue("left_elbow", "x").getDoubleValue(), ACCURACY);
+        Assert.assertEquals("GetValue: left_elbow_y", testPoint.getValue("y").getDoubleValue(), 
+                testState.getValue("left_elbow", "y").getDoubleValue(), ACCURACY);
+        Assert.assertEquals("GetValue: left_elbow_z", testPoint.getValue("z").getDoubleValue(), 
+                testState.getValue("left_elbow", "z").getDoubleValue(), ACCURACY);
     }
     
     /**
      * Tests the toString method of the State class.
-     * This method should return a string formatted as "[time]: left_wrist=[x,y,z], right_wrist=[x,y,z]"
+     * This method should return a multi-line string detailing the pointND object at each field
+     * formatted as follows "FIELDNAME(POINTND)\n"
      */
     @Test
     public void testToString()
     {
-        //TODO: UPDATE
-        String output = "1.52: left_wrist=<0.111,0.158,-0.218>, right_wrist=<0.157,-0.277,-0.052>";
+        // Manually construct a full string of testState with values from each field/subfield
+        String output = "left_ankle(X = -0.250; Y = -0.005; Z = 0.022; )\n"
+                + "left_elbow(X = 0.140; Y = 0.230; Z = -0.017; )\n"
+                + "left_foot(X = -0.260; Y = -0.046; Z = -0.072; )\n"
+                + "left_knee(X = -0.121; Y = 0.040; Z = -0.025; )\n"
+                + "left_shoulder(X = 0.211; Y = 0.116; Z = -0.026; )\n"
+                + "left_wrist(X = 0.164; Y = 0.293; Z = -0.093; )\n"
+                + "right_ankle(X = -0.244; Y = -0.149; Z = -0.083; )\n"
+                + "right_elbow(X = 0.259; Y = -0.167; Z = -0.088; )\n"
+                + "right_foot(X = -0.246; Y = -0.162; Z = -0.185; )\n"
+                + "right_knee(X = -0.113; Y = -0.102; Z = -0.045; )\n"
+                + "right_shoulder(X = 0.243; Y = -0.081; Z = 0.015; )\n"
+                + "right_wrist(X = 0.315; Y = -0.113; Z = -0.155; )\n"
+                + "robot_vel(L = -0.011; R = -0.027; )\n"
+                + "sippc_action( = 0.000; )\n"
+                + "time( = 0.020; )\n"
+                + "upper_back(X = 0.227; Y = 0.017; Z = -0.005; )\n";
+        
         Assert.assertEquals("To String", output, testState.toString());
     }
     
@@ -104,7 +120,6 @@ public class StateTest
     @Test
     public void testGetMaxState()
     {
-        //TODO: Finish
         Assert.assertEquals("Get Max State", testState, testState.getMaxState("left_elbow", "x"));
     }
         
@@ -114,7 +129,6 @@ public class StateTest
     @Test
     public void testGetMinState()
     {
-        //TODO: Finish
         Assert.assertEquals("Get Min State", testState, testState.getMinState("left_elbow", "x"));
     }
     
@@ -124,12 +138,11 @@ public class StateTest
     @Test
     public void testGetAverageValue()
     {
-        //TODO: Update all of this
-        Assert.assertEquals("Get Average Left Wrist: X", 0.11137, 
-                testState.getAverageValue(0).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("Get Average Left Wrist: Y", 0.157633, 
-                testState.getAverageValue(1).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("Get Average Left Wrist: Z", -0.217952, 
-                testState.getAverageValue(2).getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Average Value: left_wrist_x", testPoint.getValue("x").getDoubleValue(), 
+                testState.getAverageValue("left_elbow", "x").getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Average Value: left_wrist_y", testPoint.getValue("y").getDoubleValue(), 
+                testState.getAverageValue("left_elbow", "y").getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Average Value: left_wrist_z", testPoint.getValue("z").getDoubleValue(), 
+                testState.getAverageValue("left_elbow", "z").getDoubleValue(), ACCURACY);
     }
 }

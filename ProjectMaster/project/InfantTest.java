@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * Class to test the Infant class using data enclosed in testData
  * @author Zach Schuermann
- * @version 10/06/17
+ * @version 10/24/17
  */
 public class InfantTest
 {
