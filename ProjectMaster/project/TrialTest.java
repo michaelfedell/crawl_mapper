@@ -14,12 +14,6 @@ import org.junit.BeforeClass;
  */
 public class TrialTest
 {
-    /** A PointND object created for testing - left_elbow in CSV data   */
-    private static PointND testPoint;
-
-    /** A State object created for testing  */
-    private static State testState;
-    
     /** A Trial object created for testing  */
     private static Trial testTrial;
     
@@ -30,7 +24,7 @@ public class TrialTest
     private static final double ACCURACY = 0.0000001;
     
     /**
-     * Instantiates testState for the testing that follows
+     * Instantiates testTrial for the testing that follows
      * 
      * @throws  IOException as required by Infant Class
      */
@@ -41,72 +35,33 @@ public class TrialTest
         testInfant = new Infant("testData", "testFields");
         // Assign the first (and only) trial for testing (subject_testValid_w01.csv)
         testTrial = testInfant.getItem(0);
-        // Assign the second state (third row) for testing
-        testState = testTrial.getItem(1);
-        // Create a PointND to represent the left_elbow from testFields CSV in it's second state (time=0.02)
-        testPoint = new PointND();
-        testPoint.add("x", new GeneralValue(0.140007));
-        testPoint.add("y", new GeneralValue(0.230226));
-        testPoint.add("z", new GeneralValue(-0.01652));
-    }
-    /**
-     * Tests trial with all valid input. Getters and calculation methods tested.
-     * 
-     * @throws IOException Catch IO Exception in case file is not present.
-     */
-    @Test
-    public void testVaildData() throws IOException
-    {
-        // Construct trial instance with all valid data
-        Trial testTrial = new Trial("testData", "testValid", 0);
-        
-        // Test getters
-        Assert.assertEquals("InfantID test", "testValid", testTrial.getInfantID());
-        Assert.assertEquals("Filename from testData", "testData/subject_testValid_w00.csv", testTrial.getFileName());
-        Assert.assertEquals("Getsize for trial", 48, testTrial.getSize());
-        Assert.assertEquals("Getweek for trial", 00, testTrial.getWeek());
-        
-        // Test calculation methods and toString
-        // Average, max, min etc. calculated and given in testData_info.rtf in testData package
-        Assert.assertEquals("getMaxLeftWrist for valid data", .109172, 
-                testTrial.getMaxState(0).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("getMinLeftWrist for valid data", .104375, 
-                testTrial.getMinState(0).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("getAverageLeftWrist for valid data", .106955438, 
-                testTrial.getAverageValue(0).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("getState for valid data", 
-                new State("0,0.105938,0.156901,-0.214572,0.157862,-0.273852,-0.055263").toString(), 
-                testTrial.getItem(0).toString());
     }
     
     /**
-     * Tests trial constructor with NaN input in .csv file. Getters and calculation methods tested.
-     * 
-     * @throws IOException Catch IO Exception in case file is not present.
+     * Tests the getters for trial metadata including: infantID, size, week, and file name
      */
     @Test
-    public void testInvaildData() throws IOException
+    public void testGetMetaData()
     {
-        // Construct trial instance with invalid data
-        Trial testTrial = new Trial("testData", "testNaN", 0);
-        
-        // Test getters
-        Assert.assertEquals("InfantID test", "testNaN", testTrial.getInfantID());
-        Assert.assertEquals("Filename from testData", "testData/subject_testNaN_w00.csv", testTrial.getFileName());
-        Assert.assertEquals("Getsize for trial", 24, testTrial.getSize());
-        Assert.assertEquals("Getweek for trial", 00, testTrial.getWeek());
-        
-        // Test calculation methods and toString
-        // Average, max, min etc. calculated and given in testData_info.rtf in testData package
-        Assert.assertEquals("getMaxLeftWrist for NaN data", .162172, 
-                testTrial.getMaxState(0).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("getMinLeftWrist for NaN data", .315919, 
-                testTrial.getMinState(1).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("getAverageLeftWrist for NaN data", -.033168091, 
-                testTrial.getAverageValue(2).getDoubleValue(), ACCURACY);
-        Assert.assertEquals("getState for NaN data",
-                new State("0.22,NaN,NaN,NaN,0.117181,-0.310722,-0.066776").toString(), 
-                testTrial.getItem(11).toString());
+        Assert.assertEquals("Get Infant ID", "testFields", testTrial.getInfantID());
+        Assert.assertEquals("Get Size", 26, testTrial.getSize());
+        Assert.assertEquals("Get Week", 1, testTrial.getWeek());
+        Assert.assertEquals("Get File Name", "testData/subject_testFields_w01.csv", testTrial.getFileName());
     }
-
+    
+    /**
+     * Tests the value-related methods for a Trial object such as getItem and statistical methods
+     */
+    @Test
+    public void testValues()
+    {
+        Assert.assertEquals("Get Item: 1", 0.140007, 
+                testTrial.getItem(1).getValue("left_elbow", "x").getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Max State: left_elbow_x", 0.140147, 
+                testTrial.getMaxState("left_elbow", "x").getValue("left_elbow", "x").getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Min State: left_elbow_y", 0.230102, 
+                testTrial.getMinState("left_elbow", "y").getValue("left_elbow", "y").getDoubleValue(), ACCURACY);
+        Assert.assertEquals("Get Average Value: left_elbow_z", -0.017478538, 
+                testTrial.getAverageValue("left_elbow", "z").getDoubleValue(), ACCURACY);
+    }
 }

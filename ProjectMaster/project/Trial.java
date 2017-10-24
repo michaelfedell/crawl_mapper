@@ -27,6 +27,8 @@ public class Trial extends MultipleItemAbstract
      * @param directory String representing the directory containing the data files
      * @param infantID String representing the infant ID
      * @param week int week for the data file.
+     * @param infant The infant to which this trial belongs
+
      * 
      * @throws IOException If there is an error finding or loading the data file.
      */
@@ -69,9 +71,9 @@ public class Trial extends MultipleItemAbstract
      * 
      * @return infantID
      */
-    public Infant getInfant()
+    public String getInfantID()
     {
-        return infant;
+        return infant.getInfantID();
     }
     
     /**
