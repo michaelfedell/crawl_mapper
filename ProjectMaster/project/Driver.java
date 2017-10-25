@@ -26,6 +26,7 @@ public class Driver
             System.out.println("");
             System.out.println("Max Left Wrist: \n" + infant.getMaxState("left_wrist", dims.substring(i, i + 1)));
             System.out.println("Min Left Wrist: \n" + infant.getMinState("left_wrist", dims.substring(i, i + 1)));
+            System.out.println(infant.getItem(0).getItem(1).getValue("left_wrist", "q"));
         }
     }
 }

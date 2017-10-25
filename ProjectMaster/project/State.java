@@ -82,7 +82,7 @@ public class State extends SingleItemAbstract implements Iterable<String>
      */
     public GeneralValue getValue(String fieldName, String subFieldName)
     {
-        if (variables.containsKey(fieldName))
+        if (variables.containsKey(fieldName) && variables.get(fieldName).getValue(subFieldName) != null)
         {
             return variables.get(fieldName).getValue(subFieldName);
         }
