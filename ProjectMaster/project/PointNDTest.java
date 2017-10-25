@@ -112,9 +112,9 @@ public class PointNDTest
     public void testToString()
     {
         // Create the string against which point will be tested
-        String testString = "X = -1.800; Y = 0.000; Z = 14.840; ";
+        String testString = "x = -1.800; y = 0.000; z = 14.840; ";
         // Create the string against which pointInval will be tested
-        String testStringInval = "X = -1.800; Y = INVALID; Z = 14.840; ";
+        String testStringInval = "x = -1.800; y = invalid; z = 14.840; ";
         
         Assert.assertEquals("To String", testString, point.toString());
         Assert.assertEquals("To String Invalid", testStringInval, pointInval.toString());       

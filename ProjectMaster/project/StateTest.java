@@ -66,7 +66,7 @@ public class StateTest
     @Test
     public void testGetPoint()
     {
-        Assert.assertEquals("Get Point: left_elbow", "X = 0.140; Y = 0.230; Z = -0.017; ", 
+        Assert.assertEquals("Get Point: left_elbow", "x = 0.140; y = 0.230; z = -0.017; ", 
                 testState.getPoint("left_elbow").toString());
     }
     
@@ -94,22 +94,22 @@ public class StateTest
     public void testToString()
     {
         // Manually construct a full string of testState with values from each field/subfield
-        String output = "left_ankle(X = -0.250; Y = -0.005; Z = 0.022; )\n"
-                + "left_elbow(X = 0.140; Y = 0.230; Z = -0.017; )\n"
-                + "left_foot(X = -0.260; Y = -0.046; Z = -0.072; )\n"
-                + "left_knee(X = -0.121; Y = 0.040; Z = -0.025; )\n"
-                + "left_shoulder(X = 0.211; Y = 0.116; Z = -0.026; )\n"
-                + "left_wrist(X = 0.164; Y = 0.293; Z = -0.093; )\n"
-                + "right_ankle(X = -0.244; Y = -0.149; Z = -0.083; )\n"
-                + "right_elbow(X = 0.259; Y = -0.167; Z = -0.088; )\n"
-                + "right_foot(X = -0.246; Y = -0.162; Z = -0.185; )\n"
-                + "right_knee(X = -0.113; Y = -0.102; Z = -0.045; )\n"
-                + "right_shoulder(X = 0.243; Y = -0.081; Z = 0.015; )\n"
-                + "right_wrist(X = 0.315; Y = -0.113; Z = -0.155; )\n"
-                + "robot_vel(L = -0.011; R = -0.027; )\n"
+        String output = "left_ankle(x = -0.250; y = -0.005; z = 0.022; )\n"
+                + "left_elbow(x = 0.140; y = 0.230; z = -0.017; )\n"
+                + "left_foot(x = -0.260; y = -0.046; z = -0.072; )\n"
+                + "left_knee(x = -0.121; y = 0.040; z = -0.025; )\n"
+                + "left_shoulder(x = 0.211; y = 0.116; z = -0.026; )\n"
+                + "left_wrist(x = 0.164; y = 0.293; z = -0.093; )\n"
+                + "right_ankle(x = -0.244; y = -0.149; z = -0.083; )\n"
+                + "right_elbow(x = 0.259; y = -0.167; z = -0.088; )\n"
+                + "right_foot(x = -0.246; y = -0.162; z = -0.185; )\n"
+                + "right_knee(x = -0.113; y = -0.102; z = -0.045; )\n"
+                + "right_shoulder(x = 0.243; y = -0.081; z = 0.015; )\n"
+                + "right_wrist(x = 0.315; y = -0.113; z = -0.155; )\n"
+                + "robot_vel(l = -0.011; r = -0.027; )\n"
                 + "sippc_action( = 0.000; )\n"
                 + "time( = 0.020; )\n"
-                + "upper_back(X = 0.227; Y = 0.017; Z = -0.005; )\n";
+                + "upper_back(x = 0.227; y = 0.017; z = -0.005; )\n";
         
         Assert.assertEquals("To String", output, testState.toString());
     }
