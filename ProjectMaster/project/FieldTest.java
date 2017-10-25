@@ -12,6 +12,19 @@ public class FieldTest
      * Class to test the size of a Field
      */
     @Test
+    public void emptyFieldTest()
+    {
+        // Instantiate new field
+        Field field = new Field();
+        
+        // compare
+        Assert.assertEquals("", field.toString());
+    }
+    
+    /**
+     * Class to test the size of a Field
+     */
+    @Test
     public void sizeTest()
     {
         // Instantiate new field
@@ -21,9 +34,6 @@ public class FieldTest
         field.addSubField("sub1", 0);
         field.addSubField("sub2", 1);
         field.addSubField("sub3", 2);
-        
-        System.out.println(field.getIndex("sub3"));
-        System.out.println(field.getIndex("sub4"));
         
         // compare
         Assert.assertEquals(3, field.size());

@@ -102,7 +102,7 @@ public class PointNDTest
             Assert.assertTrue(key.equals("x") || key.equals("y") || key.equals("z"));
         }
     }
-    
+   
     /**
      * Tests the toString method of the PointND class.
      * This method should return a string representation of each GeneralValue object stored in the PointND object
