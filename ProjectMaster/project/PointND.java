@@ -72,7 +72,7 @@ public class PointND implements Iterable<String>
         String out = "";
         for (String key : values.keySet())
         {
-            out += key.toUpperCase() + " = " + values.get(key).toString().toUpperCase() + "; ";
+            out += key + " = " + values.get(key).toString() + "; ";
         }
         return out;
     }
