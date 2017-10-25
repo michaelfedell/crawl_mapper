@@ -70,13 +70,17 @@ public class FieldMapper implements Iterable<String>
      */
     public PointND extractPointND(String[] stringValues, String fieldName)
     {
+        // instantiate point and field to check for null
         PointND point = new PointND(); 
         Field checkField = this.getField(fieldName);
         
+        // check if key is contained and the field isnt null, otherwise return null
         if (fieldMap.containsKey(fieldName) && checkField != null)
         {
+            // loop over every subfield
             for (String subFieldName : fieldMap.get(fieldName))
             {
+                //put given subField in fieldMap
                 int i = fieldMap.get(fieldName).getIndex(subFieldName);
                 point.add(subFieldName, new GeneralValue(stringValues[i]));
             }
