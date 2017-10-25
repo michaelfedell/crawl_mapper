@@ -12,7 +12,8 @@ public class Driver
     public static void main(String[] args) throws IOException
     {
         // Instantiate infant object
-        Infant infant = new Infant("data", "c1");
+        // c1, k1, or k2
+        Infant infant = new Infant("data", "k2");
         
         String dims = "xyz";
         

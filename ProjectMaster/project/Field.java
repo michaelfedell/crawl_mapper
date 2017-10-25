@@ -1,6 +1,6 @@
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Class to store a field for a given index in a CSV
@@ -21,7 +21,7 @@ public class Field implements Iterable<String>
      */
     public Field()
     {
-        subFields = new HashMap<String, Integer>();
+        subFields = new TreeMap<String, Integer>();
     }
     
     /**
@@ -41,7 +41,14 @@ public class Field implements Iterable<String>
      */
     public Integer getIndex(String subFieldName)
     {
-        return subFields.get(subFieldName);
+        if (subFields.containsKey(subFieldName))
+        {
+            return subFields.get(subFieldName);
+        }
+        else
+        {
+            return null;
+        }
     }
     
     /**

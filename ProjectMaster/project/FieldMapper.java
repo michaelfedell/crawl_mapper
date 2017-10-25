@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -21,8 +21,8 @@ public class FieldMapper implements Iterable<String>
      */
     public FieldMapper(String[] columnNames)
     {
-        // instantiate hashmap for fieldMap
-        fieldMap = new HashMap<String, Field>();
+        // instantiate treeMap for fieldMap
+        fieldMap = new TreeMap<String, Field>();
         int i = 0;
         //loop over all columns
         for (String col : columnNames)
@@ -68,7 +68,8 @@ public class FieldMapper implements Iterable<String>
      */
     public PointND extractPointND(String[] stringValues, String fieldName)
     {
-        PointND point = new PointND();
+        // I think there is an error in here?
+        PointND point = new PointND(); 
         for (String subFieldName : fieldMap.get(fieldName))
         {
             int i = fieldMap.get(fieldName).getIndex(subFieldName);

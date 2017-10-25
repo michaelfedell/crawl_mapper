@@ -62,7 +62,14 @@ public class State extends SingleItemAbstract implements Iterable<String>
      */
     public PointND getPoint(String fieldName)
     {
-        return variables.get(fieldName);
+        if (variables.containsKey(fieldName))
+        {
+            return variables.get(fieldName);
+        }
+        else 
+        {
+            return null;
+        }
     }
     
     /**

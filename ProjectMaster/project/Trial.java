@@ -51,7 +51,7 @@ public class Trial extends MultipleItemAbstract
         String strg;
         
         // Add header to make fieldMap
-        strg = br.readLine(); 
+        strg = br.readLine();
         fieldMap = new FieldMapper(strg.split(","));
         
         // Read first line
