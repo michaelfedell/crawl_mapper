@@ -41,7 +41,7 @@ public class FieldMapper implements Iterable<String>
             // no subfields
             else
             {
-                //add col and new field with empty string subField
+                // add col and new field with empty string subField
                 fieldMap.put(col, new Field());
                 fieldMap.get(col).addSubField("", i);
             }
