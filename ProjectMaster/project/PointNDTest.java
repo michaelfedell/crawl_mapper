@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * Unit testing for the PointND Class
  * 
- * @author Michael Fedell
+ * @author Michael Fedell modified by Zach Schuermann
  * @version 10/24/17
  */
 public class PointNDTest
@@ -66,6 +66,9 @@ public class PointNDTest
                 point.getValue("y").getDoubleValue(), 0.0001);
         Assert.assertEquals("getDimValue: z", test[2].getDoubleValue(), 
                 point.getValue("z").getDoubleValue(), 0.0001);
+        
+        //Test invalid
+        Assert.assertFalse(point.getValue("Bogus").isValid());
         
         // Ensure that access also works for invalid values
         try

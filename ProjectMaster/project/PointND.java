@@ -41,7 +41,15 @@ public class PointND implements Iterable<String>
      */
     public GeneralValue getValue(String subFieldName)
     {
-        return values.get(subFieldName);
+        // check if contains key, if not return invalid
+        if (values.containsKey(subFieldName))
+        {
+            return values.get(subFieldName);
+        }
+        else
+        {
+            return new GeneralValue("NaN");
+        }
     }
     
     /**
