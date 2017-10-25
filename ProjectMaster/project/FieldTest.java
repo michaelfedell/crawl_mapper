@@ -22,6 +22,9 @@ public class FieldTest
         field.addSubField("sub2", 1);
         field.addSubField("sub3", 2);
         
+        System.out.println(field.getIndex("sub3"));
+        System.out.println(field.getIndex("sub4"));
+        
         // compare
         Assert.assertEquals(3, field.size());
     }

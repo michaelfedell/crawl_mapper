@@ -72,7 +72,7 @@ public class FieldMapper implements Iterable<String>
         PointND point = new PointND(); 
         for (String subFieldName : fieldMap.get(fieldName))
         {
-            int i = fieldMap.get(fieldName).getIndex(subFieldName);
+            int i = fieldMap.get(fieldName).getIndex(subFieldName);     // potential for null i here...? getIndex(inval) returns null so maybe?
             point.add(subFieldName, new GeneralValue(stringValues[i]));
         }
         return point;
