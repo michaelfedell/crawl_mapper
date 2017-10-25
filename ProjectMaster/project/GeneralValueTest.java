@@ -137,8 +137,11 @@ public class GeneralValueTest
     @Test
     public void testToString()
     {
+        // Create genVals for testing
         GeneralValue validGenVal = new GeneralValue("-634.18");
         GeneralValue invalidGenVal = new GeneralValue("NaN");
+        
+        // Ensure toString returns proper formatting
         Assert.assertEquals("Valid To String", "-634.180", validGenVal.toString());
         Assert.assertEquals("Valid To String", "invalid", invalidGenVal.toString());
     }

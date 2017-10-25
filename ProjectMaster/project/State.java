@@ -57,6 +57,7 @@ public class State extends SingleItemAbstract implements Iterable<String>
     
     /**
      * Returns the pointND object for a user-specified field in this state. 
+     * 
      * @param fieldName String for the given field
      * @return PointND object of specified field at current state.
      */
@@ -66,6 +67,7 @@ public class State extends SingleItemAbstract implements Iterable<String>
         {
             return variables.get(fieldName);
         }
+        // desired field does not exist
         else 
         {
             return null;
@@ -82,10 +84,12 @@ public class State extends SingleItemAbstract implements Iterable<String>
      */
     public GeneralValue getValue(String fieldName, String subFieldName)
     {
+        // desired field and subfield both exist
         if (variables.containsKey(fieldName) && variables.get(fieldName).getValue(subFieldName) != null)
         {
             return variables.get(fieldName).getValue(subFieldName);
         }
+        // desired field or subfield is invalid
         else
         {
             return new GeneralValue("NaN");
@@ -148,6 +152,8 @@ public class State extends SingleItemAbstract implements Iterable<String>
     public String toString()
     {
         String out = "";
+        
+        // loops through each field the state
         for (String key : variables.keySet())
         {
             out += key + "(" + variables.get(key).toString() + ")\n";

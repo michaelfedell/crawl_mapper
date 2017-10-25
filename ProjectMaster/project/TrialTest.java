@@ -57,10 +57,13 @@ public class TrialTest
     {
         Assert.assertEquals("Get Item: 1", 0.140007, 
                 testTrial.getItem(1).getValue("left_elbow", "x").getDoubleValue(), ACCURACY);
+        // Max value for trial calculated in testFields-Stats xlsx file
         Assert.assertEquals("Get Max State: left_elbow_x", 0.140147, 
                 testTrial.getMaxState("left_elbow", "x").getValue("left_elbow", "x").getDoubleValue(), ACCURACY);
+        // Min value for trial calculated in testFields-Stats xlsx file
         Assert.assertEquals("Get Min State: left_elbow_y", 0.230102, 
                 testTrial.getMinState("left_elbow", "y").getValue("left_elbow", "y").getDoubleValue(), ACCURACY);
+        // Average value for trial calculated in testFields-Stats xlsx file
         Assert.assertEquals("Get Average Value: left_elbow_z", -0.017478538, 
                 testTrial.getAverageValue("left_elbow", "z").getDoubleValue(), ACCURACY);
     }

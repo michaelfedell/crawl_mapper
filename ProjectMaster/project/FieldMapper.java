@@ -52,6 +52,7 @@ public class FieldMapper implements Iterable<String>
     
     /**
      * Getter for a Field with given fieldName
+     * 
      * @param fieldName the string key for a field
      * @return Field of given fieldName
      */
@@ -62,6 +63,7 @@ public class FieldMapper implements Iterable<String>
     
     /**
      * Method to return a pointND for a given string array of values for a fieldName
+     * 
      * @param stringValues String array of values in a given field
      * @param fieldName String representing the name of a given field
      * @return point The pointND constructed for a given field
@@ -84,11 +86,11 @@ public class FieldMapper implements Iterable<String>
         {
             return null;
         }
-        
     }
     
     /**
      * Getter for the size of the fieldMap
+     * 
      * @return the size of the fieldMap
      */
     public int size()
@@ -98,6 +100,7 @@ public class FieldMapper implements Iterable<String>
     
     /**
      * Iterator method to allow the class to implement iterable
+     * 
      * @return Iterator over the Key set
      */
     public Iterator<String> iterator()

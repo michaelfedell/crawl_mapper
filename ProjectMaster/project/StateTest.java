@@ -138,6 +138,7 @@ public class StateTest
     @Test
     public void testGetAverageValue()
     {
+        // Average values for a single state are equal to the value of each subfield in that state
         Assert.assertEquals("Get Average Value: left_wrist_x", 0.140007, 
                 testState.getAverageValue("left_elbow", "x").getDoubleValue(), ACCURACY);
         Assert.assertEquals("Get Average Value: left_wrist_y", 0.230226, 
@@ -156,7 +157,7 @@ public class StateTest
         // iterate over keys in point
         for (@SuppressWarnings("unused") String key : testState)
         {
-            // test each key is either x,y,z
+            // test each key for code coverage
             i++;
         }
         Assert.assertEquals(16, i);

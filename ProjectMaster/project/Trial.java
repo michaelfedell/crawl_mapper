@@ -28,8 +28,6 @@ public class Trial extends MultipleItemAbstract
      * @param infantID String representing the infant ID
      * @param week int week for the data file.
      * @param infant The infant to which this trial belongs
-
-     * 
      * @throws IOException If there is an error finding or loading the data file.
      */
     public Trial(Infant infant, String directory, String infantID, int week) throws IOException
@@ -57,6 +55,7 @@ public class Trial extends MultipleItemAbstract
         // Read first line
         strg = br.readLine();
         
+        // Adds State objects until scanner reads a null line 
         while (strg != null)
         {
             stateList.add(new State(this, fieldMap, strg));
@@ -78,6 +77,7 @@ public class Trial extends MultipleItemAbstract
     
     /**
      * Getter for the Infant of the trial
+     * 
      * @return the infant of the trial
      */
     public Infant getInfant()
