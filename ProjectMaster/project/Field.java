@@ -68,4 +68,17 @@ public class Field implements Iterable<String>
     {
         return subFields.keySet().iterator();
     }
+    
+    /**
+     * 
+     */
+    public String toString()
+    {
+        String out = "";
+        for (String key : subFields.keySet()) 
+        {
+            out += key + "(" + subFields.get(key) + "); ";
+        }
+        return out;
+    }
 }

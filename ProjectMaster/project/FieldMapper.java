@@ -68,8 +68,7 @@ public class FieldMapper implements Iterable<String>
      */
     public PointND extractPointND(String[] stringValues, String fieldName)
     {
-        // I think there is an error in here?
-        PointND point = new PointND();
+        PointND point = new PointND(); 
         Field checkField = this.getField(fieldName);
         
         if (fieldMap.containsKey(fieldName) && checkField != null)
