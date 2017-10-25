@@ -41,6 +41,7 @@ public class Field implements Iterable<String>
      */
     public Integer getIndex(String subFieldName)
     {
+        // check if it contains key, return null if not
         if (subFields.containsKey(subFieldName))
         {
             return subFields.get(subFieldName);
@@ -70,7 +71,8 @@ public class Field implements Iterable<String>
     }
     
     /**
-     * 
+     * To string method
+     * @return String representation of the object
      */
     public String toString()
     {

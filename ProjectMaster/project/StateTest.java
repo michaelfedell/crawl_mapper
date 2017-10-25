@@ -68,6 +68,8 @@ public class StateTest
     {
         Assert.assertEquals("Get Point: left_elbow", "x = 0.140; y = 0.230; z = -0.017; ", 
                 testState.getPoint("left_elbow").toString());
+        //Test null case
+        Assert.assertNull("Null getPoint", testState.getPoint("Bogus"));
     }
     
     /**
@@ -83,6 +85,10 @@ public class StateTest
                 testState.getValue("left_elbow", "y").getDoubleValue(), ACCURACY);
         Assert.assertEquals("GetValue: left_elbow_z", -0.01652, 
                 testState.getValue("left_elbow", "z").getDoubleValue(), ACCURACY);
+        
+        //Test invalid case
+        Assert.assertFalse("Null getValue", testState.getValue("Bogus", "Bogus").isValid());
+        Assert.assertFalse("Null getValue", testState.getValue("left_elbow", "Bogus").isValid());
     }
     
     /**

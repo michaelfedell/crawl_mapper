@@ -25,6 +25,38 @@ public class FieldTest
      * Class to test the size of a Field
      */
     @Test
+    public void multiFieldTest()
+    {
+        // Instantiate new field
+        Field field = new Field();
+        
+        // add subfields to count
+        field.addSubField("sub1", 0);
+        field.addSubField("sub2", 1);
+        field.addSubField("sub3", 2);
+        
+        // compare
+        Assert.assertEquals("sub1(0); sub2(1); sub3(2); ", field.toString());
+    }
+    
+    /**
+     * Class to test null Field
+     */
+    @Test
+    public void nullFieldTest()
+    {
+        // Instantiate new field
+        Field field = new Field();
+        
+        // compare
+        Assert.assertNull(field.getIndex("Bogus"));
+    }
+    
+    
+    /**
+     * Class to test the size of a Field
+     */
+    @Test
     public void sizeTest()
     {
         // Instantiate new field
