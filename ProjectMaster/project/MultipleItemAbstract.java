@@ -32,6 +32,7 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
     public State getMaxState(String fieldName, String subFieldName)
     {
         // Initialize to the smallest possible number.
+        // TODO: Refactor to compare generalValues instead of doubles
         double max = Double.NEGATIVE_INFINITY;
         double val = 0;
         State maxState = new State();
@@ -39,8 +40,10 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
         {
+            // TODO: Do not need the isValid check if we use the isGreaterThan method
             if (getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName).isValid())
             {
+                // TODO: Avoid getMaxState calls within for loops
                 val = getItem(i).getMaxState(fieldName, subFieldName)
                         .getValue(fieldName, subFieldName).getDoubleValue();
                 if (val > max)
