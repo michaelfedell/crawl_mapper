@@ -32,26 +32,20 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
     public State getMaxState(String fieldName, String subFieldName)
     {
         // Initialize to the smallest possible number.
-        // TODO: Refactor to compare generalValues instead of doubles
-        double max = Double.NEGATIVE_INFINITY;
-        double val = 0;
+        GeneralValue max = new GeneralValue(Double.NEGATIVE_INFINITY);
+        GeneralValue val = new GeneralValue();
         State maxState = new State();
         
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
         {
-            // TODO: Do not need the isValid check if we use the isGreaterThan method
-            if (getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName).isValid())
+            // TODO: Avoid getMaxState calls within for loops
+            val = getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName);
+            if (val.isGreaterThan(max))
             {
-                // TODO: Avoid getMaxState calls within for loops
-                val = getItem(i).getMaxState(fieldName, subFieldName)
-                        .getValue(fieldName, subFieldName).getDoubleValue();
-                if (val > max)
-                {
-                    max = val;
-                    maxState = getItem(i).getMaxState(fieldName, subFieldName);
-                }
-            }
+                max = val;
+                maxState = getItem(i).getMaxState(fieldName, subFieldName);
+            }   
         }
         
         // Return empty State if no maxState
@@ -68,22 +62,18 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
     public State getMinState(String fieldName, String subFieldName)
     {
         // Initialize to the smallest possible number.
-        double min = Double.POSITIVE_INFINITY;
-        double val = 0;
+        GeneralValue min = new GeneralValue(Double.POSITIVE_INFINITY);
+        GeneralValue val = new GeneralValue();
         State minState = new State();
         
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
         {
-            if (getItem(i).getMinState(fieldName, subFieldName).getValue(fieldName, subFieldName).isValid())
+            val = getItem(i).getMinState(fieldName, subFieldName).getValue(fieldName, subFieldName);
+            if (val.isLessThan(min))
             {
-                val = getItem(i).getMinState(fieldName, subFieldName)
-                        .getValue(fieldName, subFieldName).getDoubleValue();
-                if (val < min)
-                {
-                    min = val;
-                    minState = getItem(i).getMinState(fieldName, subFieldName);
-                }
+                min = val;
+                minState = getItem(i).getMinState(fieldName, subFieldName);
             }
         }
         
