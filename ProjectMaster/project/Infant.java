@@ -1,6 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * An Infant object to store all of the trials associated with a particular infant.
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * @version 10/23/17
  *
  */
-public class Infant extends MultipleItemAbstract
+public class Infant extends MultipleItemAbstract implements Iterable<Trial>
 {
     /** Stores the list of trials that pertain to a particular infant */
     private ArrayList<Trial> trialList;
@@ -49,6 +50,17 @@ public class Infant extends MultipleItemAbstract
     }
     
     /**
+     * Secondary constructor creating an infant from a reference infant but with a specified list of trials
+     * 
+     * @param infant
+     * @param indices
+     */
+    public Infant(Infant infant, int[] indices)
+    {
+        // TODO: Complete constructor
+    }
+    
+    /**
      * Allows user to access a particular trial for this infant
      * 
      * @param index The zero-indexed trial desired from ArrayList
@@ -77,5 +89,12 @@ public class Infant extends MultipleItemAbstract
     public String getInfantID()
     {
         return infantID;
+    }
+
+    @Override
+    public Iterator<Trial> iterator()
+    {
+        // TODO Implement iterator
+        return null;
     }
 }

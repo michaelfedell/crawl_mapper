@@ -29,8 +29,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * Graphical user interface for interacting with Infant data
  * 
- * @author CS2334, modified by ????
- * @version 2017-10-20
+ * @author CS2334, modified by Michael Fedell
+ * @version 11-03-17
  *
  */
 public class InfantFrame extends JFrame
@@ -48,8 +48,8 @@ public class InfantFrame extends JFrame
     ///////////////////////////////////////////////////////////////////
     /**
      * 
-     * @author CS2334, modified by ???
-     * @version 2017-10-20
+     * @author CS2334, modified by Michael Fedell
+     * @version 11-03-17
      * 
      * Menu bar that provides file loading and program exit capabilities.
      *
@@ -75,10 +75,17 @@ public class InfantFrame extends JFrame
             add(menu);
 
             // TODO: create and add menu items
-            
+            menuOpen = new JMenuItem("Open Configuration File");
+            menuExit = new JMenuItem("Exit");
+            menu.add(menuOpen);
+            menu.add(menuExit);
 
-            // TODO: Action listener for exit
-
+            // TODO: Action listener for exit - check
+            menuExit.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.exit(0);
+                }
+            });
 
             // Filter for the file chooser: we only want files ending in '.dat'
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Configuration Files", "dat");
@@ -98,8 +105,9 @@ public class InfantFrame extends JFrame
                         // Extract the file that was selected
                         File file = fileChooser.getSelectedFile();
                         try {
-                            // TODO: Set to a "busy" cursor
-
+                            // TODO: Set to a "busy" cursor - check
+                            InfantFrame.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                            
                             // Save the components of the selected file
                             String directory = file.getParent();
                             String fname = file.getName();
@@ -107,7 +115,7 @@ public class InfantFrame extends JFrame
                             // TODO: Do the loading work: the first two characters are the Infant ID
                             
                             // Return the cursor to standard form
-                            InfantFrame2.this.setCursor(null);
+                            InfantFrame.this.setCursor(null);
 
                             // TODO: If we did not load any data then open a message dialog box to indicate
                             //   an error
@@ -120,7 +128,7 @@ public class InfantFrame extends JFrame
                             JOptionPane.showMessageDialog(fileChooser, 
                                     "File load error");
                             // Return the cursor to standard form
-                            InfantFrame2.this.setCursor(null);
+                            InfantFrame.this.setCursor(null);
                         }
 
                     }
@@ -136,7 +144,7 @@ public class InfantFrame extends JFrame
     ///////////////////////////////////////////////////////////////////
     /**
      * 
-     * @author CS2334, modified by ???
+     * @author CS2334, modified by Michael Fedell
      * @version 2016-11-01
      * 
      * Selection panel: contains JLists for the list of trials, the list of fieldNames and the 
@@ -192,7 +200,7 @@ public class InfantFrame extends JFrame
             trialList = new JList<String>(trialListModel);
             // Multiple items can be selected at once
             trialList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            // Vertically organized list with an arbitrary numer of rows
+            // Vertically organized list with an arbitrary number of rows
             trialList.setVisibleRowCount(-1);
             trialList.setLayoutOrientation(JList.VERTICAL);
             // Scroll pane goes around the JList
@@ -202,14 +210,36 @@ public class InfantFrame extends JFrame
             /////////////////////////////////////
             // JList for field selection
             // Model is of Strings
-            // TODO: complete implementation
-            
+            // TODO: complete implementation - check
+            fieldListModel = new DefaultListModel<String>();
+            // JList for fields
+            fieldList = new JList<String>(fieldListModel);
+            // Multiple items can be selected at once
+            fieldList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            // Vertically organized list with an arbitrary number of rows
+            fieldList.setVisibleRowCount(-1);
+            fieldList.setLayoutOrientation(JList.VERTICAL);
+            // Scroll pane goes around the JList
+            fieldScroller = new JScrollPane(fieldList);
+            fieldScroller.setPreferredSize(new Dimension(300, 100));
+
 
 
             ////////////////////////////////////////
             // JList for Subfields
-            // TODO: complete implementation
-            
+            // TODO: complete implementation - check
+            subfieldListModel = new DefaultListModel<String>();
+            // JList for fields
+            subfieldList = new JList<String>(subfieldListModel);
+            // Multiple items can be selected at once
+            subfieldList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            // Vertically organized list with an arbitrary number of rows
+            subfieldList.setVisibleRowCount(-1);
+            subfieldList.setLayoutOrientation(JList.VERTICAL);
+            // Scroll pane goes around the JList
+            subfieldScroller = new JScrollPane(subfieldList);
+            subfieldScroller.setPreferredSize(new Dimension(300, 100));
+
 
             ////////////////
             // Selection Listeners
@@ -226,12 +256,32 @@ public class InfantFrame extends JFrame
             ///////////////
             // Layout
             this.setLayout(new GridBagLayout());
-            GridBagConstraints layoutConst = new GridBagConstraints();
+            GridBagConstraints c = new GridBagConstraints();
 
-            // TODO: complete the layout
+            // TODO: complete the layout - check
+            c.insets = new Insets(10, 10, 10, 10);
             
-            // TODO: Background color of the panel
+            // Add labels (first column)
+            c.gridx = 0;
+            c.gridy = 0;
+            add(trialLabel, c);
+            c.gridy++;
+            add(fieldLabel, c);
+            c.gridy++;
+            add(subfieldLabel, c);
 
+            // Add scrollview selection panes (second column)
+            c.gridx++;
+            c.gridy = 0;
+            add(trialScroller, c);
+            c.gridy++;
+            add(fieldScroller, c);
+            c.gridy++;
+            add(subfieldScroller, c);
+            
+            // TODO: Background color of the panel - check
+            this.setBackground(new Color(195, 224, 195));
+            
             // ///////////////////////
             // Set the names of the key objects: don't change these
             this.trialList.setName("TrialList");
@@ -278,7 +328,7 @@ public class InfantFrame extends JFrame
             // TODO: complete implementation
 
             // Tell the rest of the frame that it needs to update
-            InfantFrame2.this.update();
+            InfantFrame.this.update();
         }
 
     }
@@ -287,8 +337,8 @@ public class InfantFrame extends JFrame
     /**
      * DataPanel: display selection information and statistics
      * 
-     * @author CS2334, modified by ???
-     * @version 2017-10-20
+     * @author CS2334, modified by Michael Fedell
+     * @version 11-03-17
      * 
      * 
      *
@@ -308,7 +358,17 @@ public class InfantFrame extends JFrame
         private JLabel minTimeLabel = new JLabel("at");
         private JLabel averageLabel = new JLabel("Average:");
 
-        // TODO: complete implementation
+        // TODO: complete implementation - check
+        private JTextField infantIDField = new JTextField(10);
+        private JTextField fieldNameField = new JTextField(10);
+        private JTextField subfieldNameField = new JTextField(10);
+        private JTextField maxValueField = new JTextField(10);
+        private JTextField maxWeekField = new JTextField(10);
+        private JTextField maxTimeField = new JTextField(10);
+        private JTextField minValueField = new JTextField(10);
+        private JTextField minWeekField = new JTextField(10);
+        private JTextField minTimeField = new JTextField(10);
+        private JTextField averageValueField = new JTextField(10);
 
 
         /**
@@ -335,9 +395,63 @@ public class InfantFrame extends JFrame
             averageValueField.setEditable(false);
 
             //////////////
-            // TODO: Layout
+            // TODO: Layout - check
             this.setLayout(new GridBagLayout());
-            GridBagConstraints layoutConst = new GridBagConstraints();
+            GridBagConstraints c = new GridBagConstraints();
+            
+            c.insets = new Insets(10, 10, 10, 10);
+            
+            // Add Labels (first column)
+            c.gridx = 0;
+            c.gridy = 0;
+            add(infantIDLabel, c);
+            c.gridy++;
+            add(fieldNameLabel, c);
+            c.gridy++;
+            add(subfieldNameLabel, c);
+            c.gridy++;
+            add(maxLabel, c);
+            c.gridy++;
+            add(averageLabel, c);
+            c.gridy++;
+            add(minLabel, c);
+            
+            // Add Fields (second column)
+            c.gridx++;
+            c.gridy = 0;
+            add(infantIDField, c);
+            c.gridy++;
+            add(fieldNameField, c);
+            c.gridy++;
+            add(subfieldNameField, c);
+            c.gridy++;
+            add(maxValueField, c);
+            c.gridy++;
+            add(minValueField, c);
+            c.gridy++;
+            add(averageValueField, c);
+            
+            // Add week and time to Max row
+            c.gridx = 2;
+            c.gridy = 3;
+            add(maxWeekLabel, c);
+            c.gridx++;
+            add(maxWeekField, c);
+            c.gridx++;
+            add(maxTimeLabel, c);
+            c.gridx++;
+            add(maxTimeField, c);
+            
+            // Add week and time to Min row
+            c.gridx = 2;
+            c.gridy = 5;
+            add(minWeekLabel, c);
+            c.gridx++;
+            add(minWeekField, c);
+            c.gridx++;
+            add(minTimeLabel, c);
+            c.gridx++;
+            add(minTimeField, c);
 
             
             
@@ -376,7 +490,17 @@ public class InfantFrame extends JFrame
                 String minState, String minStateWeek, String minStateTime,
                 String average)
         {
-            // TODO: Set each of the text fields
+            // TODO: Set each of the text fields - check
+            infantIDField.setText(infantID);
+            fieldNameField.setText(fieldName);
+            subfieldNameField.setText(subfieldName);
+            maxValueField.setText(maxState);
+            maxWeekField.setText(maxStateWeek);
+            maxTimeField.setText(maxStateTime);
+            minValueField.setText(minState);
+            minWeekField.setText(minStateWeek);
+            minTimeField.setText(minStateTime);
+            averageValueField.setText(average);
         }
     }
 
@@ -414,8 +538,10 @@ public class InfantFrame extends JFrame
         this.selectionPanel = new SelectionPanel();
         this.add(this.selectionPanel, layoutConst);
 
-        // TODO: Display panel
-        
+        // TODO: Display panel - check
+        layoutConst.gridx = 1;
+        this.dataPanel = new DataPanel();
+        this.add(this.dataPanel, layoutConst);
         
         // Make the frame visible
         this.setVisible(true);
@@ -494,7 +620,6 @@ public class InfantFrame extends JFrame
                 
                 // TODO: complete the setting of the defined Strings
                 
-                }
             }
             else
             {
@@ -508,7 +633,5 @@ public class InfantFrame extends JFrame
                 maxStateString, maxStateWeekString, maxStateTimeString,
                 minStateString, minStateWeekString, minStateTimeString,
                 averageString);
-
     }
-
 }
