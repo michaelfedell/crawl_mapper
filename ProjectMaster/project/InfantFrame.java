@@ -618,8 +618,22 @@ public class InfantFrame extends JFrame
                 // Which subfield has been selected?
                 subfieldName = selectionPanel.subfieldList.getSelectedValue();
                 
-                // TODO: complete the setting of the defined Strings
+                // TODO: complete the setting of the defined Strings - check?
+                maxStateString = subInfant.getMaxState(fieldName, subfieldName)
+                        .getValue(fieldName, subfieldName).toString();
+                maxStateWeekString = String.format("Week %02d", 
+                        subInfant.getMaxState(fieldName, subfieldName).getTrial().getWeek());
+                maxStateTimeString = subInfant.getMaxState(fieldName, subfieldName)
+                        .getValue("time", "").toString();
                 
+                averageString = subInfant.getAverageValue(fieldName, subfieldName).toString();
+                
+                minStateString = subInfant.getMinState(fieldName, subfieldName)
+                        .getValue(fieldName, subfieldName).toString();
+                minStateWeekString = String.format("Week %02d", 
+                        subInfant.getMinState(fieldName, subfieldName).getTrial().getWeek());
+                minStateTimeString = subInfant.getMinState(fieldName, subfieldName)
+                        .getValue("time", "").toString();
             }
             else
             {
