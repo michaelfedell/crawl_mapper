@@ -74,13 +74,13 @@ public class InfantFrame extends JFrame
             menu = new JMenu("File");
             add(menu);
 
-            // TODO: create and add menu items
+            // create and add menu items
             menuOpen = new JMenuItem("Open Configuration File");
             menuExit = new JMenuItem("Exit");
             menu.add(menuOpen);
             menu.add(menuExit);
 
-            // TODO: Action listener for exit - check
+            // Action listener for exit
             menuExit.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.exit(0);
@@ -105,22 +105,27 @@ public class InfantFrame extends JFrame
                         // Extract the file that was selected
                         File file = fileChooser.getSelectedFile();
                         try {
-                            // TODO: Set to a "busy" cursor - check
+                            // Set to a "busy" cursor - check
                             InfantFrame.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                             
                             // Save the components of the selected file
                             String directory = file.getParent();
                             String fname = file.getName();
 
-                            // TODO: Do the loading work: the first two characters are the Infant ID
+                            // Do the loading work: the first two characters are the Infant ID
+                            InfantFrame.this.loadData(directory, fname.substring(0, 2));
                             
                             // Return the cursor to standard form
                             InfantFrame.this.setCursor(null);
 
-                            // TODO: If we did not load any data then open a message dialog box to indicate
-                            //   an error
+                            // If we did not load any data then open a message dialog box to indicate an error
+                            if (infant.getSize() == 0)
+                            {
+                                JOptionPane.showMessageDialog(fileChooser, "No data for specified file");
+                            }
                             
-                            // TODO: Update the frame
+                            // Update the frame
+                            InfantFrame.this.update();
                         }
                         catch (IOException e2)
                         {
@@ -563,8 +568,8 @@ public class InfantFrame extends JFrame
      */
     public synchronized void loadData(String directory, String infantID) throws IOException
     {
-        // TODO: implement
-
+        // construct infant
+        this.infant = new Infant(directory, infantID);
     }
 
     /**
