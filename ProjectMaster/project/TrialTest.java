@@ -1,4 +1,8 @@
 import org.junit.Test;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -39,14 +43,23 @@ public class TrialTest
     
     /**
      * Tests the getters for trial metadata including: infantID, size, week, and file name
+     * @throws IOException 
      */
     @Test
-    public void testGetMetaData()
+    public void testGetMetaData() throws IOException
     {
         Assert.assertEquals("Get Infant ID", "testFields", testTrial.getInfantID());
         Assert.assertEquals("Get Size", 26, testTrial.getSize());
         Assert.assertEquals("Get Week", 1, testTrial.getWeek());
         Assert.assertEquals("Get File Name", "testData/subject_testFields_w01.csv", testTrial.getFileName());
+        // Test get fieldMapper for project 4 addition
+        // Create fieldMapper to test against
+        // Open the file
+        BufferedReader br = new BufferedReader(new FileReader("testData/subject_testFields_w01.csv"));
+        String strg = br.readLine();
+        FieldMapper fieldMapTest = new FieldMapper(strg.split(","));
+        Assert.assertEquals("Get FieldMapper", fieldMapTest.size(), testTrial.getFieldMapper().size());
+        Assert.assertEquals("Get FieldMapper", fieldMapTest.getField("left_wrist_z"), testTrial.getFieldMapper().getField("left_wrist_z"));
     }
     
     /**
@@ -66,5 +79,14 @@ public class TrialTest
         // Average value for trial calculated in testFields-Stats xlsx file
         Assert.assertEquals("Get Average Value: left_elbow_z", -0.017478538, 
                 testTrial.getAverageValue("left_elbow", "z").getDoubleValue(), ACCURACY);
+    }
+    
+    /**
+     * Test the addition of toString for project 4
+     */
+    @Test
+    public void testToString()
+    {
+        Assert.assertEquals ("toString failed", "Week 01", testTrial.toString());
     }
 }

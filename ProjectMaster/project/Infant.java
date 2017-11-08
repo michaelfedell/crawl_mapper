@@ -57,7 +57,22 @@ public class Infant extends MultipleItemAbstract implements Iterable<Trial>
      */
     public Infant(Infant infant, int[] indices)
     {
-        // TODO: Complete constructor
+        // use same infantID
+        this.infantID = infant.getInfantID();
+        
+        // instantiate trialList
+        trialList = new ArrayList<Trial>();
+        
+        //  trialList
+        for (int index : indices)
+        {
+            //try catch for invalid indices
+            try {
+                trialList.add(infant.trialList.get(index));
+            } catch (IndexOutOfBoundsException e) {
+                continue;
+            }
+        }
     }
     
     /**

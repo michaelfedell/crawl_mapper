@@ -21,6 +21,9 @@ public class Trial extends MultipleItemAbstract
     /** File name that was loaded.  */
     private String fileName;
     
+    /** Declare fieldMapper **/
+    private FieldMapper fieldMapper;
+    
     /**
      * Trial constructor
      * 
@@ -41,16 +44,13 @@ public class Trial extends MultipleItemAbstract
         // instantiate stateList
         this.stateList = new ArrayList<State>();
         
-        //declare fieldMapper
-        FieldMapper fieldMap; 
-        
         // Open the file
         BufferedReader br = new BufferedReader(new FileReader(this.fileName));
         String strg;
         
         // Add header to make fieldMap
         strg = br.readLine();
-        fieldMap = new FieldMapper(strg.split(","));
+        fieldMapper = new FieldMapper(strg.split(","));
         
         // Read first line
         strg = br.readLine();
@@ -58,7 +58,7 @@ public class Trial extends MultipleItemAbstract
         // Adds State objects until scanner reads a null line 
         while (strg != null)
         {
-            stateList.add(new State(this, fieldMap, strg));
+            stateList.add(new State(this, fieldMapper, strg));
             strg = br.readLine();
         }
 
@@ -124,5 +124,25 @@ public class Trial extends MultipleItemAbstract
     public String getFileName()
     {
         return fileName;
+    }
+    
+    /**
+     * Getter for the fieldMapper.
+     * 
+     * @return FieldMapper of the trial.
+     */
+    public FieldMapper getFieldMapper()
+    {
+        return fieldMapper;
+    }
+    
+    /**
+     * Converts data to a String representation.
+     * 
+     * @return FieldMapper of the trial.
+     */
+    public String toString()
+    {
+        return String.format("Week %02d", getWeek());
     }
 }
