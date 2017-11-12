@@ -1,7 +1,6 @@
 import org.junit.Test;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import org.junit.Assert;
@@ -43,7 +42,7 @@ public class TrialTest
     
     /**
      * Tests the getters for trial metadata including: infantID, size, week, and file name
-     * @throws IOException 
+     * @throws IOException for file load error
      */
     @Test
     public void testGetMetaData() throws IOException
@@ -59,7 +58,8 @@ public class TrialTest
         String strg = br.readLine();
         FieldMapper fieldMapTest = new FieldMapper(strg.split(","));
         Assert.assertEquals("Get FieldMapper", fieldMapTest.size(), testTrial.getFieldMapper().size());
-        Assert.assertEquals("Get FieldMapper", fieldMapTest.getField("left_wrist_z"), testTrial.getFieldMapper().getField("left_wrist_z"));
+        Assert.assertEquals("Get FieldMapper", fieldMapTest.getField("left_wrist_z"), 
+                testTrial.getFieldMapper().getField("left_wrist_z"));
     }
     
     /**
@@ -87,6 +87,6 @@ public class TrialTest
     @Test
     public void testToString()
     {
-        Assert.assertEquals ("toString failed", "Week 01", testTrial.toString());
+        Assert.assertEquals("toString failed", "Week 01", testTrial.toString());
     }
 }

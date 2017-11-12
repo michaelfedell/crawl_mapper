@@ -30,7 +30,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * Graphical user interface for interacting with Infant data
  * 
  * @author CS2334, modified by Michael Fedell
- * @version 11-03-17
+ * @version 11-11-17
  *
  */
 public class InfantFrame extends JFrame
@@ -49,7 +49,7 @@ public class InfantFrame extends JFrame
     /**
      * 
      * @author CS2334, modified by Michael Fedell
-     * @version 11-03-17
+     * @version 11-11-17
      * 
      * Menu bar that provides file loading and program exit capabilities.
      *
@@ -154,7 +154,7 @@ public class InfantFrame extends JFrame
     /**
      * 
      * @author CS2334, modified by Michael Fedell
-     * @version 2016-11-01
+     * @version 11-11-17
      * 
      * Selection panel: contains JLists for the list of trials, the list of fieldNames and the 
      * list of subfieldNames.  Note that the displayed subfieldNames is dependent on which 
@@ -219,7 +219,6 @@ public class InfantFrame extends JFrame
             /////////////////////////////////////
             // JList for field selection
             // Model is of Strings
-            // TODO: complete implementation - check
             fieldListModel = new DefaultListModel<String>();
             // JList for fields
             fieldList = new JList<String>(fieldListModel);
@@ -236,7 +235,7 @@ public class InfantFrame extends JFrame
 
             ////////////////////////////////////////
             // JList for Subfields
-            // TODO: complete implementation - check
+            // 
             subfieldListModel = new DefaultListModel<String>();
             // JList for fields
             subfieldList = new JList<String>(subfieldListModel);
@@ -252,7 +251,7 @@ public class InfantFrame extends JFrame
 
             ////////////////
             // Selection Listeners
-            // TODO: complete implementation of all three listeners
+            // trialList listener to update infant frame
             trialList.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
                     if (e.getValueIsAdjusting() == false)
@@ -262,16 +261,17 @@ public class InfantFrame extends JFrame
                 }
             });
             
+            // fieldList listener to update the subfield selections (and the frame)
             fieldList.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
                     if (e.getValueIsAdjusting() == false)
                     {
                         updateSubfieldSelections();
-                        InfantFrame.this.update();
                     }
                 }
             });
             
+            // subfieldList to update the infant frame
             subfieldList.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
                     if (e.getValueIsAdjusting() == false)
@@ -341,6 +341,7 @@ public class InfantFrame extends JFrame
             this.trialListModel.clear();
             this.fieldListModel.clear();
             
+            // loop over trials in infant and add to panel
             for (Trial trial : infant)
             {
                 this.trialListModel.addElement(trial.toString());
@@ -349,10 +350,10 @@ public class InfantFrame extends JFrame
             /////////////////////
             // Field list
             
+            // instantiate fieldMapper
             fieldMapper = infant.getItem(0).getFieldMapper();
 
-            // TODO: complete implementation (the fieldMapper will be
-            //   useful here, if one exists)
+            // Loop over the fields in fieldMapper
             for (String field :  fieldMapper)
             {
                 this.fieldListModel.addElement(field);
@@ -370,18 +371,23 @@ public class InfantFrame extends JFrame
          */
         private void updateSubfieldSelections()
         {
-            // TODO: complete implementation
+            // clear list
             this.subfieldListModel.clear();
+            // check for selected value
             if (fieldList.getSelectedValue() != null)
             {
+                // checek selected value exists
                 if (fieldMapper.getField(fieldList.getSelectedValue()) != null)
                 {
+                    // iterate over all subfields and add them to the panel
                     for (String subField : fieldMapper.getField(fieldList.getSelectedValue()))
                     {
+                        // add specific string for "" (scalar)
                         if (subField.equals(""))
                         {
                             this.subfieldListModel.addElement("scalar");
                         }
+                        // not scalar
                         else
                         {
                             this.subfieldListModel.addElement(subField);
@@ -422,7 +428,7 @@ public class InfantFrame extends JFrame
         private JLabel minTimeLabel = new JLabel("at");
         private JLabel averageLabel = new JLabel("Average:");
 
-        // TODO: complete implementation - check
+        // textFields
         private JTextField infantIDField = new JTextField(10);
         private JTextField fieldNameField = new JTextField(10);
         private JTextField subfieldNameField = new JTextField(10);
@@ -459,7 +465,7 @@ public class InfantFrame extends JFrame
             averageValueField.setEditable(false);
 
             //////////////
-            // TODO: Layout - check
+            // Layout
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
             
@@ -554,7 +560,7 @@ public class InfantFrame extends JFrame
                 String minState, String minStateWeek, String minStateTime,
                 String average)
         {
-            // TODO: Set each of the text fields - check
+            // Set each of the text fields
             infantIDField.setText(infantID);
             fieldNameField.setText(fieldName);
             subfieldNameField.setText(subfieldName);
@@ -627,7 +633,7 @@ public class InfantFrame extends JFrame
      */
     public synchronized void loadData(String directory, String infantID) throws IOException
     {
-        // construct infant
+        // construct infant and update selections
         this.infant = new Infant(directory, infantID);
         this.selectionPanel.updateSelections();
     }
@@ -683,22 +689,27 @@ public class InfantFrame extends JFrame
                 // Which subfield has been selected?
                 subfieldName = selectionPanel.subfieldList.getSelectedValue();
                 
+                // check subfieldname and indices before computation
                 if (subfieldName != null && indices.length > 0)
                 {       
+                    // change scalar to "" for statistics
                     if (subfieldName.equals("scalar"))
                     {
                         subfieldName = "";
                     }
                 
-                    // TODO: complete the setting of the defined Strings - check?
+                    //complete the setting of the defined Strings
+                    // MAX
                     maxStateString = subInfant.getMaxState(fieldName, subfieldName)
                             .getValue(fieldName, subfieldName).toString();
                     maxStateWeekString = subInfant.getMaxState(fieldName, subfieldName).getTrial().toString();
                     maxStateTimeString = subInfant.getMaxState(fieldName, subfieldName)
                             .getValue("time", "").toString();
                     
+                    // AVERAGE
                     averageString = subInfant.getAverageValue(fieldName, subfieldName).toString();
                     
+                    // MIN
                     minStateString = subInfant.getMinState(fieldName, subfieldName)
                             .getValue(fieldName, subfieldName).toString();
                     minStateWeekString = subInfant.getMinState(fieldName, subfieldName).getTrial().toString();

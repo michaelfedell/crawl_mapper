@@ -153,7 +153,7 @@ public class InfantTest
     public void infantIndexingTest() throws IOException
     {
         Infant testBaby = new Infant("testData", "testValid");
-        Infant indexedBaby = new Infant(testBaby, new int[] {0, 1});
+        Infant indexedBaby = new Infant(testBaby, new int[] {0, 1, 25});
         
         Assert.assertEquals(indexedBaby.getSize(), 2);
     }
@@ -165,11 +165,14 @@ public class InfantTest
     @Test
     public void infantIterableTest() throws IOException
     {
+        // instantiate testBaby
         Infant testBaby = new Infant("testData", "testValid");
         
+        // iterate over testBaby
         for (Trial trial : testBaby)
         {
-            Assert.assertTrue(true);
+            // check for trial in infant
+            Assert.assertTrue(trial.getInfant().equals(testBaby));
         }
     }
 }

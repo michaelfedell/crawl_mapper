@@ -4,7 +4,7 @@ import java.io.IOException;
  * Driver class to construct trial object and print arbitrary state.
  *
  * @author Zach Schuermann
- * @version 10/23/17
+ * @version 11/11/17
  *
  */
 public class Driver

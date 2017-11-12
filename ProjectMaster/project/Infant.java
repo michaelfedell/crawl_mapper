@@ -52,8 +52,8 @@ public class Infant extends MultipleItemAbstract implements Iterable<Trial>
     /**
      * Secondary constructor creating an infant from a reference infant but with a specified list of trials
      * 
-     * @param infant
-     * @param indices
+     * @param infant the infant to create a subset of
+     * @param indices the indices to 'slice' for the existing infant
      */
     public Infant(Infant infant, int[] indices)
     {
@@ -111,7 +111,7 @@ public class Infant extends MultipleItemAbstract implements Iterable<Trial>
     
     /**
      * Iterator over the trials in the infant
-     *
+     * @return an iterator over the trialList
      */
     @Override
     public Iterator<Trial> iterator()
