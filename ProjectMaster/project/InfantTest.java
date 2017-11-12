@@ -144,4 +144,32 @@ public class InfantTest
         Assert.assertFalse("Infant loaded from invalid data",
                 testBaby.getMinState("left_wrist", "z").getValue("left_wrist", "z").isValid());
     }
+    
+    /**
+     * Test new constructor for infant class using indices.
+     * @throws IOException for invalid loading
+     */
+    @Test
+    public void infantIndexingTest() throws IOException
+    {
+        Infant testBaby = new Infant("testData", "testValid");
+        Infant indexedBaby = new Infant(testBaby, new int[] {0, 1});
+        
+        Assert.assertEquals(indexedBaby.getSize(), 2);
+    }
+    
+    /**
+     * Iterable test
+     * @throws IOException for invalid loading
+     */
+    @Test
+    public void infantIterableTest() throws IOException
+    {
+        Infant testBaby = new Infant("testData", "testValid");
+        
+        for (Trial trial : testBaby)
+        {
+            Assert.assertTrue(true);
+        }
+    }
 }

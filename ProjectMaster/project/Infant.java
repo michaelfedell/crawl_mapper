@@ -67,9 +67,12 @@ public class Infant extends MultipleItemAbstract implements Iterable<Trial>
         for (int index : indices)
         {
             //try catch for invalid indices
-            try {
+            try 
+            {
                 trialList.add(infant.trialList.get(index));
-            } catch (IndexOutOfBoundsException e) {
+            }
+            catch (IndexOutOfBoundsException e) 
+            {
                 continue;
             }
         }
@@ -105,11 +108,14 @@ public class Infant extends MultipleItemAbstract implements Iterable<Trial>
     {
         return infantID;
     }
-
+    
+    /**
+     * Iterator over the trials in the infant
+     *
+     */
     @Override
     public Iterator<Trial> iterator()
     {
-        // TODO Implement iterator
-        return null;
+        return trialList.iterator();
     }
 }

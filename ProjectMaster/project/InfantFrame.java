@@ -77,6 +77,10 @@ public class InfantFrame extends JFrame
             // create and add menu items
             menuOpen = new JMenuItem("Open Configuration File");
             menuExit = new JMenuItem("Exit");
+            
+            // for testing
+            menuOpen.setName("MenuOpen");
+            
             menu.add(menuOpen);
             menu.add(menuExit);
 
@@ -223,7 +227,7 @@ public class InfantFrame extends JFrame
             fieldList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             // Vertically organized list with an arbitrary number of rows
             fieldList.setVisibleRowCount(-1);
-            fieldList.setLayoutOrientation(JList.VERTICAL);
+            fieldList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
             // Scroll pane goes around the JList
             fieldScroller = new JScrollPane(fieldList);
             fieldScroller.setPreferredSize(new Dimension(300, 100));
@@ -249,6 +253,33 @@ public class InfantFrame extends JFrame
             ////////////////
             // Selection Listeners
             // TODO: complete implementation of all three listeners
+            trialList.addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting() == false)
+                    {
+                        InfantFrame.this.update();
+                    }
+                }
+            });
+            
+            fieldList.addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting() == false)
+                    {
+                        updateSubfieldSelections();
+                        InfantFrame.this.update();
+                    }
+                }
+            });
+            
+            subfieldList.addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    if (e.getValueIsAdjusting() == false)
+                    {
+                        InfantFrame.this.update();
+                    }
+                }
+            });
             
 
 
@@ -263,7 +294,7 @@ public class InfantFrame extends JFrame
             this.setLayout(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
 
-            // TODO: complete the layout - check
+            //complete the layout
             c.insets = new Insets(10, 10, 10, 10);
             
             // Add labels (first column)
@@ -284,7 +315,7 @@ public class InfantFrame extends JFrame
             c.gridy++;
             add(subfieldScroller, c);
             
-            // TODO: Background color of the panel - check
+            // Background color of the panel
             this.setBackground(new Color(195, 224, 195));
             
             // ///////////////////////
@@ -308,15 +339,24 @@ public class InfantFrame extends JFrame
 
             // Clear all elements
             this.trialListModel.clear();
-
-            // TODO: complete implementation
+            this.fieldListModel.clear();
             
+            for (Trial trial : infant)
+            {
+                this.trialListModel.addElement(trial.toString());
+            }
             
             /////////////////////
             // Field list
+            
+            fieldMapper = infant.getItem(0).getFieldMapper();
 
             // TODO: complete implementation (the fieldMapper will be
             //   useful here, if one exists)
+            for (String field :  fieldMapper)
+            {
+                this.fieldListModel.addElement(field);
+            }
 
             // Update the subfields
             this.updateSubfieldSelections();
@@ -331,6 +371,25 @@ public class InfantFrame extends JFrame
         private void updateSubfieldSelections()
         {
             // TODO: complete implementation
+            this.subfieldListModel.clear();
+            if (fieldList.getSelectedValue() != null)
+            {
+                if (fieldMapper.getField(fieldList.getSelectedValue()) != null)
+                {
+                    for (String subField : fieldMapper.getField(fieldList.getSelectedValue()))
+                    {
+                        if (subField.equals(""))
+                        {
+                            this.subfieldListModel.addElement("scalar");
+                        }
+                        else
+                        {
+                            this.subfieldListModel.addElement(subField);
+                        }
+                    }
+                    subfieldList.setSelectedIndex(0);
+                }
+            }
 
             // Tell the rest of the frame that it needs to update
             InfantFrame.this.update();
@@ -432,9 +491,9 @@ public class InfantFrame extends JFrame
             c.gridy++;
             add(maxValueField, c);
             c.gridy++;
-            add(minValueField, c);
-            c.gridy++;
             add(averageValueField, c);
+            c.gridy++;
+            add(minValueField, c);
             
             // Add week and time to Max row
             c.gridx = 2;
@@ -570,6 +629,7 @@ public class InfantFrame extends JFrame
     {
         // construct infant
         this.infant = new Infant(directory, infantID);
+        this.selectionPanel.updateSelections();
     }
 
     /**
@@ -623,22 +683,28 @@ public class InfantFrame extends JFrame
                 // Which subfield has been selected?
                 subfieldName = selectionPanel.subfieldList.getSelectedValue();
                 
-                // TODO: complete the setting of the defined Strings - check?
-                maxStateString = subInfant.getMaxState(fieldName, subfieldName)
-                        .getValue(fieldName, subfieldName).toString();
-                maxStateWeekString = String.format("Week %02d", 
-                        subInfant.getMaxState(fieldName, subfieldName).getTrial().getWeek());
-                maxStateTimeString = subInfant.getMaxState(fieldName, subfieldName)
-                        .getValue("time", "").toString();
+                if (subfieldName != null && indices.length > 0)
+                {       
+                    if (subfieldName.equals("scalar"))
+                    {
+                        subfieldName = "";
+                    }
                 
-                averageString = subInfant.getAverageValue(fieldName, subfieldName).toString();
-                
-                minStateString = subInfant.getMinState(fieldName, subfieldName)
-                        .getValue(fieldName, subfieldName).toString();
-                minStateWeekString = String.format("Week %02d", 
-                        subInfant.getMinState(fieldName, subfieldName).getTrial().getWeek());
-                minStateTimeString = subInfant.getMinState(fieldName, subfieldName)
-                        .getValue("time", "").toString();
+                    // TODO: complete the setting of the defined Strings - check?
+                    maxStateString = subInfant.getMaxState(fieldName, subfieldName)
+                            .getValue(fieldName, subfieldName).toString();
+                    maxStateWeekString = subInfant.getMaxState(fieldName, subfieldName).getTrial().toString();
+                    maxStateTimeString = subInfant.getMaxState(fieldName, subfieldName)
+                            .getValue("time", "").toString();
+                    
+                    averageString = subInfant.getAverageValue(fieldName, subfieldName).toString();
+                    
+                    minStateString = subInfant.getMinState(fieldName, subfieldName)
+                            .getValue(fieldName, subfieldName).toString();
+                    minStateWeekString = subInfant.getMinState(fieldName, subfieldName).getTrial().toString();
+                    minStateTimeString = subInfant.getMinState(fieldName, subfieldName)
+                            .getValue("time", "").toString();
+                }
             }
             else
             {

@@ -58,7 +58,15 @@ public class FieldMapper implements Iterable<String>
      */
     public Field getField(String fieldName)
     {
-        return fieldMap.get(fieldName);
+        if (fieldMap.containsKey(fieldName))
+        {
+            return fieldMap.get(fieldName);
+        }
+        else
+        {
+            return null;
+        }
+       
     }
     
     /**
