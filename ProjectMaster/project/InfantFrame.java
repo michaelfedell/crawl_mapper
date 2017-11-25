@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -31,18 +32,26 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * 
  * @author CS2334, modified by Michael Fedell
  * @version 11-11-17
- *
  */
 public class InfantFrame extends JFrame
 {
     /** Panel for selecting the station, statistic, and Year */
     private SelectionPanel selectionPanel;
+    
     /** Panel for displaying statistic */
     private DataPanel dataPanel;
+    
     /** Width of column 1 text fields in the data display */
     private final static int COLUMN_FIELD_WIDTH = 10;
+    
     /** Infant that is currently loaded.  */
     private Infant infant;
+    
+    /**  */
+    private Trial trial;
+    
+    /**  */
+    private final Font FONT;
 
 
     ///////////////////////////////////////////////////////////////////
@@ -152,14 +161,12 @@ public class InfantFrame extends JFrame
 
     ///////////////////////////////////////////////////////////////////
     /**
-     * 
      * @author CS2334, modified by Michael Fedell
      * @version 11-11-17
      * 
      * Selection panel: contains JLists for the list of trials, the list of fieldNames and the 
      * list of subfieldNames.  Note that the displayed subfieldNames is dependent on which 
      * field has been selected
-     *
      */
     private class SelectionPanel extends JPanel
     {
@@ -408,9 +415,6 @@ public class InfantFrame extends JFrame
      * 
      * @author CS2334, modified by Michael Fedell
      * @version 11-03-17
-     * 
-     * 
-     *
      */
 
     private class DataPanel extends JPanel
@@ -648,7 +652,6 @@ public class InfantFrame extends JFrame
      * particular, the structures that it is referencing may be in the process of being updated.  So,
      * we cannot assume that things like "selected values" are not actually set to something interesting
      * or useful.
-     * 
      */
     public synchronized void update()
     {

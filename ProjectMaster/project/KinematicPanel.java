@@ -35,7 +35,7 @@ public class KinematicPanel extends JPanel
     private String title;
     /** Font used for panel title.  */
     // TODO: initialize the font
-    private static final Font FONT = ???;
+    private static final Font FONT = new Font("SanSerif", Font.BOLD, 16);
 
     /**
      * Constructor 
@@ -85,7 +85,8 @@ public class KinematicPanel extends JPanel
     {
         super.paintComponent(g);
         
-        // TODO: Draw the title  
+        // TODO: Draw the title 
+        g.drawString(title, 0, 0);
 
         // Render as long as state is defined
         if (this.state != null)
@@ -98,7 +99,7 @@ public class KinematicPanel extends JPanel
             g2.scale(flipX, flipY);
             
             // TODO: Draw the kinematic tree 
-
+            
             
             // These next two lines make the border drawing work properly
             // Flip back
