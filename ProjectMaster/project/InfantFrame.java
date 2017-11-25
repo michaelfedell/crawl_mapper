@@ -233,9 +233,8 @@ public class InfantFrame extends JFrame
 
 
 
-            ////////////////////////////////////////
+            //////////////////////////////////////////
             // JList for Subfields
-            // 
             subfieldListModel = new DefaultListModel<String>();
             // JList for fields
             subfieldList = new JList<String>(subfieldListModel);
@@ -249,7 +248,7 @@ public class InfantFrame extends JFrame
             subfieldScroller.setPreferredSize(new Dimension(300, 100));
 
 
-            ////////////////
+            //////////////////////////////////////////
             // Selection Listeners
             // trialList listener to update infant frame
             trialList.addListSelectionListener(new ListSelectionListener() {
@@ -376,7 +375,7 @@ public class InfantFrame extends JFrame
             // check for selected value
             if (fieldList.getSelectedValue() != null)
             {
-                // checek selected value exists
+                // check selected value exists
                 if (fieldMapper.getField(fieldList.getSelectedValue()) != null)
                 {
                     // iterate over all subfields and add them to the panel
@@ -608,7 +607,7 @@ public class InfantFrame extends JFrame
         this.selectionPanel = new SelectionPanel();
         this.add(this.selectionPanel, layoutConst);
 
-        // TODO: Display panel - check
+        // Display panel
         layoutConst.gridx = 1;
         this.dataPanel = new DataPanel();
         this.add(this.dataPanel, layoutConst);

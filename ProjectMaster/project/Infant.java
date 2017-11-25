@@ -63,17 +63,13 @@ public class Infant extends MultipleItemAbstract implements Iterable<Trial>
         // instantiate trialList
         trialList = new ArrayList<Trial>();
         
-        //  trialList
+        // trialList
         for (int index : indices)
         {
-            //try catch for invalid indices
-            try 
+            // check for valid indices
+            if (index >= 0 && index <= infant.getSize() - 1) 
             {
                 trialList.add(infant.trialList.get(index));
-            }
-            catch (IndexOutOfBoundsException e) 
-            {
-                continue;
             }
         }
     }

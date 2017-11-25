@@ -39,7 +39,6 @@ public abstract class MultipleItemAbstract extends SingleItemAbstract
         // Loop through all trials and test for validity
         for (int i = 0; i < getSize(); i++)
         {
-            // TODO: Avoid getMaxState calls within for loops
             val = getItem(i).getMaxState(fieldName, subFieldName).getValue(fieldName, subFieldName);
             if (val.isGreaterThan(max))
             {

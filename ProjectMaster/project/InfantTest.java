@@ -153,9 +153,12 @@ public class InfantTest
     public void infantIndexingTest() throws IOException
     {
         Infant testBaby = new Infant("testData", "testValid");
-        Infant indexedBaby = new Infant(testBaby, new int[] {0, 1, 25});
+        Infant indexedBaby = new Infant(testBaby, new int[] {0, 1, 2, 25});
         
-        Assert.assertEquals(indexedBaby.getSize(), 2);
+        // Need to also assert that indexedBaby has the proper indexed trials
+        Assert.assertEquals("Check Size", 2, indexedBaby.getSize());
+        Assert.assertEquals("Check index 0", 1, indexedBaby.getItem(0).getWeek());
+        Assert.assertEquals("Check index 1", 2, indexedBaby.getItem(1).getWeek());
     }
     
     /**
