@@ -33,7 +33,12 @@ public abstract class KinematicPointAbstract
     public KinematicPointAbstract(Color color, float width)
     {
         //TODO: Implement constructor
+        this.children = new ArrayList<KinematicPointAbstract>();
+        this.color = color;
+        this.stroke = new BasicStroke(width);
         
+        // Default the scale to 1000 pixels / meter
+        KinematicPointAbstract.scale = 1000;
     }
     
     /**
@@ -57,8 +62,35 @@ public abstract class KinematicPointAbstract
      */
     public void draw(Graphics2D g, State state, String screenXSubfield, String screenYSubfield)
     {
-        //TODO: Implement method
+        // Extract dimensions for the current point
+        GeneralValue thisPtX = this.getScreenCoordinate(state, screenXSubfield);
+        GeneralValue thisPtY = this.getScreenCoordinate(state, screenYSubfield);
         
+        // Loop through each child of the current point
+        for(int i = 0; i < children.size(); i++)
+        {
+            // Extract dimensions for the child point
+            GeneralValue childPtX = children.get(i).getScreenCoordinate(state, screenXSubfield);
+            GeneralValue childPtY = children.get(i).getScreenCoordinate(state, screenYSubfield);
+            
+            // Ensure that valid values were found for both the current point and the child point
+            // If any point contains an invalid value, the point will be skipped 
+            // and draw will move to the child of the child
+            if(thisPtX.isValid() && thisPtY.isValid() && childPtX.isValid() && childPtY.isValid())
+            {
+                //TODO: Transform the values into pixel coordinates for each point
+                int x1 = (int) (thisPtX.getDoubleValue() * scale);
+                int y1 = (int) (thisPtY.getDoubleValue() * scale);
+                int x2 = (int) (childPtX.getDoubleValue() * scale);
+                int y2 = (int) (childPtY.getDoubleValue() * scale);
+                
+                //TODO: Draw the line from current to child point
+                g.setStroke(stroke);
+                g.drawLine(x1, y1, x2, y2);
+            }
+            // Recursive call to draw the next child point
+            children.get(i).draw(g, state, screenXSubfield, screenYSubfield);
+        }
     }
     
     /**
@@ -75,8 +107,8 @@ public abstract class KinematicPointAbstract
     /**
      * Accesses the current screen coordinate of a specified subfield
      * 
-     * @param state
-     * @param screenSubfield
+     * @param state The state which should be currently rendered
+     * @param screenSubfield The subfield specifying dimension on-screen (e.g. "x" or "y")
      * @return A GeneralValue object defining the current screen coordinate of the specified subfield
      */
     public abstract GeneralValue getScreenCoordinate(State state, String screenSubfield);

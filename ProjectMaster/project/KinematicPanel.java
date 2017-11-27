@@ -18,24 +18,29 @@ import javax.swing.border.Border;
  */
 public class KinematicPanel extends JPanel
 {
-    /** Drawing flip direction for X: +/-1*/
+    /** Drawing flip direction for X: +/-1 */
     private double flipX;
-    /** Drawing flip direction for Y: +/-1*/
+    /** Drawing flip direction for Y: +/-1 */
     private double flipY;
     
     /** Subfield used for X dimension. */
     private String screenXSubfield;
+    
     /** Subfield used for Y dimension. */
     private String screenYSubfield;
+    
     /** Root of the kinematic tree.  */
     private KinematicPointAbstract rootPoint;
-    /** State to render.  */
+    
+    /** State to render. */
     private State state;
+    
     /** Panel title */
     private String title;
-    /** Font used for panel title.  */
+    
+    /** Font used for panel title. */
     // TODO: initialize the font
-    private static final Font FONT = new Font("SanSerif", Font.BOLD, 16);
+    private static final Font FONT = new Font("SanSerif", Font.BOLD, 24);
 
     /**
      * Constructor 
@@ -86,7 +91,8 @@ public class KinematicPanel extends JPanel
         super.paintComponent(g);
         
         // TODO: Draw the title 
-        g.drawString(title, 0, 0);
+        g.setFont(FONT);
+        g.drawString(title, 20, 40);
 
         // Render as long as state is defined
         if (this.state != null)
@@ -99,7 +105,7 @@ public class KinematicPanel extends JPanel
             g2.scale(flipX, flipY);
             
             // TODO: Draw the kinematic tree 
-            
+            rootPoint.draw(g2, state, screenXSubfield, screenYSubfield);
             
             // These next two lines make the border drawing work properly
             // Flip back

@@ -1,9 +1,11 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,8 +24,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -30,41 +37,43 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * Graphical user interface for interacting with Infant data
  * 
- * @author CS2334, modified by Michael Fedell
- * @version 11-11-17
+ * @author CS2334, modified by ????
+ * @version 2017-10-20
+ *
  */
 public class InfantFrame extends JFrame
 {
+    /** Serializable support.  */
+    private static final long serialVersionUID = 1L;
+
     /** Panel for selecting the station, statistic, and Year */
     private SelectionPanel selectionPanel;
-    
+
     /** Panel for displaying statistic */
     private DataPanel dataPanel;
-    
-    /** Width of column 1 text fields in the data display */
-    private final static int COLUMN_FIELD_WIDTH = 10;
-    
+
     /** Infant that is currently loaded.  */
     private Infant infant;
-    
-    /**  */
-    private Trial trial;
-    
-    /**  */
-    private final Font FONT;
 
+    /** Currently selected trial.  */
+    private Trial trial;
+
+    /** Font used for labels and JLists.  */
+    private static final Font FONT = new Font(Font.SANS_SERIF, Font.BOLD, 18);
 
     ///////////////////////////////////////////////////////////////////
     /**
      * 
-     * @author CS2334, modified by Michael Fedell
-     * @version 11-11-17
+     * @author CS2334, modified by ???
+     * @version 2017-10-20
      * 
      * Menu bar that provides file loading and program exit capabilities.
      *
      */
     private class FileMenuBar extends JMenuBar 
     {
+        /** Serializable support.  */
+        private static final long serialVersionUID = 1L;
         /** Menu on the menu bar */
         private JMenu menu;
         /** Exit menu option */
@@ -72,7 +81,7 @@ public class InfantFrame extends JFrame
         /** Open menu option.  */
         private JMenuItem menuOpen;
         /** Reference to a file chooser pop-up */
-        private JFileChooser fileChooser;
+        private JFileChooser fileChooser; 
 
         /**
          * Constructor: fully assemble the menu bar and attach the 
@@ -83,19 +92,17 @@ public class InfantFrame extends JFrame
             menu = new JMenu("File");
             add(menu);
 
-            // create and add menu items
+            // Create the menu items and add them to the menu
             menuOpen = new JMenuItem("Open Configuration File");
-            menuExit = new JMenuItem("Exit");
-            
-            // for testing
             menuOpen.setName("MenuOpen");
-            
+            menuExit = new JMenuItem("Exit");
             menu.add(menuOpen);
             menu.add(menuExit);
 
             // Action listener for exit
             menuExit.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    // Exit the program
                     System.exit(0);
                 }
             });
@@ -118,27 +125,31 @@ public class InfantFrame extends JFrame
                         // Extract the file that was selected
                         File file = fileChooser.getSelectedFile();
                         try {
-                            // Set to a "busy" cursor - check
-                            InfantFrame.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                            
+                            // Set to a "busy" cursor
+                            InfantFrame.this.setCursor(
+                                    Cursor.getPredefinedCursor(
+                                            Cursor.WAIT_CURSOR));
+
                             // Save the components of the selected file
-                            String directory = file.getParent();
+                            String directory = file.getParent(); 
                             String fname = file.getName();
 
                             // Do the loading work: the first two characters are the Infant ID
                             InfantFrame.this.loadData(directory, fname.substring(0, 2));
-                            
+
                             // Return the cursor to standard form
                             InfantFrame.this.setCursor(null);
 
-                            // If we did not load any data then open a message dialog box to indicate an error
-                            if (infant.getSize() == 0)
+                            // Did we load any data?
+                            if (InfantFrame.this.infant.getSize() == 0)
                             {
-                                JOptionPane.showMessageDialog(fileChooser, "No data for specified file");
+                                // No data loaded
+                                JOptionPane.showMessageDialog(fileChooser, "No data found");
                             }
-                            
-                            // Update the frame
+
+                            // Update the display
                             InfantFrame.this.update();
+
                         }
                         catch (IOException e2)
                         {
@@ -150,7 +161,6 @@ public class InfantFrame extends JFrame
                         }
 
                     }
-                    
                 }
 
             });
@@ -161,181 +171,98 @@ public class InfantFrame extends JFrame
 
     ///////////////////////////////////////////////////////////////////
     /**
-     * @author CS2334, modified by Michael Fedell
-     * @version 11-11-17
      * 
-     * Selection panel: contains JLists for the list of trials, the list of fieldNames and the 
-     * list of subfieldNames.  Note that the displayed subfieldNames is dependent on which 
-     * field has been selected
+     * @author CS2334, modified by ???
+     * @version 2016-11-01
+     * 
+     * Selection panel: contains JLists for the list of trials
+     *
      */
     private class SelectionPanel extends JPanel
     {
+        /** Serializable support.  */
+        private static final long serialVersionUID = 1L;
+
         /** Selection of available trials/weeks.  */
         private JList<String> trialList;
-        /** Selection of the field.  */
-        private JList<String> fieldList;
-        /** Selection of the subfield.  */
-        private JList<String> subfieldList;
 
         /** List model for the trial list.  */
         private DefaultListModel<String> trialListModel;
-        /** List model for the field list.  */
-        private DefaultListModel<String> fieldListModel;
-        /** List model for the subfield list.  */
-        private DefaultListModel<String> subfieldListModel;
 
         /** Scroll pane: trial list  */
         private JScrollPane trialScroller;
-        /** Scroll pane: field list  */
-        private JScrollPane fieldScroller;
-        /** Scroll pane: subfield list  */
-        private JScrollPane subfieldScroller;
 
         /**  Trial selection label */
         private JLabel trialLabel;
-        /** Field selection label */
-        private JLabel fieldLabel;
-        /** Subfield selection label */
-        private JLabel subfieldLabel;
-
-        /** FieldMapper for one of the trials.  */
-        private FieldMapper fieldMapper;
 
         /**
          * Constructor
          * 
-         * Creates a 3x2 grid of components with labels down the left column and Jlist down the 2nd column
+         * Creates a 1x2 grid of components with labels down the left column and Jlist down the 2nd column
          */
         private SelectionPanel()
         {
             ////////////////////////////
             // Create the JList for trial selection
-            // List model contains the data to be displayed.
+            // List model contains the data to be displayed.  Uses Trial.toString() to obtain strings
             trialListModel = new DefaultListModel<String>();
             // JList for trials
             trialList = new JList<String>(trialListModel);
             // Multiple items can be selected at once
-            trialList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            trialList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             // Vertically organized list with an arbitrary number of rows
             trialList.setVisibleRowCount(-1);
             trialList.setLayoutOrientation(JList.VERTICAL);
             // Scroll pane goes around the JList
             trialScroller = new JScrollPane(trialList);
             trialScroller.setPreferredSize(new Dimension(300, 100));
+            trialList.setFont(FONT);
 
-            /////////////////////////////////////
-            // JList for field selection
-            // Model is of Strings
-            fieldListModel = new DefaultListModel<String>();
-            // JList for fields
-            fieldList = new JList<String>(fieldListModel);
-            // Multiple items can be selected at once
-            fieldList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            // Vertically organized list with an arbitrary number of rows
-            fieldList.setVisibleRowCount(-1);
-            fieldList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-            // Scroll pane goes around the JList
-            fieldScroller = new JScrollPane(fieldList);
-            fieldScroller.setPreferredSize(new Dimension(300, 100));
-
-
-
-            //////////////////////////////////////////
-            // JList for Subfields
-            subfieldListModel = new DefaultListModel<String>();
-            // JList for fields
-            subfieldList = new JList<String>(subfieldListModel);
-            // Multiple items can be selected at once
-            subfieldList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            // Vertically organized list with an arbitrary number of rows
-            subfieldList.setVisibleRowCount(-1);
-            subfieldList.setLayoutOrientation(JList.VERTICAL);
-            // Scroll pane goes around the JList
-            subfieldScroller = new JScrollPane(subfieldList);
-            subfieldScroller.setPreferredSize(new Dimension(300, 100));
-
-
-            //////////////////////////////////////////
+            ////////////////
             // Selection Listeners
-            // trialList listener to update infant frame
-            trialList.addListSelectionListener(new ListSelectionListener() {
+
+            // Trial list
+            trialList.addListSelectionListener(new ListSelectionListener()
+            {
                 public void valueChanged(ListSelectionEvent e) {
-                    if (e.getValueIsAdjusting() == false)
-                    {
-                        InfantFrame.this.update();
-                    }
+                    InfantFrame.this.update();
                 }
             });
-            
-            // fieldList listener to update the subfield selections (and the frame)
-            fieldList.addListSelectionListener(new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e) {
-                    if (e.getValueIsAdjusting() == false)
-                    {
-                        updateSubfieldSelections();
-                    }
-                }
-            });
-            
-            // subfieldList to update the infant frame
-            subfieldList.addListSelectionListener(new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e) {
-                    if (e.getValueIsAdjusting() == false)
-                    {
-                        InfantFrame.this.update();
-                    }
-                }
-            });
-            
 
 
             // Labels
             trialLabel = new JLabel("Trials");
-            fieldLabel = new JLabel("Fields");
-            subfieldLabel = new JLabel("Subfields");
-
+            trialLabel.setFont(FONT);
 
             ///////////////
             // Layout
             this.setLayout(new GridBagLayout());
-            GridBagConstraints c = new GridBagConstraints();
+            GridBagConstraints layoutConst = new GridBagConstraints();
 
-            //complete the layout
-            c.insets = new Insets(10, 10, 10, 10);
-            
-            // Add labels (first column)
-            c.gridx = 0;
-            c.gridy = 0;
-            add(trialLabel, c);
-            c.gridy++;
-            add(fieldLabel, c);
-            c.gridy++;
-            add(subfieldLabel, c);
+            // Trial list
+            layoutConst.gridx = 0;
+            layoutConst.gridy = 0;
+            layoutConst.insets = new Insets(10, 10, 10, 10);
+            this.add(trialLabel, layoutConst);
 
-            // Add scrollview selection panes (second column)
-            c.gridx++;
-            c.gridy = 0;
-            add(trialScroller, c);
-            c.gridy++;
-            add(fieldScroller, c);
-            c.gridy++;
-            add(subfieldScroller, c);
-            
+
+            layoutConst.gridx = 1;
+            layoutConst.gridy = 0;
+            this.add(trialScroller, layoutConst);
+
             // Background color of the panel
-            this.setBackground(new Color(195, 224, 195));
-            
+            this.setBackground(new Color(200, 220, 200));
+
             // ///////////////////////
             // Set the names of the key objects: don't change these
             this.trialList.setName("TrialList");
-            this.fieldList.setName("FieldList");
-            this.subfieldList.setName("SubfieldList");
             // ///////////////////////
         }
 
         /**
          * Update the entire selection panel based on the currently-loaded infant.
          * 
-         * This method is generally called when a new infant is loaded
+         * This method is called when a new infant is loaded
          * 
          */
         private void updateSelections()
@@ -345,103 +272,69 @@ public class InfantFrame extends JFrame
 
             // Clear all elements
             this.trialListModel.clear();
-            this.fieldListModel.clear();
-            
-            // loop over trials in infant and add to panel
-            for (Trial trial : infant)
-            {
-                this.trialListModel.addElement(trial.toString());
-            }
-            
-            /////////////////////
-            // Field list
-            
-            // instantiate fieldMapper
-            fieldMapper = infant.getItem(0).getFieldMapper();
 
-            // Loop over the fields in fieldMapper
-            for (String field :  fieldMapper)
+            if(infant != null)
             {
-                this.fieldListModel.addElement(field);
-            }
-
-            // Update the subfields
-            this.updateSubfieldSelections();
-        }
-
-        /**
-         * Update the subfield selection list based on the subfields available for the currently selected field
-         * 
-         * 
-         * This method is called any time there is a change to the selected field.
-         */
-        private void updateSubfieldSelections()
-        {
-            // clear list
-            this.subfieldListModel.clear();
-            // check for selected value
-            if (fieldList.getSelectedValue() != null)
-            {
-                // check selected value exists
-                if (fieldMapper.getField(fieldList.getSelectedValue()) != null)
+                // Loop through every trial & add it to the list model
+                for (Trial t: infant)
                 {
-                    // iterate over all subfields and add them to the panel
-                    for (String subField : fieldMapper.getField(fieldList.getSelectedValue()))
-                    {
-                        // add specific string for "" (scalar)
-                        if (subField.equals(""))
-                        {
-                            this.subfieldListModel.addElement("scalar");
-                        }
-                        // not scalar
-                        else
-                        {
-                            this.subfieldListModel.addElement(subField);
-                        }
-                    }
-                    subfieldList.setSelectedIndex(0);
+                    this.trialListModel.addElement(t.toString());
                 }
             }
-
-            // Tell the rest of the frame that it needs to update
-            InfantFrame.this.update();
         }
-
     }
 
     ///////////////////////////////////////////////////////////////////
     /**
      * DataPanel: display selection information and statistics
      * 
-     * @author CS2334, modified by Michael Fedell
-     * @version 11-03-17
+     * @author CS2334, modified by ???
+     * @version 2017-10-20
+     * 
+     * 
+     *
      */
 
-    private class DataPanel extends JPanel
+    public class DataPanel extends JPanel
     {
-        // Labels
-        private JLabel infantIDLabel = new JLabel("Infant ID:");
-        private JLabel fieldNameLabel = new JLabel("Field:");
-        private JLabel subfieldNameLabel = new JLabel("Subfield:");
-        private JLabel maxLabel = new JLabel("Max:");
-        private JLabel maxWeekLabel = new JLabel("on");
-        private JLabel maxTimeLabel = new JLabel("at");
-        private JLabel minLabel = new JLabel("Min");
-        private JLabel minWeekLabel = new JLabel("on");
-        private JLabel minTimeLabel = new JLabel("at");
-        private JLabel averageLabel = new JLabel("Average:");
+        /** Serializable support.  */
+        private static final long serialVersionUID = 1L;
+        
+        /** Root point for the kinematic tree */
+        private KinematicPointAbstract rootPoint;
+        
+        /** Panel for all kinematic views.  */
+        private JPanel viewPanel;
+        /** Panels for top kinematic view.  */
+        private KinematicPanel topViewPanel;
+        /** Panels for side kinematic view.  */
+        private KinematicPanel sideViewPanel;
+        /** Panels for rear kinematic view.  */
+        private KinematicPanel rearViewPanel;
+        /** Panel for textual data.  */
+        private JPanel textPanel;
+        /** Infant ID display */
+        private JTextField infantTextField;
+        /** Current time index display */
+        private JTextField timeTextField;
 
-        // textFields
-        private JTextField infantIDField = new JTextField(10);
-        private JTextField fieldNameField = new JTextField(10);
-        private JTextField subfieldNameField = new JTextField(10);
-        private JTextField maxValueField = new JTextField(10);
-        private JTextField maxWeekField = new JTextField(10);
-        private JTextField maxTimeField = new JTextField(10);
-        private JTextField minValueField = new JTextField(10);
-        private JTextField minWeekField = new JTextField(10);
-        private JTextField minTimeField = new JTextField(10);
-        private JTextField averageValueField = new JTextField(10);
+
+        /** Slider for showing/setting current time index */
+        private JSlider timeSlider;
+        /** Current time index.  */
+        private int currentTime = 0;
+        /** Button for start/stop of animation. */
+        private JButton runButton;
+        /** Panel for containing button and slider.  */
+        private JPanel timePanel;
+        /** Animation timer.  */
+        private Timer timer;
+
+        /** Width of text fields.  */
+        private static final int FIELD_WIDTH = 30;
+        
+        /** Width of lines in kinematic models */
+        public static final int LINE_WIDTH = 3;
 
 
         /**
@@ -451,129 +344,196 @@ public class InfantFrame extends JFrame
          */
         private DataPanel()
         {
-
             // Background color of the panel
             this.setBackground(new Color(200, 200, 230));
+            this.rootPoint = createKinematicModel();
+            KinematicPointAbstract.setScale(300.0);
 
-            // Set the text fields to be non-editable
-            infantIDField.setEditable(false);
-            fieldNameField.setEditable(false);
-            subfieldNameField.setEditable(false);
-            maxValueField.setEditable(false);
-            maxWeekField.setEditable(false);
-            maxTimeField.setEditable(false);
-            minValueField.setEditable(false);
-            minWeekField.setEditable(false);
-            minTimeField.setEditable(false);
-            averageValueField.setEditable(false);
+            ////////////////////////////////////
+            // Time slider
+            this.timeSlider = new JSlider(JSlider.HORIZONTAL, 0, 15000, 0);
+            this.timeSlider.setMajorTickSpacing(1000);
+            this.timeSlider.setMinorTickSpacing(100);
+            this.timeSlider.setPaintTicks(true);
+            this.timeSlider.setPaintLabels(true);
+            this.timeSlider.setPreferredSize(new Dimension(800, 100));
+
+            // Start/stop button
+            this.runButton = new JButton("Start");
+            // Time panel
+            this.timePanel = new JPanel();
+
+            /////////////////////////////////////////
+            // Text panel will contain the infant ID and the current time step
+            this.textPanel = new JPanel();
+            this.infantTextField = new JTextField(FIELD_WIDTH);
+            this.infantTextField.setEditable(false);
+            this.infantTextField.setFont(FONT);
+            this.timeTextField = new JTextField(FIELD_WIDTH);
+            this.timeTextField.setEditable(false);
+            this.timeTextField.setFont(FONT);
+            this.textPanel.setLayout(new GridLayout(0, 1));
+            this.textPanel.add(infantTextField);
+            this.textPanel.add(timeTextField);
+            this.textPanel.setPreferredSize(new Dimension(300, 70));
+
+            ///////////////////////////////////////
+            // Timer 
+            this.timer = new Timer(5, new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    // TODO: implement
+                    // Set the current time to one higher than its current value
+                    
+                }
+
+            });
+
+            ///////////////////////////////////////
+            // Layout for the time panel
+            this.timePanel.setLayout(new GridBagLayout());
+
+            GridBagConstraints layoutConst = new GridBagConstraints();
+            layoutConst.insets = new Insets(10, 10, 10, 10);
 
             //////////////
-            // Layout
-            this.setLayout(new GridBagLayout());
-            GridBagConstraints c = new GridBagConstraints();
-            
-            c.insets = new Insets(10, 10, 10, 10);
-            
-            // Add Labels (first column)
-            c.gridx = 0;
-            c.gridy = 0;
-            add(infantIDLabel, c);
-            c.gridy++;
-            add(fieldNameLabel, c);
-            c.gridy++;
-            add(subfieldNameLabel, c);
-            c.gridy++;
-            add(maxLabel, c);
-            c.gridy++;
-            add(averageLabel, c);
-            c.gridy++;
-            add(minLabel, c);
-            
-            // Add Fields (second column)
-            c.gridx++;
-            c.gridy = 0;
-            add(infantIDField, c);
-            c.gridy++;
-            add(fieldNameField, c);
-            c.gridy++;
-            add(subfieldNameField, c);
-            c.gridy++;
-            add(maxValueField, c);
-            c.gridy++;
-            add(averageValueField, c);
-            c.gridy++;
-            add(minValueField, c);
-            
-            // Add week and time to Max row
-            c.gridx = 2;
-            c.gridy = 3;
-            add(maxWeekLabel, c);
-            c.gridx++;
-            add(maxWeekField, c);
-            c.gridx++;
-            add(maxTimeLabel, c);
-            c.gridx++;
-            add(maxTimeField, c);
-            
-            // Add week and time to Min row
-            c.gridx = 2;
-            c.gridy = 5;
-            add(minWeekLabel, c);
-            c.gridx++;
-            add(minWeekField, c);
-            c.gridx++;
-            add(minTimeLabel, c);
-            c.gridx++;
-            add(minTimeField, c);
+            // Layout: Time panel in the south area
+            this.setLayout(new BorderLayout());
+            this.add(this.timePanel, BorderLayout.SOUTH);
 
-            
-            
-            /////////////////////////////////////
-            // Component names: DO NOT CHANGE THIS CODE
-            
-            infantIDField.setName("infantIDField");
-            fieldNameField.setName("fieldNameField");
-            subfieldNameField.setName("subfieldNameField");
-            maxValueField.setName("maxValueField");
-            maxWeekField.setName("maxWeekField");
-            maxTimeField.setName("maxTimeField");
-            minValueField.setName("minValueField");
-            minWeekField.setName("minWeekField");
-            minTimeField.setName("minTimeField");
-            averageValueField.setName("averageValueField");
-            /////////////////////////////////////
+            layoutConst.gridx = 0;
+            layoutConst.gridy = 0;
+            this.timePanel.add(this.runButton, layoutConst);
+
+            layoutConst.gridx++;
+            this.timePanel.add(this.timeSlider, layoutConst);
+
+
+            //////////////////////////////////////////
+            // Layout: View panel in the center
+            this.viewPanel = new JPanel();
+            this.viewPanel.setLayout(new GridBagLayout());
+            this.add(this.viewPanel, BorderLayout.CENTER);
+
+            // Sub-panels: 3 different views + the text panel
+            // STUDENT
+            this.topViewPanel = new KinematicPanel(rootPoint, 1.0, -1.0, "x", "y", "Top View");
+            this.sideViewPanel = new KinematicPanel(rootPoint, 1.0, -1.0, "x", "z", "Side View");
+            this.rearViewPanel = new KinematicPanel(rootPoint, -1.0, -1.0, "y", "z", "Rear View");
+
+            // Top view
+            layoutConst.gridx = 1;
+            layoutConst.gridy = 0;
+            this.viewPanel.add(this.topViewPanel, layoutConst);
+
+            // Side view
+            layoutConst.gridx = 1;
+            layoutConst.gridy = 1;
+            this.viewPanel.add(this.sideViewPanel, layoutConst);
+
+            // Rear view
+            layoutConst.gridx = 0;
+            layoutConst.gridy = 0;
+            this.viewPanel.add(this.rearViewPanel, layoutConst);
+
+            // Text Field
+            layoutConst.gridx = 0;
+            layoutConst.gridy = 1;
+            this.viewPanel.add(this.textPanel, layoutConst);
+
+
+            //////////////////////////////////////////////////////////////////
+            // Slider change listener: translate the time step into the display
+            this.timeSlider.addChangeListener(new ChangeListener() {
+
+                @Override
+                public void stateChanged(ChangeEvent e)
+                {
+                    // Set the current time to match the slider time
+                    DataPanel.this.setTime(DataPanel.this.timeSlider.getValue());
+                }
+
+            });
+
+            ///////////////////////////
+            // Button action listener: used to start/stop the animation
+            this.runButton.addActionListener(new ActionListener()  {
+
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    // Use the button text to decide whether the timer is running or not.
+                    //  Based on this information, properly configure the button text and
+                    //  the timer.
+                    
+                    // TODO: implement
+                }
+
+            });
+
+            // ///////////////////////
+            // Set the names of the key objects: don't change these
+            this.infantTextField.setName("infantIDField");
+            this.timeTextField.setName("timeField");
+            this.runButton.setName("runButton");
+            this.timeSlider.setName("timeSlider");
+            // ///////////////////////
         }
 
         /**
-         * Update the data display panel with new Strings
+         * Set the current time for the animation.
          * 
-         * @param infantID Infant ID
-         * @param fieldName Field name
-         * @param subfieldName Subfield name
-         * @param maxState Max value String
-         * @param maxStateWeek Max value Week (Trial.toString())
-         * @param maxStateTime Max value time
-         * @param minState Min value String
-         * @param minStateWeek Min value Week
-         * @param minStateTime Min value time
-         * @param average Average value
+         * Notes:
+         * - Deal with the case that 'trial' is null
+         * - If the new time is within allowable range, then use that 
+         *     as the current time, set the timeSlider to this time,
+         *     extract the state for the current time and force an update
+         *     of the display
+         * - If the new time is outside of the allowable range, then ensure 
+         *     that the timer is off 
+         * 
+         * 
+         * @param newTime The new time step
          */
-        private void update(String infantID, String fieldName, String subfieldName,
-                String maxState, String maxStateWeek, String maxStateTime,
-                String minState, String minStateWeek, String minStateTime,
-                String average)
+        public void setTime(int newTime)
         {
-            // Set each of the text fields
-            infantIDField.setText(infantID);
-            fieldNameField.setText(fieldName);
-            subfieldNameField.setText(subfieldName);
-            maxValueField.setText(maxState);
-            maxWeekField.setText(maxStateWeek);
-            maxTimeField.setText(maxStateTime);
-            minValueField.setText(minState);
-            minWeekField.setText(minStateWeek);
-            minTimeField.setText(minStateTime);
-            averageValueField.setText(average);
+            // Do we have a trial?
+            if (InfantFrame.this.trial != null)
+            {
+                // TODO: complete the implementation
+                
+            }
+        }
+
+
+        /**
+         * Create the full kinematic model of the infant.
+         * 
+         * @return The root of the kinematic tree
+         */
+        public KinematicPointAbstract createKinematicModel()
+        {
+            // TODO: implement
+            
+            KinematicPointConstant root;
+            root = new KinematicPointConstant(Color.RED, 5, 0.1, 0, 0);
+            // root.addChild(new KinematicPointConstant(Color.BLUE, 5, 1, 1, 1));
+            return root;
+        }
+
+        /**
+         * Update the data display
+         * - Each of the kinematic panels
+         * - Each of the text fields
+         * - Force all components to redraw
+         * 
+         * @param state The current state
+         */
+        private void update(State state)
+        {
+            // TODO: implement
         }
     }
 
@@ -588,8 +548,8 @@ public class InfantFrame extends JFrame
     public InfantFrame()
     {
         super("Infant Explorer");
-        
-        /** Menu bar */
+
+        // Menu bar
         FileMenuBar fileMenuBar;
         // Configure the frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -606,22 +566,24 @@ public class InfantFrame extends JFrame
         layoutConst.gridx = 0;
         layoutConst.gridy = 0;
         layoutConst.insets = new Insets(10, 10, 10, 10);
-        
+
         // Selection panel
         this.selectionPanel = new SelectionPanel();
         this.add(this.selectionPanel, layoutConst);
 
         // Display panel
-        layoutConst.gridx = 1;
         this.dataPanel = new DataPanel();
+        layoutConst.gridx = 1;
         this.add(this.dataPanel, layoutConst);
-        
+
         // Make the frame visible
         this.setVisible(true);
-        
+
+        this.getContentPane().setBackground(new Color(200, 220, 200));
+
         // Compress the size of all objects
         this.pack();
-        
+
     }
 
     /**
@@ -636,14 +598,17 @@ public class InfantFrame extends JFrame
      */
     public synchronized void loadData(String directory, String infantID) throws IOException
     {
-        // construct infant and update selections
-        this.infant = new Infant(directory, infantID);
+        // Create the new infant object
+        infant = new Infant(directory, infantID);
+
+        // Update the selection panel
         this.selectionPanel.updateSelections();
+
     }
 
     /**
-     * Translate the selections made in the SelectionPanel into a set of Strings to
-     * be displayed in the DataPanel.
+     * Translate the selections made in the SelectionPanel into the configuration of the
+     * dataPanel
      * 
      * This method is declared as "synchronized" to ensure that only one thread is allowed to call it
      * and other synchronized methods at once.
@@ -652,84 +617,38 @@ public class InfantFrame extends JFrame
      * particular, the structures that it is referencing may be in the process of being updated.  So,
      * we cannot assume that things like "selected values" are not actually set to something interesting
      * or useful.
+     * 
      */
     public synchronized void update()
     {
-        // Which weeks have been selected?
-        int[] indices = selectionPanel.trialList.getSelectedIndices();
+        // Selected trial
+        int trialIndex = selectionPanel.trialList.getSelectedIndex();
 
-        // Default values for the displayed Strings
-        String infantID = "n/a";
-        String maxStateString = "n/a";
-        String maxStateWeekString = "n/a";
-        String maxStateTimeString = "n/a";
-
-        String minStateString = "n/a";
-        String minStateWeekString = "n/a";
-        String minStateTimeString = "n/a";
-
-        String averageString = "n/a";
-
-        String fieldName = "n/a";
-        String subfieldName = "n/a";
-
-        // Does the infant object exist and does it have at least one week?
-        if (infant != null && infant.getSize() > 0)
+        // Must have a valid infant with some trials
+        if(infant != null && infant.getSize() > 0)
         {
-            // Create an Infant object with only the selected weeks
-            Infant subInfant = new Infant(this.infant, indices);
-            
-            // Extract the infant ID
-            infantID = infant.getInfantID();
-
-            // Which field has been selected?
-            fieldName = selectionPanel.fieldList.getSelectedValue();
-
-            // Does this field exist and is it not empty
-            if (fieldName != null && !fieldName.equals(""))
+            // Check to make sure that the selected trial is in the valid range
+            if(trialIndex >= 0 && trialIndex < infant.getSize())
             {
-                // Which subfield has been selected?
-                subfieldName = selectionPanel.subfieldList.getSelectedValue();
-                
-                // check subfieldname and indices before computation
-                if (subfieldName != null && indices.length > 0)
-                {       
-                    // change scalar to "" for statistics
-                    if (subfieldName.equals("scalar"))
-                    {
-                        subfieldName = "";
-                    }
-                
-                    //complete the setting of the defined Strings
-                    // MAX
-                    maxStateString = subInfant.getMaxState(fieldName, subfieldName)
-                            .getValue(fieldName, subfieldName).toString();
-                    maxStateWeekString = subInfant.getMaxState(fieldName, subfieldName).getTrial().toString();
-                    maxStateTimeString = subInfant.getMaxState(fieldName, subfieldName)
-                            .getValue("time", "").toString();
-                    
-                    // AVERAGE
-                    averageString = subInfant.getAverageValue(fieldName, subfieldName).toString();
-                    
-                    // MIN
-                    minStateString = subInfant.getMinState(fieldName, subfieldName)
-                            .getValue(fieldName, subfieldName).toString();
-                    minStateWeekString = subInfant.getMinState(fieldName, subfieldName).getTrial().toString();
-                    minStateTimeString = subInfant.getMinState(fieldName, subfieldName)
-                            .getValue("time", "").toString();
-                }
-            }
-            else
-            {
-                // Indicate no meaningful fieldName
-                fieldName = "n/a";
+                // Extract the trial
+                this.trial = infant.getItem(trialIndex);
+                // Reset the time index to the beginning (this will cause an update)
+                this.dataPanel.setTime(0);
+
             }
         }
-
-        // Tell the data panel to update
-        this.dataPanel.update(infantID, fieldName, subfieldName,
-                maxStateString, maxStateWeekString, maxStateTimeString,
-                minStateString, minStateWeekString, minStateTimeString,
-                averageString);
     }
+
+    /**
+     * Return a reference to the data panel.
+     * 
+     * FOR TESTING ONLY
+     * 
+     * @return the data panel.
+     */
+    public DataPanel getDataPanel()
+    {
+        return this.dataPanel;
+    }
+
 }
