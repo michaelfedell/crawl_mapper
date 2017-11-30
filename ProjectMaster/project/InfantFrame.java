@@ -225,7 +225,10 @@ public class InfantFrame extends JFrame
             trialList.addListSelectionListener(new ListSelectionListener()
             {
                 public void valueChanged(ListSelectionEvent e) {
-                    InfantFrame.this.update();
+                    if (e.getValueIsAdjusting() == false)
+                    {
+                        InfantFrame.this.update();
+                    }
                 }
             });
 
@@ -384,9 +387,8 @@ public class InfantFrame extends JFrame
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    // TODO: implement
                     // Set the current time to one higher than its current value
-                    
+                    DataPanel.this.setTime(++currentTime);
                 }
 
             });
@@ -418,7 +420,6 @@ public class InfantFrame extends JFrame
             this.add(this.viewPanel, BorderLayout.CENTER);
 
             // Sub-panels: 3 different views + the text panel
-            // STUDENT
             this.topViewPanel = new KinematicPanel(rootPoint, 1.0, -1.0, "x", "y", "Top View");
             this.sideViewPanel = new KinematicPanel(rootPoint, 1.0, -1.0, "x", "z", "Side View");
             this.rearViewPanel = new KinematicPanel(rootPoint, -1.0, -1.0, "y", "z", "Rear View");
@@ -467,8 +468,16 @@ public class InfantFrame extends JFrame
                     // Use the button text to decide whether the timer is running or not.
                     //  Based on this information, properly configure the button text and
                     //  the timer.
-                    
-                    // TODO: implement
+                    if (runButton.getText().equals("Start"))
+                    {
+                        timer.start();
+                        runButton.setText("Stop");
+                    }
+                    else
+                    {
+                        timer.stop();
+                        runButton.setText("Start");
+                    }
                 }
 
             });
@@ -502,8 +511,19 @@ public class InfantFrame extends JFrame
             // Do we have a trial?
             if (InfantFrame.this.trial != null)
             {
-                // TODO: complete the implementation
-                
+                // check allowable range
+                if (newTime >= 0 && newTime < 15000)
+                {
+                    currentTime = newTime;
+                    this.update(trial.getItem(currentTime));
+                    this.timeSlider.setValue(currentTime);
+                    this.timeSlider.repaint();
+                }
+                else
+                {
+                    timer.stop();
+                    runButton.setText("Start");
+                }
             }
         }
 
@@ -515,11 +535,68 @@ public class InfantFrame extends JFrame
          */
         public KinematicPointAbstract createKinematicModel()
         {
-            // TODO: implement
+            // constant points
+            KinematicPointConstant root = new KinematicPointConstant(Color.BLUE, LINE_WIDTH, 0, 0, 0);
+            KinematicPointConstant lower_back = new KinematicPointConstant(Color.RED, LINE_WIDTH, .1, 0, 0);
+            KinematicPointConstant right_hip = new KinematicPointConstant(Color.RED, LINE_WIDTH, 0, -.05, 0);
+            KinematicPointConstant left_hip = new KinematicPointConstant(Color.RED, LINE_WIDTH, 0, .05, 0);
             
-            KinematicPointConstant root;
-            root = new KinematicPointConstant(Color.RED, 5, 0.1, 0, 0);
-            // root.addChild(new KinematicPointConstant(Color.BLUE, 5, 1, 1, 1));
+            //back
+            KinematicPointState upper_back = new KinematicPointState(Color.BLUE, LINE_WIDTH, "upper_back");
+            
+            //shoulders
+            KinematicPointState right_shoulder = new KinematicPointState(Color.RED, LINE_WIDTH, "right_shoulder");
+            KinematicPointState left_shoulder = new KinematicPointState(Color.RED, LINE_WIDTH, "left_shoulder");
+            
+            //elbows
+            KinematicPointState right_elbow = new KinematicPointState(Color.BLUE, LINE_WIDTH, "right_elbow");
+            KinematicPointState left_elbow = new KinematicPointState(Color.BLUE, LINE_WIDTH, "left_elbow");
+            
+            //wrists
+            KinematicPointState right_wrist = new KinematicPointState(Color.RED, LINE_WIDTH, "right_wrist");
+            KinematicPointState left_wrist = new KinematicPointState(Color.RED, LINE_WIDTH, "left_wrist");
+            
+            //knees
+            KinematicPointState right_knee = new KinematicPointState(Color.BLUE, LINE_WIDTH, "right_knee");
+            KinematicPointState left_knee = new KinematicPointState(Color.BLUE, LINE_WIDTH, "left_knee");
+            
+            //ankles
+            KinematicPointState right_ankle = new KinematicPointState(Color.RED, LINE_WIDTH, "right_ankle");
+            KinematicPointState left_ankle = new KinematicPointState(Color.RED, LINE_WIDTH, "left_ankle");
+            
+            //feet
+            KinematicPointState right_foot = new KinematicPointState(Color.BLUE, LINE_WIDTH, "right_foot");
+            KinematicPointState left_foot = new KinematicPointState(Color.BLUE, LINE_WIDTH, "left_foot");
+            
+            
+            // all fixed point
+            root.addChild(lower_back);
+            root.addChild(right_hip);
+            root.addChild(left_hip);
+            
+            // all stateful points 
+            lower_back.addChild(upper_back);
+            upper_back.addChild(right_shoulder);
+            upper_back.addChild(left_shoulder);
+            
+            //right arm
+            right_shoulder.addChild(right_elbow);
+            right_elbow.addChild(right_wrist);
+            
+            //left arm
+            left_shoulder.addChild(left_elbow);
+            left_elbow.addChild(left_wrist);
+            
+            //right leg
+            right_hip.addChild(right_knee);
+            right_knee.addChild(right_ankle);
+            right_ankle.addChild(right_foot);
+            
+            //left leg
+            left_hip.addChild(left_knee);
+            left_knee.addChild(left_ankle);
+            left_ankle.addChild(left_foot);
+            
             return root;
         }
 
@@ -533,7 +610,19 @@ public class InfantFrame extends JFrame
          */
         private void update(State state)
         {
-            // TODO: implement
+            //update kinematic panels by setting state
+            this.topViewPanel.setState(state);
+            this.sideViewPanel.setState(state);
+            this.rearViewPanel.setState(state);
+            
+            // update text fields
+            this.infantTextField.setText("Infant: " + state.getTrial().getInfantID());
+            this.timeTextField.setText("Time Step: " + this.currentTime);
+            this.timeSlider.setValue(currentTime);
+            
+            // force repaint
+            this.repaint();
+            
         }
     }
 

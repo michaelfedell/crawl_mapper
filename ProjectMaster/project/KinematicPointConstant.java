@@ -46,6 +46,6 @@ public class KinematicPointConstant extends KinematicPointAbstract
      */
     public GeneralValue getScreenCoordinate(State state, String screenSubfield)
     {
-        return state.getValue("lower_back", screenSubfield);
+        return point.getValue(screenSubfield);
     }
 }

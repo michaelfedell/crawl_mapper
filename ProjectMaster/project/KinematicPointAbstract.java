@@ -86,6 +86,7 @@ public abstract class KinematicPointAbstract
                 
                 //TODO: Draw the line from current to child point
                 g.setStroke(stroke);
+                g.setColor(color);
                 g.drawLine(x1, y1, x2, y2);
             }
             // Recursive call to draw the next child point
