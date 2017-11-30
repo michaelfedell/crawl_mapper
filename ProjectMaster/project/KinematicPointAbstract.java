@@ -4,9 +4,8 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 /**
- * 
- * 
- * @author Michael Fedell
+ * Class to describe each of the Kinematic points used to represent kinematic tree representation of the infant.
+ * @author Michael Fedell Modified by Zach Schuermann
  * @version 11-24-17
  */
 public abstract class KinematicPointAbstract
@@ -27,12 +26,12 @@ public abstract class KinematicPointAbstract
      * Default constructor for objects that extend this abstract class
      * Assigns color to this.color and width to this.
      * 
-     * @param color
-     * @param width
+     * @param color The color to be used for the segment.
+     * @param width The width of the segment.
      */
     public KinematicPointAbstract(Color color, float width)
     {
-        //TODO: Implement constructor
+        //Constructor to assign color, stroke with given width, and children list
         this.children = new ArrayList<KinematicPointAbstract>();
         this.color = color;
         this.stroke = new BasicStroke(width);
@@ -44,7 +43,7 @@ public abstract class KinematicPointAbstract
     /**
      * This method adds a child to the current node in the kinematic tree
      * 
-     * @param child
+     * @param child The KinematicPoint to add as a child of the current node
      */
     public void addChild(KinematicPointAbstract child)
     {
@@ -78,13 +77,13 @@ public abstract class KinematicPointAbstract
             // and draw will move to the child of the child
             if(thisPtX.isValid() && thisPtY.isValid() && childPtX.isValid() && childPtY.isValid())
             {
-                //TODO: Transform the values into pixel coordinates for each point
+                //Transform the values into pixel coordinates for each point
                 int x1 = (int) (thisPtX.getDoubleValue() * scale);
                 int y1 = (int) (thisPtY.getDoubleValue() * scale);
                 int x2 = (int) (childPtX.getDoubleValue() * scale);
                 int y2 = (int) (childPtY.getDoubleValue() * scale);
                 
-                //TODO: Draw the line from current to child point
+                //Draw the line from current to child point
                 g.setStroke(stroke);
                 g.setColor(color);
                 g.drawLine(x1, y1, x2, y2);

@@ -37,8 +37,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * Graphical user interface for interacting with Infant data
  * 
- * @author CS2334, modified by ????
- * @version 2017-10-20
+ * @author CS2334, modified by Zach Schuermann
+ * @version 2017-11-20
  *
  */
 public class InfantFrame extends JFrame
@@ -64,7 +64,7 @@ public class InfantFrame extends JFrame
     ///////////////////////////////////////////////////////////////////
     /**
      * 
-     * @author CS2334, modified by ???
+     * @author CS2334, modified by Zach Schuermann
      * @version 2017-10-20
      * 
      * Menu bar that provides file loading and program exit capabilities.
@@ -172,8 +172,8 @@ public class InfantFrame extends JFrame
     ///////////////////////////////////////////////////////////////////
     /**
      * 
-     * @author CS2334, modified by ???
-     * @version 2016-11-01
+     * @author CS2334, modified by Zach Schuermann
+     * @version 2016-11-29
      * 
      * Selection panel: contains JLists for the list of trials
      *
@@ -224,6 +224,7 @@ public class InfantFrame extends JFrame
             // Trial list
             trialList.addListSelectionListener(new ListSelectionListener()
             {
+                //List selection listener for the trials - updates frame after selection
                 public void valueChanged(ListSelectionEvent e) {
                     if (e.getValueIsAdjusting() == false)
                     {
@@ -275,7 +276,8 @@ public class InfantFrame extends JFrame
 
             // Clear all elements
             this.trialListModel.clear();
-
+            
+            // Check infant exists
             if(infant != null)
             {
                 // Loop through every trial & add it to the list model
@@ -291,8 +293,8 @@ public class InfantFrame extends JFrame
     /**
      * DataPanel: display selection information and statistics
      * 
-     * @author CS2334, modified by ???
-     * @version 2017-10-20
+     * @author CS2334, modified by Zach Schuermann
+     * @version 2017-11-20
      * 
      * 
      *
@@ -457,7 +459,7 @@ public class InfantFrame extends JFrame
                 }
 
             });
-
+            
             ///////////////////////////
             // Button action listener: used to start/stop the animation
             this.runButton.addActionListener(new ActionListener()  {
@@ -468,11 +470,13 @@ public class InfantFrame extends JFrame
                     // Use the button text to decide whether the timer is running or not.
                     //  Based on this information, properly configure the button text and
                     //  the timer.
+                    // Stop to Start
                     if (runButton.getText().equals("Start"))
                     {
                         timer.start();
                         runButton.setText("Stop");
                     }
+                    // Start to Stop
                     else
                     {
                         timer.stop();
@@ -514,11 +518,13 @@ public class InfantFrame extends JFrame
                 // check allowable range
                 if (newTime >= 0 && newTime < 15000)
                 {
+                    // update time and timeSlider
                     currentTime = newTime;
                     this.update(trial.getItem(currentTime));
                     this.timeSlider.setValue(currentTime);
                     this.timeSlider.repaint();
                 }
+                // not in range - stop timer
                 else
                 {
                     timer.stop();
@@ -723,7 +729,6 @@ public class InfantFrame extends JFrame
                 this.trial = infant.getItem(trialIndex);
                 // Reset the time index to the beginning (this will cause an update)
                 this.dataPanel.setTime(0);
-
             }
         }
     }

@@ -18,7 +18,7 @@ public class KinematicPointState extends KinematicPointAbstract
      * 
      * @param color Defines the color of this point
      * @param width Defines the width of drawing line
-     * @param fieldName
+     * @param fieldName Defines the field of the given point (like "left_wrist")
      */
     public KinematicPointState(Color color, float width, String fieldName)
     {

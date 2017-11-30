@@ -1,9 +1,9 @@
 import java.awt.Color;
 
 /**
+ * Class describing Kinematic Points that do not move with respect to the current state.
  * 
- * 
- * @author Michael Fedell
+ * @author Michael Fedell modified by Zach Schuermann
  * @version 11-24-17
  */
 public class KinematicPointConstant extends KinematicPointAbstract
@@ -46,6 +46,7 @@ public class KinematicPointConstant extends KinematicPointAbstract
      */
     public GeneralValue getScreenCoordinate(State state, String screenSubfield)
     {
+        // return the point's value for a given subfield (does not use state)
         return point.getValue(screenSubfield);
     }
 }

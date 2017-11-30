@@ -1,10 +1,10 @@
 import java.io.IOException;
 
 /**
- * Driver class to construct trial object and print arbitrary state.
+ * Driver class to construct infant frame.
  *
  * @author Zach Schuermann
- * @version 11/11/17
+ * @version 11/21/17
  *
  */
 public class Driver

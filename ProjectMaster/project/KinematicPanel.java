@@ -12,8 +12,8 @@ import javax.swing.border.Border;
 /**
  * Panel for drawing a single view of an infant
  * 
- * @author CS2334, modified by ???
- * @version 2017-11-10
+ * @author CS2334, modified by Zach Schuermann
+ * @version 2017-11-20
  *
  */
 public class KinematicPanel extends JPanel
@@ -90,7 +90,7 @@ public class KinematicPanel extends JPanel
     {
         super.paintComponent(g);
         
-        // TODO: Draw the title 
+        // Draw the title 
         g.setFont(FONT);
         g.drawString(title, 20, 40);
 
@@ -104,7 +104,7 @@ public class KinematicPanel extends JPanel
             // Flip the drawing directions
             g2.scale(flipX, flipY);
             
-            // TODO: Draw the kinematic tree 
+            // Draw the kinematic tree recursively by calling draw on root point
             rootPoint.draw(g2, state, screenXSubfield, screenYSubfield);
             
             // These next two lines make the border drawing work properly
